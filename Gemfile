@@ -15,6 +15,7 @@ gem "jbuilder", "~> 2.11"
 gem 'seed_dump', "~> 3.3"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", "~> 1.11", require: false
+gem "paper_trail", "~> 12.3"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
