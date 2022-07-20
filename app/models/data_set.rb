@@ -5,7 +5,7 @@ class DataSet < ApplicationRecord
   attr_accessor :step
 
   def storage_size
-    files.map(&:byte_size).sum
+    files.sum(&:byte_size)
   end
 
   def row_count
@@ -17,11 +17,11 @@ class DataSet < ApplicationRecord
   end
 
   def emergency_categories
-    fields.find_by(common_type: 'Emergency Category').unique_values.order(:value)
+    fields.find_by(common_type: "Emergency Category").unique_values.order(:value)
   end
 
   def call_categories
-    fields.find_by(common_type: 'Call Category').unique_values.order(:value)
+    fields.find_by(common_type: "Call Category").unique_values.order(:value)
   end
 
   def detailed_call_types
@@ -29,22 +29,22 @@ class DataSet < ApplicationRecord
   end
 
   def priorities
-    fields.find_by(common_type: 'Priority').unique_values.order(:value)
+    fields.find_by(common_type: "Priority").unique_values.order(:value)
   end
 
   def start_time
-    if fields.find_by(common_type: 'Call Time')&.min_value
-      DateTime.parse fields.find_by(common_type: 'Call Time').min_value
-    end
+    return unless (call_time = fields.find_by(common_type: "Call Time")&.min_value)
+
+    DateTime.parse call_time
   end
 
   def end_time
-    if fields.find_by(common_type: 'Call Time')&.max_value
-      DateTime.parse fields.find_by(common_type: 'Call Time').max_value
-    end
+    return unless (call_time = fields.find_by(common_type: "Call Time")&.max_value)
+
+    DateTime.parse call_time
   end
 
-  def timeframe(full = false)
+  def timeframe(full: false)
     return unless start_time && end_time
 
     if full
@@ -55,27 +55,27 @@ class DataSet < ApplicationRecord
   end
 
   def prepare_datamap
-    if fields.empty?
-      set_metadata!
-      # check there's an attached file
-      datafile.headers.split(',').each_with_index do |heading, i|
-        datafile.with_file do |f|
-          unique_value_count = `cut -d, -f#{i+1} #{f.path} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' | sort | uniq | wc -l`.to_i - 1
-          blank_value_count = `cut -d, -f#{i+1} #{f.path} | grep -v -e '[[:space:]]*$' | wc -l`
-          sample_data = `tail -n +2 #{f.path} | cut -d, -f#{i+1} | sort | uniq | head`
-          fields.create heading: heading, position: i, unique_value_count: unique_value_count,
-                        empty_value_count: blank_value_count, sample_data: sample_data
-        end
+    return unless fields.empty?
+
+    set_metadata!
+    # check there's an attached file
+    datafile.headers.split(",").each_with_index do |heading, i|
+      datafile.with_file do |f|
+        unique_value_count =
+          `cut -d, -f#{i + 1} #{f.path} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' | sort | uniq | wc -l`.to_i - 1
+        blank_value_count = `cut -d, -f#{i + 1} #{f.path} | grep -v -e '[[:space:]]*$' | wc -l`
+        sample_data = `tail -n +2 #{f.path} | cut -d, -f#{i + 1} | sort | uniq | head`
+        fields.create heading:, position: i, unique_value_count:,
+                      empty_value_count: blank_value_count, sample_data:
       end
     end
   end
 
   def set_metadata!
-    files.each do |file|
-      file.set_metadata!
-    end
+    files.each(&:set_metadata!)
   end
 
+  # rubocop:disable all
   def analyze!
     return if analyzed?
 
@@ -101,4 +101,5 @@ class DataSet < ApplicationRecord
 
     update_attribute :analyzed, true
   end
+  # rubocop:enable all
 end

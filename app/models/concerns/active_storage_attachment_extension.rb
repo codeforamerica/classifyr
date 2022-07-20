@@ -2,18 +2,14 @@ module ActiveStorageAttachmentExtension
   extend ActiveSupport::Concern
 
   included do
-    has_many :virus_scan_results
+    has_many :virus_scan_results, dependent: :destroy
   end
 
-  def with_file
-    blob.open do |f|
-      yield f
-    end
+  def with_file(&)
+    blob.open(&)
   end
 
-  def analyze!
-
-  end
+  def analyze!; end
 
   def set_metadata!
     blob.open do |f|

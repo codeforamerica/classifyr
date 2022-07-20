@@ -1,19 +1,17 @@
 class DataSetsController < ApplicationController
-  before_action :set_data_set, only: %i[ show edit update destroy map analyze ]
+  before_action :set_data_set, only: %i[show edit update destroy map analyze]
 
   def index
     @data_sets = DataSet.all
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @data_set = DataSet.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @data_set = DataSet.new(data_set_params)
@@ -26,10 +24,10 @@ class DataSetsController < ApplicationController
   end
 
   def update
-    if params['data_set']['step'] == 'map_fields'
-      params['data_set']['common_types'].each do |position, common_type|
+    if params["data_set"]["step"] == "map_fields"
+      params["data_set"]["common_types"].each do |position, common_type|
         common_type = nil if common_type.blank?
-        @data_set.fields.find_by(position: position).update(common_type: common_type)
+        @data_set.fields.find_by(position:).update(common_type:)
       end
       redirect_to analyze_data_set_url(@data_set), notice: "Fields were successfully mapped."
     elsif @data_set.update(data_set_params)
@@ -47,7 +45,7 @@ class DataSetsController < ApplicationController
 
   def map
     @data_set.prepare_datamap
-    @fields = @data_set.fields.order('position asc')
+    @fields = @data_set.fields.order("position asc")
   end
 
   def analyze
@@ -55,13 +53,18 @@ class DataSetsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_data_set
-      @data_set = DataSet.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def data_set_params
-      params.require(:data_set).permit(:title, :data_link, :api_links, :source, :exclusions, :license, :format, :documentation_link, :city, :state, :description, :has_911, :has_ems, :has_fire, files: [])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_data_set
+    @data_set = DataSet.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def data_set_params
+    params.require(:data_set).permit(
+      :title, :data_link, :api_links, :source, :exclusions, :license, :format,
+      :documentation_link, :city, :state, :description, :has_911, :has_ems,
+      :has_fire, files: []
+    )
+  end
 end

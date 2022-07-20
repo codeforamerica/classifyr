@@ -9,7 +9,7 @@
   <td>
     <div class="flex flex-wrap">
       <div class="w-full text-center">
-        <% if field.has_values? %>
+        <% if field.values? %>
           <button class="text-sm underline px-6 py-3 mr-1 mb-1 ease-linear transition-all duration-150" type="button" onclick="openPopover(event,'popover-<%= field.id %>')">
             <%= field.heading %>
           </button>
