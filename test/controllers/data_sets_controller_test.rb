@@ -17,7 +17,9 @@ class DataSetsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create data_set" do
     assert_difference("DataSet.count") do
-      post data_sets_url, params: { data_set: { city: @data_set.city, end_date: @data_set.end_date, filename: @data_set.filename, name: @data_set.name, start_date: @data_set.start_date, state: @data_set.state } }
+      post data_sets_url,
+           params: { data_set: { city: @data_set.city, end_date: @data_set.end_date, filename: @data_set.filename,
+                                 name: @data_set.name, start_date: @data_set.start_date, state: @data_set.state } }
     end
 
     assert_redirected_to data_set_url(DataSet.last)
@@ -34,7 +36,9 @@ class DataSetsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update data_set" do
-    patch data_set_url(@data_set), params: { data_set: { city: @data_set.city, end_date: @data_set.end_date, filename: @data_set.filename, name: @data_set.name, start_date: @data_set.start_date, state: @data_set.state } }
+    patch data_set_url(@data_set),
+          params: { data_set: { city: @data_set.city, end_date: @data_set.end_date, filename: @data_set.filename,
+                                name: @data_set.name, start_date: @data_set.start_date, state: @data_set.state } }
     assert_redirected_to data_set_url(@data_set)
   end
 

@@ -12,13 +12,13 @@ gem "turbo-rails", "~> 1.1"
 gem "stimulus-rails", "~> 1.0"
 gem "tailwindcss-rails", "~> 2.0"
 gem "jbuilder", "~> 2.11"
-gem 'seed_dump', "~> 3.3"
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem "seed_dump", "~> 3.3"
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "bootsnap", "~> 1.11", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", "~> 1.5", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", "~> 1.5", platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
@@ -31,9 +31,9 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 
-  gem 'rubocop-rails', "~> 2.15", require: false
-  gem 'rubocop-performance', "~> 1.14", require: false
-  gem 'rubocop-rspec', "~> 2.12", require: false
+  gem "rubocop-rails", "~> 2.15", require: false
+  gem "rubocop-performance", "~> 1.14", require: false
+  gem "rubocop-rspec", "~> 2.12", require: false
 end
 
 group :test do

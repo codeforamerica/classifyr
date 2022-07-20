@@ -3,9 +3,9 @@ class ClassificationsController < ApplicationController
     @term = Classification.pick
     @headings = @term.field.data_set.fields.order(:position).pluck(:heading)
     @data = @term.examples
-    @common_incident_types = CommonIncidentType.all.order(:code).map do |cit|
+    @common_incident_types = CommonIncidentType.all.order(:code).to_h do |cit|
       ["#{cit.code}: #{cit.notes || cit.description}", cit.id]
-    end.to_h
+    end
 
     @classification = Classification.new(value: @term.value, common_type: Classification::CALL_TYPE)
   end
@@ -13,7 +13,7 @@ class ClassificationsController < ApplicationController
   def create
     @classification = Classification.new(classification_params)
 
-    if @classification.save && ! @classification.unknown?
+    if @classification.save && !@classification.unknown?
       redirect_to classifications_path, notice: "'#{@classification.value}' successfully categorized."
     else
       redirect_to classifications_path, notice: "'#{@classification.value}' marked unknown."
@@ -21,7 +21,8 @@ class ClassificationsController < ApplicationController
   end
 
   private
-    def classification_params
-      params.require(:classification).permit(:value, :common_type, :unknown, :common_incident_type_id)
-    end
+
+  def classification_params
+    params.require(:classification).permit(:value, :common_type, :unknown, :common_incident_type_id)
+  end
 end

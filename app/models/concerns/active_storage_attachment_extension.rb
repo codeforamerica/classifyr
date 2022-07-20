@@ -5,15 +5,11 @@ module ActiveStorageAttachmentExtension
     has_many :virus_scan_results
   end
 
-  def with_file
-    blob.open do |f|
-      yield f
-    end
+  def with_file(&)
+    blob.open(&)
   end
 
-  def analyze!
-
-  end
+  def analyze!; end
 
   def set_metadata!
     blob.open do |f|
