@@ -42,13 +42,15 @@ jobs:
 
       - name: Create DB
         run: |
-          bin/rails db:prepare
+          bin/rails db:setup
+
       - name: Run tests
         run: |
           bundle exec rspec
 
   lint:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
 
