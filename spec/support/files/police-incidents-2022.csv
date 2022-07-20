@@ -1,0 +1,6 @@
+incident_number,call_type,call_type_group,call_time,Street,call_origin,mental_health,drug_related,dv_related,alcohol_related,Area,AreaName,Latitude,Longitude,Hour,DayOfWeek,WARD,DISTRICT,priority,Month,year
+22BU000002,Welfare Check,Public Service,2021-12-31T20:08:55-05:00,Main St,911,0,1,0,1,E,SouthEnd,44.475410548309,-73.1971131641151,1 am,Saturday,8,East,Priority 2,January,2022
+22BU000003,DUI,Motor Vehicle,2021-12-31T20:31:30-05:00,NA,911,0,0,1,1,NA,NA,NA,NA,1 am,Saturday,NA,NA,Priority 1,January,2022
+22BU000007,Intoxication,Quality of Life,2021-12-31T21:25:52-05:00,Main St,Phone,0,0,0,1,D,Downtown,44.4756491602608,-73.2145682567682,2 am,Saturday,3,Central,Priority 3,January,2022
+22BU000013,Mental Health Issue,Public Service,2022-01-01T00:20:29-05:00,S Champlain St,Phone,1,0,0,0,E,SouthEnd,44.4725442759697,-73.2166263378627,5 am,Saturday,5,South,Priority 2,January,2022
+22BU000016,Trespass,Other,2022-01-01T04:37:29-05:00,Pine St,Phone,0,0,0,0,D,Downtown,44.4742771510042,-73.2156656366762,9 am,Saturday,5,South,Priority 2,January,2022
