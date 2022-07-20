@@ -2,10 +2,12 @@ class Field < ApplicationRecord
   belongs_to  :data_set
   has_many :unique_values, dependent: :destroy
 
-  TYPES = ["", "Emergency Category", "Call Category", Classification::CALL_TYPE,
-           "-----------------", "Call Identifier", "Call Time", "Call Disposition", "Priority", "Dispatched Unit Type",
-           "-----------------", "Geolocation Latitude", "Geolocation Longitude",
-           "-----------------", "Flag Alcohol Related", "Flag Domestic Violence", "Flag Drug Related", "Flag Mental Health"].freeze
+  TYPES = [
+    "", "Emergency Category", "Call Category", Classification::CALL_TYPE,
+    "-----------------", "Call Identifier", "Call Time", "Call Disposition", "Priority", "Dispatched Unit Type",
+    "-----------------", "Geolocation Latitude", "Geolocation Longitude",
+    "-----------------", "Flag Alcohol Related", "Flag Domestic Violence", "Flag Drug Related", "Flag Mental Health"
+  ].freeze
 
   # FORMATS = ['', 'Lookup', 'Date', 'Time', 'Address', 'Geolocation', 'Text']
   #
@@ -17,7 +19,7 @@ class Field < ApplicationRecord
     where("common_type IS NOT NULL AND common_type != ''")
   end
 
-  def has_values?
+  def values?
     VALUE_TYPES.include? common_type
   end
 

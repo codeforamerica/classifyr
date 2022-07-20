@@ -2,7 +2,7 @@ module ActiveStorageAttachmentExtension
   extend ActiveSupport::Concern
 
   included do
-    has_many :virus_scan_results
+    has_many :virus_scan_results, dependent: :destroy
   end
 
   def with_file(&)

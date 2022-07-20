@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/MethodLength
 module ApplicationHelper
   def us_states
     [
@@ -57,3 +58,4 @@ module ApplicationHelper
     ]
   end
 end
+# rubocop:enable Metrics/MethodLength
