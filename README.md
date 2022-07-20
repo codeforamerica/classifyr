@@ -2,6 +2,14 @@
 
 Data classification tool developed for the Reimagine911 project.
 
+## Testing
+
+Run the following command to start the tests.
+
+```
+bundle exec rspec
+```
+
 ## Docker
 
 This project includes a Dockerfile for the web app as well as a docker compose
@@ -19,8 +27,8 @@ the database directory by running the following:
 mkdir tmp/db
 ```
 
-*Note: This has been tested on Intel Mac using both Docker Desktop and
-[colima][3].*
+_Note: This has been tested on Intel Mac using both Docker Desktop and
+[colima][3]._
 
 ```bash
 docker compose up -d
@@ -31,8 +39,6 @@ docker compose run web rake assets:precompile
 ```
 
 You should then be able to connect to the classifyr via http://localhost:3000/.
-
-
 
 [1]: https://docs.docker.com/samples/rails/
 [2]: https://docs.docker.com/compose/
