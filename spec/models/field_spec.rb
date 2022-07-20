@@ -40,18 +40,18 @@ RSpec.describe Field, type: :model do
   end
 
   describe "instance methods" do
-    describe "#has_values?" do
+    describe "#values?" do
       context "without a common_type" do
         it "returns true" do
           field = create(:field, common_type: Field::VALUE_TYPES[1])
-          expect(field.has_values?).to be true
+          expect(field.values?).to be true
         end
       end
 
       context "with a common_type" do
         it "returns false" do
           field = create(:field, common_type: nil)
-          expect(field.has_values?).to be false
+          expect(field.values?).to be false
         end
       end
     end
