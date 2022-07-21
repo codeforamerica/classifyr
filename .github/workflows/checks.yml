@@ -59,7 +59,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Rubocop Linter Action
-        uses: andrewmcodes/rubocop-linter-action@v3.3.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          # runs 'bundle install' and caches installed gems automatically
+          bundler-cache: true
+
+      - name: RuboCop
+        run: bundle exec rubocop
