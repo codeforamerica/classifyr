@@ -1,0 +1,28 @@
+name: Branch Checks
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+
+    steps:
+      uses: ./.github/actions/rspec
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
+
+      - name: RuboCop Linter
+        uses: andrewmcodes/rubocop-linter-action@v3.3.0
+        with:
+          action_config_path: ".github/config/branch_rubocop_linter_action.yml"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
