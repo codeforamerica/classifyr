@@ -16,6 +16,9 @@ gem "seed_dump", "~> 3.3"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "bootsnap", "~> 1.12", require: false
 
+gem "devise", github: "heartcombo/devise", ref: "f8d1ea90bc3"
+
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", "~> 1.6", platforms: %i[mri mingw x64_mingw]
@@ -34,7 +37,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console", "~> 4.2"
-
+  gem "letter_opener"
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
