@@ -193,3 +193,13 @@ Bundler/OrderedGems:
 
 Naming/VariableNumber:
   Enabled: false
+
+# RSpec Cops
+
+RSpec/ExampleLength:
+  Max: 10
+  Enabled: true
+
+RSpec/NestedGroups:
+  Max: 4
+  Enabled: true
