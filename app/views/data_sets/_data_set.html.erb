@@ -10,7 +10,7 @@
   <div class="border-t border-gray-200">
     <dl>
       <%= render partial: 'data_sets/data_details', locals: {label: 'Source', value: data_set.source, index: 0} %>
-      <%= render partial: 'data_sets/data_details', locals: {label: 'Timeframe', value: data_set.timeframe(true), index: 1} %>
+      <%= render partial: 'data_sets/data_details', locals: {label: 'Timeframe', value: data_set.timeframe(full: true), index: 1} %>
       <%= render partial: 'data_sets/data_details', locals: {label: 'Location', value: "#{data_set.city}, #{data_set.state}", index: 0} %>
       <%= render partial: 'data_sets/data_details', locals: {label: 'Size', value: "#{number_to_human_size(data_set.storage_size)} (#{data_set.row_count} x #{data_set.fields.count})", index: 1} %>
       <%= render partial: 'data_sets/data_details', locals: {label: 'License', value:  data_set.license, index: 0} %>
