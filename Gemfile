@@ -19,6 +19,11 @@ gem "bootsnap", "~> 1.11", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", "~> 1.5", platforms: %i[mri mingw x64_mingw]
+  gem "rspec-rails", "~> 5.1"
+  gem "factory_bot_rails", "~> 6.2"
+  gem "faker", "~> 2.21"
+  gem "pry", "~> 0.13"
+  gem "bullet", "~> 7.0"
 end
 
 group :development do
@@ -41,4 +46,7 @@ group :test do
   gem "capybara", "~> 3.37"
   gem "selenium-webdriver", "~> 4.1"
   gem "webdrivers", "~> 5.0"
+  gem "webmock", "~> 3.14"
+  gem "vcr", "~> 6.1"
+  gem "database_cleaner-active_record", "~> 2.0"
 end

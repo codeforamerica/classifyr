@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_27_210028) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_05_224432) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,6 +65,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_27_210028) do
     t.string "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "humanized_code"
+    t.string "humanized_description"
   end
 
   create_table "data_sets", force: :cascade do |t|
