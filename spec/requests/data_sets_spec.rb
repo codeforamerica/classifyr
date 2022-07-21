@@ -4,7 +4,7 @@ RSpec.describe "DataSets", type: :request do
   describe "#index" do
     it "returns 200 OK" do
       get "/data_sets"
-      expect(response.status).to eq(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it "renders the 'index' template" do

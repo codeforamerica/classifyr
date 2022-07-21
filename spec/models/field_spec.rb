@@ -16,15 +16,19 @@ RSpec.describe Field, type: :model do
   describe "constants" do
     it "has the TYPES constant defined" do
       expect(Field::TYPES).to eq(
-        ['', 'Emergency Category', 'Call Category', Classification::CALL_TYPE,
-         '-----------------', 'Call Identifier','Call Time', 'Call Disposition', 'Priority', 'Dispatched Unit Type',
-         '-----------------', 'Geolocation Latitude', 'Geolocation Longitude',
-         '-----------------', 'Flag Alcohol Related', 'Flag Domestic Violence', 'Flag Drug Related', 'Flag Mental Health']
+        [
+          "", "Emergency Category", "Call Category", Classification::CALL_TYPE,
+          "-----------------", "Call Identifier", "Call Time", "Call Disposition", "Priority", "Dispatched Unit Type",
+          "-----------------", "Geolocation Latitude", "Geolocation Longitude",
+          "-----------------", "Flag Alcohol Related", "Flag Domestic Violence", "Flag Drug Related",
+          "Flag Mental Health"
+        ],
       )
     end
 
     it "has the VALUE_TYPES constant defined" do
-      expect(Field::VALUE_TYPES).to eq(['Emergency Category', 'Call Category', Classification::CALL_TYPE, 'Call Disposition', 'Priority'])
+      expect(Field::VALUE_TYPES).to eq(["Emergency Category", "Call Category", Classification::CALL_TYPE,
+                                        "Call Disposition", "Priority"])
     end
   end
 
@@ -32,9 +36,9 @@ RSpec.describe Field, type: :model do
     describe ".mapped" do
       it "returns mapped fields" do
         mapped_field = create(:field, common_type: Field::VALUE_TYPES[1])
-        unmapped_field = create(:field, common_type: nil)
+        create(:field, common_type: nil)
 
-        expect(Field.mapped).to eq [mapped_field]
+        expect(described_class.mapped).to eq [mapped_field]
       end
     end
   end
