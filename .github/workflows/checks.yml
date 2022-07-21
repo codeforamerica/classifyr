@@ -44,6 +44,7 @@ jobs:
         run: |
           bin/rails db:setup
 
+      # Quick fix for strange Rails <> Tailwind issue: https://github.com/rails/tailwindcss-rails/issues/153#issuecomment-1059830547
       - name: Precompile assets
         run: |
           bundle exec rake assets:precompile
@@ -58,7 +59,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Rubocop checks
-        uses: luizfonseca/github-actions-rubocop@1.5.6
+      - name: Rubocop Linter Action
+        uses: andrewmcodes/rubocop-linter-action@v3.3.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
