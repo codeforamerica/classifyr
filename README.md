@@ -2,12 +2,48 @@
 
 Data classification tool developed for the Reimagine911 project.
 
-## Testing
+## System Requirements
 
-Run the following command to start the tests.
+You'll want to ensure you have the following already installed on your local machine before getting started.
+
+- **Ruby**: Version 3.1.2 as specified in the `.ruby-version` file.
+- **Bundler**: Version 2.3.7+.
+- **PostgreSQL**: Version 12+.
+
+For reference, the project is using Rails 7.
+
+## Installation
+
+You can set things up manually by going through this section or use Docker (see next section).
+
+1. Pull the code
 
 ```
-bundle exec rspec
+git clone git@github.com:codeforamerica/classifyr.git && cd classifyr
+```
+
+2. Install dependencies
+
+```
+bundle install
+```
+
+3. Set up the database
+
+```
+rails db:prepare
+```
+
+4. Run the tests
+
+```
+rspec
+```
+
+5. Start the server
+
+```
+./bin/dev
 ```
 
 ## Docker
@@ -43,3 +79,42 @@ You should then be able to connect to the classifyr via http://localhost:3000/.
 [1]: https://docs.docker.com/samples/rails/
 [2]: https://docs.docker.com/compose/
 [3]: https://github.com/abiosoft/colima
+
+## Tests (how to run)
+
+Use the following command to run the tests:
+
+```
+rspec
+```
+
+```
+Finished in 0.86675 seconds (files took 2.32 seconds to load)
+11 examples, 0 failures
+```
+
+## Linting
+
+We use Rubocop with a [custom config](.rubocop.yml) for linting. Run the following command to check the code:
+
+```
+rubocop
+```
+
+Add `-a` or `-A` to automatically fix correctable issues.
+
+## Deployment
+
+WIP.
+
+## Contributing
+
+We follow a very simple development workflow: https://guides.github.com/introduction/flow/
+
+> GitHub flow is a lightweight, branch-based workflow. The GitHub flow is useful for everyone, not just developers.
+
+1. Check out the `main` branch and pull down the latest code.
+2. Create a new branch off of the latest from `main` prefixed with your initials: td-new-feature.
+3. Work on your feature.
+4. When you're done with your feature, create a pull request and request a review from another developer. Please follow the pull request template. Opening a PR will automatically run the tests and linting, make sure everything is passing.
+5. Fix up your PR if needed and "squash and merge" it once approved.
