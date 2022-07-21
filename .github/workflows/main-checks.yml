@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      uses: ./.github/actions/rspec
+      - uses: ./.github/actions/rspec
 
   lint:
     runs-on: ubuntu-latest
