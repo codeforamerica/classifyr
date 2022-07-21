@@ -1,4 +1,6 @@
 class UniqueValue < ApplicationRecord
+  has_paper_trail
+
   belongs_to :field
 
   def examples

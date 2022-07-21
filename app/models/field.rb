@@ -1,4 +1,6 @@
 class Field < ApplicationRecord
+  has_paper_trail
+
   belongs_to  :data_set
   has_many :unique_values, dependent: :destroy
 

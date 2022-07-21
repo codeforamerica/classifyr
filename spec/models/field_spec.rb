@@ -3,6 +3,15 @@ require "rails_helper"
 RSpec.describe Field, type: :model do
   let(:field) { build(:field) }
 
+  describe "versioning" do
+    it "has versioning enabled on create" do
+      field = create(:field)
+      field.update(position: 1)
+      expect(field.versions.count).to eq(2)
+      expect(field.versions.last.object_changes).to include("position")
+    end
+  end
+
   describe "associations" do
     it "belongs_to a data_set" do
       expect(field).to respond_to(:data_set)
