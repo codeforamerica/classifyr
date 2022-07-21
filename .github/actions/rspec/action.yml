@@ -29,8 +29,6 @@ runs:
     CLASSIFYR_DATABASE_PASSWORD: ""
 
   steps:
-    - uses: actions/checkout@v2
-
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
