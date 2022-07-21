@@ -6,6 +6,7 @@ services:
       - ./tmp/db:/var/lib/postgresql/data:rw
       - ./scripts:/opt/scripts
     environment:
+      CLASSIFYR_DATABASE_HOST: "db"
       POSTGRES_PASSWORD: "${CLASSIFYR_DATABASE_PASSWORD:-thisisprobablyabadidea!}"
       POSTGRES_USER: "${CLASSIFYR_DATABASE_USERNAME:-classifyr}"
     command: /opt/scripts/initdb.sh
