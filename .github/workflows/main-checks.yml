@@ -9,9 +9,52 @@ jobs:
   rspec:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ""
+          POSTGRES_DB: postgres
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        # tmpfs makes DB faster by using RAM
+        options: >-
+          --mount type=tmpfs,destination=/var/lib/postgresql/data
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      RAILS_ENV: test
+      GEMFILE_RUBY_VERSION: 2.7.2
+      CLASSIFYR_DATABASE_HOST: localhost
+      CLASSIFYR_DATABASE_USERNAME: postgres
+      CLASSIFYR_DATABASE_PASSWORD: ""
+
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/rspec
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          # runs 'bundle install' and caches installed gems automatically
+          bundler-cache: true
+
+      - name: Create DB
+        run: |
+          bin/rails db:setup
+
+      # Quick fix for strange Rails <> Tailwind issue: https://github.com/rails/tailwindcss-rails/issues/153#issuecomment-1059830547
+      - name: Precompile assets
+        run: |
+          bundle exec rake assets:precompile
+
+      - name: Run tests
+        run: |
+          bundle exec rspec
 
   lint:
     runs-on: ubuntu-latest
