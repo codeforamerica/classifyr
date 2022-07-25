@@ -19,7 +19,7 @@ AllCops:
 # Metrics Cops
 
 Metrics/AbcSize:
-  Max: 20]
+  Max: 21
   Enabled: true
 
 Metrics/ClassLength:
