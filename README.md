@@ -43,7 +43,7 @@ rspec
 5. Start the server
 
 ```
-rails s
+./bin/dev
 ```
 
 ## Docker

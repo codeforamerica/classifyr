@@ -5,19 +5,18 @@ ruby "3.1.2"
 
 gem "rails", "~> 7.0", ">= 7.0.2.3"
 gem "sprockets-rails", "~> 3.4"
-gem "pg", "~> 1.4"
+gem "pg", "~> 1.3"
 gem "puma", "~> 5.6"
 gem "importmap-rails", "~> 1.1"
 gem "turbo-rails", "~> 1.1"
-gem "stimulus-rails", "~> 1.1"
-gem "tailwindcss-rails", "~> 2.0"
+gem "stimulus-rails", "~> 1.0"
+gem "tailwindcss-rails", "2.0.5"
 gem "jbuilder", "~> 2.11"
 gem "seed_dump", "~> 3.3"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
-gem "bootsnap", "~> 1.12", require: false
-
+gem "bootsnap", "~> 1.11", require: false
+gem "paper_trail", "~> 12.3"
 gem "devise", github: "heartcombo/devise", ref: "f8d1ea90bc3"
-
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -27,11 +26,6 @@ group :development, :test do
   gem "faker", "~> 2.21"
   gem "pry", "~> 0.14"
   gem "bullet", "~> 7.0"
-
-  gem "rubocop", "~> 1.31"
-  gem "rubocop-rails", "~> 2.15"
-  gem "rubocop-performance", "~> 1.14"
-  gem "rubocop-rspec", "~> 2.12"
 end
 
 group :development do
@@ -43,6 +37,11 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  gem "rubocop", "~> 1.31"
+  gem "rubocop-rails", "~> 2.15"
+  gem "rubocop-performance", "~> 1.14"
+  gem "rubocop-rspec", "~> 2.12"
 end
 
 group :test do

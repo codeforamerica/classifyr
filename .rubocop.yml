@@ -18,13 +18,9 @@ AllCops:
 
 # Metrics Cops
 
-# Disabled due to RuboCop error
-# comparison of Float with String failed
-# rubocop-1.31.2/lib/rubocop/cop/mixin/method_complexity.rb:55:in `>'
-# rubocop-1.31.2/lib/rubocop/cop/mixin/method_complexity.rb:55:in `check_complexity'
 Metrics/AbcSize:
-  Max: 20]
-  Enabled: false
+  Max: 21
+  Enabled: true
 
 Metrics/ClassLength:
   Description: "Avoid classes longer than 100 lines of code."
@@ -206,4 +202,8 @@ RSpec/ExampleLength:
 
 RSpec/NestedGroups:
   Max: 4
+  Enabled: true
+
+RSpec/MultipleExpectations:
+  Max: 3
   Enabled: true

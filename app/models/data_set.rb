@@ -1,4 +1,6 @@
 class DataSet < ApplicationRecord
+  has_paper_trail
+
   has_many_attached :files, dependent: :destroy
   has_many :fields, dependent: :destroy
 
