@@ -1,12 +1,11 @@
 <h2 class="hidden">Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: false }) do |f| %>
   <div class="form-group">
     <div class="my-4">
       <%= f.label :email %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter your email" %>
+      <%= render "shared/input_error", resource: resource, field: :email %>
     </div>
 
     <div class="my-4">
@@ -15,11 +14,13 @@
       <% if @minimum_password_length %>
         <p class="text-slate-500 text-xs mt-1 ml-1"><%= @minimum_password_length %> characters minimum</p>
       <% end %>
+      <%= render "shared/input_error", resource: resource, field: :password %>
     </div>
 
     <div class="my-4">
       <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm your password" %>
+      <%= render "shared/input_error", resource: resource, field: :password_confirmation %>
     </div>
     <div class="my-4">
       <%= f.submit "Sign up", class: "w-full justify-center" %>

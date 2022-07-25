@@ -3,6 +3,12 @@ require "rails_helper"
 RSpec.describe Field, type: :model do
   let(:field) { build(:field) }
 
+  describe "factory" do
+    it "has a valid factory" do
+      expect(field).to be_valid
+    end
+  end
+
   describe "versioning" do
     it "has versioning enabled on create" do
       field = create(:field)

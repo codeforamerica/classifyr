@@ -1,0 +1,7 @@
+<% if resource.errors.include?(field) %>
+  <div class="errors">
+    <% resource.errors.full_messages_for(field).each do |error_message| %>
+      <%= error_message %>.
+    <% end %>
+  </div>
+<% end %>
