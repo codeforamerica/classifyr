@@ -23,7 +23,7 @@ AllCops:
 # rubocop-1.31.2/lib/rubocop/cop/mixin/method_complexity.rb:55:in `>'
 # rubocop-1.31.2/lib/rubocop/cop/mixin/method_complexity.rb:55:in `check_complexity'
 Metrics/AbcSize:
-  Max: 20]
+  Max: 20
   Enabled: false
 
 Metrics/ClassLength:

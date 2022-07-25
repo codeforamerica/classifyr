@@ -24,4 +24,4 @@ Fixes # (issue)
 
 ## Notes
 
-Add any additional notes or screenshots here.
+Add any additional notes, instructions for QA, or screenshots here.
