@@ -2,9 +2,8 @@
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }, data: { turbo: false }) do |f| %>
   <%= f.hidden_field :reset_password_token %>
-  <div class="form-group">
 
-    <div class="my-4">
+  <div class="form-group my-4">
     <%= f.label :password, "New password" %>
     <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
     <% if @minimum_password_length %>
@@ -13,15 +12,14 @@
     <%= render "shared/input_error", resource: resource, field: :password %>
   </div>
 
-  <div class="field">
+  <div class="form-group my-4">
     <%= f.label :password_confirmation, "Confirm new password" %>
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
     <%= render "shared/input_error", resource: resource, field: :password_confirmation %>
   </div>
 
-    <div class="my-4">
+  <div class="form-group my-4">
     <%= f.submit "Change my password", class: "w-full justify-center" %>
-  </div>
   </div>
 <% end %>
 
