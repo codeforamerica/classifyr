@@ -4,7 +4,8 @@
   <div class="form-group my-4">
     <%= f.label :email %>
     <%= f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
-  </div>
+    <%= render "shared/input_error", resource: resource, field: :email %>
+
 
   <div class="form-group my-4">
     <%= f.submit "Resend confirmation instructions", class: "w-full justify-center" %>

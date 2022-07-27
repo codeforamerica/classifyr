@@ -13,9 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   def my_profile?
-    (
-      [resource_name, action_name] == [:user, "edit"] ||
-      [resource_name, action_name] == [:user, "update"]
-    )
+    controller_name == "registrations"
   end
 end
