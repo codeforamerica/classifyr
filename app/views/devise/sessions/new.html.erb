@@ -1,25 +1,28 @@
-<h2>Log in</h2>
+<h2 class="modal-title">Log in</h2>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
+  <div class="form-group">
+    <div class="my-4">
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter your email" %>
+      <%= render "shared/input_error", resource: resource, field: :email %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+    <div class="my-4">
+      <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: "current-password", placeholder: "Enter your password" %>
+      <%= render "shared/input_error", resource: resource, field: :password %>
+    </div>
 
   <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
+    <div class="my-4">
+      <%= f.check_box :remember_me, class: "mr-2 float-left" %>
       <%= f.label :remember_me %>
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+  <div class="my-4">
+    <%= f.submit "Log in", class: "w-full justify-center" %>
   </div>
 <% end %>
 

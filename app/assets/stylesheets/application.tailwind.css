@@ -80,11 +80,11 @@
     }
 
     p.notice {
-        @apply py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block;
+        @apply py-2 px-3 bg-green-50 text-green-500 font-medium text-center;
     }
 
     p.alert {
-        @apply py-2 px-3 bg-orange-50 mb-5 text-orange-500 font-medium rounded-lg inline-block;
+        @apply py-2 px-3 bg-orange-50 text-orange-500 font-medium text-center;
     }
 
     .three-four {
@@ -93,6 +93,10 @@
 
     dl dt {
         @apply text-sm font-medium text-gray-500;
+    }
+
+    .modal-title {
+        @apply text-lg border-b-2 text-center pb-4 mb-8 font-bold;
     }
 }
 

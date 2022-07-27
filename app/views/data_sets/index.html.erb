@@ -1,8 +1,4 @@
 <div class="w-full">
-  <% if notice.present? %>
-    <p class="notice" id="notice"><%= notice %></p>
-  <% end %>
-
   <%= render partial: 'shared/card_head', locals: {title: 'Datasets', description: "List of the public data sets uploaded by Code for America's National Action Team.",
                                                    button: {label: 'Upload Dataset', path: new_data_set_path}} %>
 

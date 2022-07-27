@@ -1,15 +1,16 @@
-<h2>Forgot your password?</h2>
+<h2 class="modal-title">Forgot your password?</h2>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }, data: { turbo: false }) do |f| %>
+  <div class="form-group">
+    <div class="my-4">
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      <%= render "shared/input_error", resource: resource, field: :email %>
+    </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
+    <div class="my-4">
+      <%= f.submit "Send me reset password instructions", class: "w-full justify-center" %>
+    </div>
   </div>
 <% end %>
 

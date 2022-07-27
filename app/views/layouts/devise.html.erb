@@ -11,22 +11,20 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-gray-800">
-    <main class="flex flex-col h-screen justify-center align-middle">
+  <body class="flex flex-col bg-gray-800 h-screen">
+    <div class="w-full">
+      <% if notice %>
+        <p class="notice" id="notice"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="alert alert-danger"><%= alert %></p>
+      <% end %>
+    </div>
+    <main class="flex flex-col grow justify-center align-middle">
       <div class="flex justify-center h-16">
         <img class="hidden lg:block h-12 w-auto" src="<%= image_path 'workflow-logo-indigo-500-mark-white-text.svg' %>" alt="Classifyr">
       </div>
-      <div class="w-fit mx-auto px-12 py-8 bg-gray-100 rounded-lg">
-
-        <div class="w-full">
-          <% if notice %>
-            <p class="notice" id="notice"><%= notice %></p>
-          <% end %>
-          <% if alert %>
-            <p class="alert alert-danger"><%= alert %></p>
-          <% end %>
-        </div>
-
+      <div class="w-96 mx-auto px-8 py-8 bg-gray-100 rounded-lg">
         <%= yield %>
       </div>
     </main>
