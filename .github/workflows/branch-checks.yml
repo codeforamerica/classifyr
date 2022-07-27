@@ -30,9 +30,9 @@ jobs:
     env:
       RAILS_ENV: test
       GEMFILE_RUBY_VERSION: 2.7.2
-      CLASSIFYR_DATABASE_HOST: localhost
-      CLASSIFYR_DATABASE_USERNAME: postgres
-      CLASSIFYR_DATABASE_PASSWORD: ""
+      RAILS_DB_HOST: localhost
+      RAILS_DB_USER: postgres
+      RAILS_DB_PASSWORD: ""
 
     steps:
       - uses: actions/checkout@v2

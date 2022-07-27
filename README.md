@@ -69,8 +69,7 @@ _Note: This has been tested on Intel Mac using both Docker Desktop and
 ```bash
 docker compose up -d
 # Note: It may take a few minutes for all services to be available.
-docker compose run web rake db:create
-docker compose run web rake db:migrate
+docker compose run web rake db:prepare
 docker compose run web rake assets:precompile
 ```
 
