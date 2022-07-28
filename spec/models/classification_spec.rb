@@ -3,20 +3,8 @@ require "rails_helper"
 RSpec.describe Classification, type: :model do
   let(:classification) { build(:classification) }
 
-  describe "factory" do
-    it "has a valid factory" do
-      expect(classification).to be_valid
-    end
-  end
-
-  describe "versioning" do
-    it "has versioning enabled on create" do
-      classification = create(:classification)
-      classification.update(value: 1)
-      expect(classification.versions.count).to eq(2)
-      expect(classification.versions.last.object_changes).to include("value")
-    end
-  end
+  include_examples "valid factory", :classification
+  include_examples "papertrail versioning", :classification, "value"
 
   describe "associations" do
     it "belongs_to a common_incident_type" do

@@ -3,20 +3,8 @@ require "rails_helper"
 RSpec.describe CommonIncidentType, type: :model do
   let(:common_incident_type) { build(:common_incident_type) }
 
-  describe "factory" do
-    it "has a valid factory" do
-      expect(common_incident_type).to be_valid
-    end
-  end
-
-  describe "versioning" do
-    it "has versioning enabled on create" do
-      common_incident_type = create(:common_incident_type)
-      common_incident_type.update(code: 1)
-      expect(common_incident_type.versions.count).to eq(2)
-      expect(common_incident_type.versions.last.object_changes).to include("code")
-    end
-  end
+  include_examples "valid factory", :common_incident_type
+  include_examples "papertrail versioning", :common_incident_type, "code"
 
   describe "associations" do
     it "has_many classifications" do
