@@ -13,6 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   def my_profile?
-    controller_name == "registrations"
+    controller_name == "registrations" && action_name == "edit"
   end
 end
