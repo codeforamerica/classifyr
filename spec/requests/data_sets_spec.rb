@@ -262,7 +262,7 @@ RSpec.describe "DataSets", type: :request do
     context "when authenticated" do
       before { sign_in user }
 
-      it "maps the dataset" do
+      it "analyses the dataset" do
         get "/data_sets/#{data_set.id}/analyze"
 
         expect(response).to have_http_status(:ok)
