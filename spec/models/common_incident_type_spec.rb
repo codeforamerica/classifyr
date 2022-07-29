@@ -5,12 +5,7 @@ RSpec.describe CommonIncidentType, type: :model do
 
   include_examples "valid factory", :common_incident_type
   include_examples "papertrail versioning", :common_incident_type, "code"
-
-  describe "associations" do
-    it "has_many classifications" do
-      expect(common_incident_type).to respond_to(:classifications)
-    end
-  end
+  include_examples "associations", :common_incident_type, [:classifications]
 
   describe "constants" do
     it "has the TYPES constant defined" do

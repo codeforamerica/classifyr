@@ -5,16 +5,7 @@ RSpec.describe Field, type: :model do
 
   include_examples "valid factory", :field
   include_examples "papertrail versioning", :field, "position"
-
-  describe "associations" do
-    it "belongs_to a data_set" do
-      expect(field).to respond_to(:data_set)
-    end
-
-    it "has_many unique_values" do
-      expect(field).to respond_to(:unique_values)
-    end
-  end
+  include_examples "associations", :field, [:data_set, :unique_values]
 
   describe "constants" do
     it "has the TYPES constant defined" do

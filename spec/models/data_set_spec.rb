@@ -6,16 +6,7 @@ RSpec.describe DataSet, type: :model do
 
   include_examples "valid factory", :data_set
   include_examples "papertrail versioning", :data_set, "title"
-
-  describe "associations" do
-    it "has_many_attached files" do
-      expect(data_set).to respond_to(:files)
-    end
-
-    it "has_many fields" do
-      expect(data_set).to respond_to(:fields)
-    end
-  end
+  include_examples "associations", :data_set, [:files, :fields]
 
   describe "instance methods" do
     describe "field types" do

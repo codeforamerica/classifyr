@@ -1,15 +1,13 @@
 RSpec.shared_examples "papertrail versioning" do |model, field|
-  describe "factory" do
-    describe "versioning" do
-      it "has versioning enabled on create" do
-        record = create(model)
+  describe "versioning" do
+    it "has versioning enabled on create" do
+      record = create(model)
 
-        expect {
-          record.update(field => 1)
-        }.to change { record.versions.count }.by(1)
+      expect {
+        record.update(field => 1)
+      }.to change { record.versions.count }.by(1)
 
-        expect(record.versions.last.object_changes).to include(field)
-      end
+      expect(record.versions.last.object_changes).to include(field)
     end
   end
 end
