@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
 
   layout :layout_by_resource
 
+  private
+
   # Use logged-in layout when editing current_user details
   def layout_by_resource
     if devise_controller? && defined?(resource_name) && !my_profile?

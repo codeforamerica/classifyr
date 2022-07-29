@@ -2,7 +2,10 @@ module ActiveStorageAttachmentExtension
   extend ActiveSupport::Concern
 
   included do
-    has_many :virus_scan_results, dependent: :destroy
+    # TD -
+    # Commenting this out since it's not part of the MVP
+    # And it's preventing the deletion of data sets.
+    # has_many :virus_scan_results, dependent: :destroy
   end
 
   def with_file(&)

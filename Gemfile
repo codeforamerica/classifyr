@@ -10,13 +10,14 @@ gem "puma", "~> 5.6"
 gem "importmap-rails", "~> 1.1"
 gem "turbo-rails", "~> 1.1"
 gem "stimulus-rails", "~> 1.1"
-gem "tailwindcss-rails", "2.0.5"
+gem "tailwindcss-rails", "~> 2.0"
 gem "jbuilder", "~> 2.11"
 gem "seed_dump", "~> 3.3"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "bootsnap", "~> 1.12", require: false
 gem "paper_trail", "~> 12.3"
 gem "devise", github: "heartcombo/devise", ref: "f8d1ea90bc3"
+gem "active_storage_validations", "~> 0.9"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

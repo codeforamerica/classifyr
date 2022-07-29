@@ -4,6 +4,9 @@ class DataSet < ApplicationRecord
   has_many_attached :files, dependent: :destroy
   has_many :fields, dependent: :destroy
 
+  validates :title, presence: true
+  validates :files, attached: true
+
   attr_accessor :step
 
   def storage_size
