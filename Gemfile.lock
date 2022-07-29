@@ -353,7 +353,7 @@ DEPENDENCIES
   selenium-webdriver (~> 4.3)
   sprockets-rails (~> 3.4)
   stimulus-rails (~> 1.1)
-  tailwindcss-rails (~> 2.0)
+  tailwindcss-rails (= 2.0.5)
   turbo-rails (~> 1.1)
   tzinfo-data
   vcr (~> 6.1)
