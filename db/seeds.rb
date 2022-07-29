@@ -1,5 +1,7 @@
 require "csv"
 
+# Insert an initial data set
+
 ds = DataSet.create!(
   {
     title: "Burlington, VT Police Incidents",
