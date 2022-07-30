@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "DataSets", type: :request do
-  let(:user) { create(:user) }
+  let(:role) { create(:role, name: :data_admin) }
+  let(:user) { create(:user, role:) }
   let(:data_set) { create(:data_set) }
 
   describe "#index" do

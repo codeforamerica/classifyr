@@ -1,13 +1,15 @@
 require "rails_helper"
 
 RSpec.describe "Create a data set", type: :feature do
-  let(:user) { create(:user) }
+  let(:role) { create(:role, name: :data_admin) }
+  let(:user) { create(:user, role:) }
 
   context "with valid inputs" do
     it "creates the data set successfully" do
       sign_in user
 
       visit root_path
+
       find("#sidenav").click_on "Datasets"
       click_on "Upload Dataset"
 

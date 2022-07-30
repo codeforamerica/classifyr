@@ -19,6 +19,8 @@ class User < ApplicationRecord
   private
 
   def set_default_role
+    return if role
+
     update(role: Role.find_default_role) # volunteer
   end
 end

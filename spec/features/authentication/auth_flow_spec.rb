@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Auth flow", type: :feature do
+  before { Role.insert_roles }
+
   context "with valid inputs" do
     it "creates a new functional user account" do
       visit root_path
