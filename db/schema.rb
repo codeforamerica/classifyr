@@ -108,7 +108,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_29_084719) do
 
   create_table "roles", force: :cascade do |t|
     t.string "name", null: false
-    t.jsonb "permissions", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_roles_on_name", unique: true
@@ -138,11 +137,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_29_084719) do
     t.string "unconfirmed_email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "role_id_id"
+    t.bigint "role_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["role_id_id"], name: "index_users_on_role_id_id"
+    t.index ["role_id"], name: "index_users_on_role_id"
   end
 
   create_table "versions", force: :cascade do |t|

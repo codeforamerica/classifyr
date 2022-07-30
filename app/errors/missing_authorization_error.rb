@@ -1,0 +1,1 @@
+class MissingAuthorizationError < StandardError; end

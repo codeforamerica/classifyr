@@ -6,4 +6,19 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :trackable
+
+  after_create :set_default_role
+
+  def update_role(role_name)
+    new_role = Role.find_by(name: role_name)
+    return false unless new_role
+
+    update(role: new_role)
+  end
+
+  private
+
+  def set_default_role
+    update(role: Role.find_default_role) # volunteer
+  end
 end

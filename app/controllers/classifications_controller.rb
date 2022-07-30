@@ -1,5 +1,7 @@
 class ClassificationsController < ApplicationController
   def index
+    authorize! :index, :classifications
+
     @term = Classification.pick
     @headings = @term.field.data_set.fields.order(:position).pluck(:heading)
     @data = @term.examples
@@ -11,6 +13,8 @@ class ClassificationsController < ApplicationController
   end
 
   def create
+    authorize! :create, :classifications
+
     @classification = Classification.new(classification_params)
 
     if @classification.save && !@classification.unknown?

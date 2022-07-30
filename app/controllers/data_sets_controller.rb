@@ -2,18 +2,25 @@ class DataSetsController < ApplicationController
   before_action :set_data_set, only: %i[show edit update destroy map analyze]
 
   def index
+    authorize! :index, :data_sets
     @data_sets = DataSet.all
   end
 
-  def show; end
+  def show
+    authorize! :show, :data_sets
+  end
 
   def new
+    authorize! :create, :data_sets
     @data_set = DataSet.new
   end
 
-  def edit; end
+  def edit
+    authorize! :update, :data_sets
+  end
 
   def create
+    authorize! :create, :data_sets
     @data_set = DataSet.new(data_set_params)
 
     if @data_set.save
@@ -24,6 +31,7 @@ class DataSetsController < ApplicationController
   end
 
   def update
+    authorize! :update, :data_sets
     if params["data_set"]["step"] == "map_fields"
       params["data_set"]["common_types"].each do |position, common_type|
         common_type = nil if common_type.blank?
@@ -38,17 +46,20 @@ class DataSetsController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, :data_sets
     @data_set.destroy
 
     redirect_to data_sets_url, notice: "Data set was successfully destroyed."
   end
 
   def map
+    authorize! :create, :data_sets
     @data_set.prepare_datamap
     @fields = @data_set.fields.order("position asc")
   end
 
   def analyze
+    authorize! :create, :data_sets
     @data_set.analyze! unless @data_set.analyzed?
   end
 
