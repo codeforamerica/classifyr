@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   private
 
   def not_authorized
-    redirect_to root_path, alert: "You are not authorized to access this page."
+    redirect_to dashboards_path, alert: "You are not authorized to access this page."
   end
 
   def verify_authorized

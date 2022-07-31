@@ -68,6 +68,7 @@ class Role < ApplicationRecord
   def authorized?(action, entity)
     permissions = ROLE_PERMISSIONS[name.to_sym]
 
+    return false unless permissions
     return true if permissions[:all]
     return false unless permissions[entity]
     return true if permissions[entity]&.include?(:all)
