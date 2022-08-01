@@ -1,0 +1,28 @@
+<%= form_with(model: user, class: "contents") do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation" class="errors">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="form-group mb-4">
+    <%= form.label :email %>
+    <%= form.text_field :email, placeholder: 'Enter an email' %>
+  </div>
+
+  <div class="form-group mt-4 mb-8">
+    <%= form.label :role %>
+    <%= form.select :role_id, options_for_select(@roles, @user.role&.id) %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit value: action_name == 'new' ? 'Create User' : 'Update User', class: 'button' %>
+  </div>
+<% end %>

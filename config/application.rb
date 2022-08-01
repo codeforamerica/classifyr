@@ -22,5 +22,6 @@ module Datablade
     config.active_storage.multiple_file_field_include_hidden = false
 
     config.autoload_paths << Rails.root.join("app/errors/**/*")
+    config.autoload_paths << Rails.root.join("app/policies/**/*")
   end
 end

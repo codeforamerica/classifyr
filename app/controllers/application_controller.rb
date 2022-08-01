@@ -8,9 +8,16 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def authorize!(action, entity)
+  def authorize!(action, entity, record = nil)
     @_authorized = true
-    raise NotAuthorizedError unless current_user&.role&.authorized?(action, entity)
+
+    authorized = if record
+                   current_user&.role&.authorized_with_record?(action, entity, current_user, record)
+                 else
+                   current_user&.role&.authorized?(action, entity)
+                 end
+
+    raise NotAuthorizedError unless authorized
   end
 
   private

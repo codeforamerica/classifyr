@@ -62,8 +62,23 @@ class Role < ApplicationRecord
     find_by(name: DEFAULT_ROLE_NAME)
   end
 
+  def to_s
+    humanized_name
+  end
+
   def humanized_name
     name.humanize.titleize
+  end
+
+  def authorized_with_record?(action, entity, user, record)
+    # We delegate to policies when permissions need to be checked
+    # against a record
+    if Kernel.const_defined?("#{entity.to_s.singularize.capitalize}Policy")
+      policy_klass = "#{entity.to_s.singularize.capitalize}Policy".constantize
+      authorized?(action, entity) && policy_klass.new(user, record).send(action)
+    else
+      authorized?(action, entity)
+    end
   end
 
   def authorized?(action, entity)

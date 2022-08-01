@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    authorize! :show, :users
+    authorize! :show, :users, @user
   end
 
   def new
@@ -16,7 +16,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    authorize! :update, :users
+    authorize! :update, :users, @user
+
+    @roles = Role.all.map do |role|
+      [role.to_s, role.id]
+    end
   end
 
   def create
@@ -31,16 +35,18 @@ class UsersController < ApplicationController
   end
 
   def update
-    authorize! :update, :users
+    authorize! :update, :users, @user
+
     if @user.update(user_params)
-      redirect_to user_url(@user), notice: "User was successfully updated."
+      redirect_to users_url, notice: "User was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    authorize! :destroy, :users
+    authorize! :destroy, :users, @user
+
     @user.destroy
 
     redirect_to users_url, notice: "User was successfully destroyed."

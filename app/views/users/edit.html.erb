@@ -1,0 +1,9 @@
+<div class="mx-auto md:w-3/4 w-full">
+  <br>
+  <%= render partial: 'shared/card_head', locals: {title: @user.email, description: 'Make updates to this existing user.'} %>
+
+  <div id="users" class="header">
+    <%= render "form", user: @user %>
+    <%= link_to 'Cancel', users_path, class: "button-cancel" %>
+  </div>
+</div>

@@ -1,5 +1,18 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, skip: [:sessions, :registrations]
+  as :user do
+    get "login", to: "devise/sessions#new", as: :new_user_session
+    post "login", to: "devise/sessions#create", as: :user_session
+    delete "logout", to: "devise/sessions#destroy", as: :destroy_user_session
+
+    get "sign_up", to: "devise/registrations#new", as: :new_user_registration
+    post "sign_up", to: "devise/registrations#create", as: :user_registration
+
+    get "profile", to: "devise/registrations#edit"
+    put "profile", to: "devise/registrations#update"
+    patch "profile", to: "devise/registrations#update"
+  end
+
   resources :data_sets do
     member do
       get "map"
