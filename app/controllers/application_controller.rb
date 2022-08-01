@@ -14,6 +14,6 @@ class ApplicationController < ActionController::Base
   end
 
   def my_profile?
-    controller_name == "registrations" && action_name == "edit"
+    controller_name == "registrations" && %w[edit update].include?(action_name)
   end
 end
