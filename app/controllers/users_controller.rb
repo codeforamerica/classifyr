@@ -1,37 +1,14 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_roles, only: %i[edit update]
 
   def index
     authorize! :index, :users
     @users = User.all
   end
 
-  def show
-    authorize! :show, :users, @user
-  end
-
-  def new
-    authorize! :create, :users
-    @user = User.new
-  end
-
   def edit
     authorize! :update, :users, @user
-
-    @roles = Role.all.map do |role|
-      [role.to_s, role.id]
-    end
-  end
-
-  def create
-    authorize! :create, :users
-    @user = User.new(user_params)
-
-    if @user.save
-      redirect_to user_path(@user), notice: "User was successfully created."
-    else
-      render :new, status: :unprocessable_entity
-    end
   end
 
   def update
@@ -58,7 +35,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  def set_roles
+    @roles = Role.all.map do |role|
+      [role.to_s, role.id]
+    end
+  end
+
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :role_id)
+    params.require(:user).permit(:email, :role_id)
   end
 end

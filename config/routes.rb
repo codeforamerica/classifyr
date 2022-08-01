@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   end
 
   resources :classifications
-  resources :users
+  resources :users, only: [:index, :edit, :update, :destroy]
   resources :dashboards, only: [:index, :show]
 
   root "dashboards#index"

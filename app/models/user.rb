@@ -9,6 +9,8 @@ class User < ApplicationRecord
 
   after_create :set_default_role
 
+  validates :email, presence: true
+
   def update_role(role_name)
     new_role = Role.find_by(name: role_name)
     return false unless new_role

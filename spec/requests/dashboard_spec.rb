@@ -27,4 +27,35 @@ RSpec.describe "Dashboards", type: :request do
       end
     end
   end
+
+  describe "navigation menu" do
+    context "when unauthorized" do
+      let(:role) { create(:role, name: :volunteer) }
+      let(:user) { create(:user, role:) }
+
+      before { sign_in user }
+
+      it "does not include the 'Users' menu item" do
+        get(path)
+        html = Nokogiri::HTML(response.body.to_s)
+        users_link = html.css('//a[@href="/users"]')
+        expect(users_link.length).to eq(0)
+      end
+    end
+
+    context "when authorized" do
+      let(:role) { create(:role, name: :data_admin) }
+      let(:user) { create(:user, role:) }
+
+      before { sign_in user }
+
+      it "does not include the 'Users' menu item" do
+        get(path)
+
+        html = Nokogiri::HTML(response.body.to_s)
+        users_link = html.css('//a[@href="/users"]')
+        expect(users_link.length).to eq(1)
+      end
+    end
+  end
 end
