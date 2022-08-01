@@ -45,6 +45,7 @@ class Role < ApplicationRecord
       data_sets: [:export],
     },
     data_reviewer: {
+      dashboard: [:index, :show],
       data_categorization: [:review],
     },
   }.freeze
