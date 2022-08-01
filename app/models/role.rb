@@ -69,26 +69,4 @@ class Role < ApplicationRecord
   def humanized_name
     name.humanize.titleize
   end
-
-  def authorized_with_record?(action, entity, user, record)
-    # We delegate to policies when permissions need to be checked
-    # against a record
-    if Kernel.const_defined?("#{entity.to_s.singularize.capitalize}Policy")
-      policy_klass = "#{entity.to_s.singularize.capitalize}Policy".constantize
-      authorized?(action, entity) && policy_klass.new(user, record).send(action)
-    else
-      authorized?(action, entity)
-    end
-  end
-
-  def authorized?(action, entity)
-    permissions = ROLE_PERMISSIONS[name.to_sym]
-
-    return false unless permissions
-    return true if permissions[:all]
-    return false unless permissions[entity]
-    return true if permissions[entity]&.include?(:all)
-
-    permissions[entity].include?(action)
-  end
 end

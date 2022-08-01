@@ -58,8 +58,13 @@ module ApplicationHelper
     ]
   end
 
-  def authorized?(action, entity)
-    current_user&.role&.authorized?(action, entity)
+  def authorized?(action, entity, record = nil)
+    Authorizer.new(
+      user: current_user,
+      action:,
+      entity:,
+      record:,
+    ).run
   end
 end
 # rubocop:enable Metrics/MethodLength
