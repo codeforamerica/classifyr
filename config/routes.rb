@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, skip: [:sessions, :registrations]
+  devise_for :users, controllers: { registrations: "registrations" }, skip: [:sessions, :registrations]
   as :user do
     get "login", to: "devise/sessions#new", as: :new_user_session
     post "login", to: "devise/sessions#create", as: :user_session
