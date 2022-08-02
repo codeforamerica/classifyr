@@ -12,7 +12,7 @@ You'll want to ensure you have the following already installed on your local mac
 
 For reference, the project is using Rails 7.
 
-## Installation
+## Quick Start
 
 You can set things up manually by going through this section or use Docker (see next section).
 
@@ -108,6 +108,8 @@ Add `-a` or `-A` to automatically fix correctable issues.
 WIP.
 
 ## Contributing
+
+We'd love to get contributions from you! For a quick guide to getting your system setup for developing, take a look at our Quickstart Guide above. Once you are up and running, take a look at the [Contribution Documents](./CONTRIBUTING.md) to see how to get your changes merged in.
 
 We follow a very simple development workflow: https://guides.github.com/introduction/flow/
 
