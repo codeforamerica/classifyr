@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  before_action :set_paper_trail_whodunnit
   after_action :verify_authorized
 
   layout :layout_by_resource
@@ -33,6 +34,6 @@ class ApplicationController < ActionController::Base
   end
 
   def my_profile?
-    controller_name == "registrations" && action_name == "edit"
+    controller_name == "registrations" && %w[edit update].include?(action_name)
   end
 end
