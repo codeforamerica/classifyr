@@ -6,7 +6,6 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
@@ -22,10 +21,12 @@
     </div>
     <main class="flex flex-col grow justify-center align-middle">
       <div class="flex justify-center h-16">
-        <img class="hidden lg:block h-12 w-auto" src="<%= image_path 'workflow-logo-indigo-500-mark-white-text.svg' %>" alt="Classifyr">
+        <img class="h-12 w-auto" src="<%= image_path 'workflow-logo-indigo-500-mark-white-text.svg' %>" alt="Classifyr">
       </div>
-      <div class="w-96 mx-auto px-8 py-8 bg-gray-100 rounded-lg">
-        <%= yield %>
+      <div class="sm:w-fit m:w-96 mx-auto">
+        <div class="mx-4 px-8 py-8 bg-gray-100 rounded-lg">
+          <%= yield %>
+        </div>
       </div>
     </main>
   </body>
