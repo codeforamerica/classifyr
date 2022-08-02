@@ -66,5 +66,11 @@ module ApplicationHelper
       record:,
     ).run
   end
+
+  def current_class?(path)
+    return "nav-item-active" if request.path.starts_with?(path)
+
+    ""
+  end
 end
 # rubocop:enable Metrics/MethodLength
