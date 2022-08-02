@@ -110,13 +110,3 @@ WIP.
 ## Contributing
 
 We'd love to get contributions from you! For a quick guide to getting your system setup for developing, take a look at our Quickstart Guide above. Once you are up and running, take a look at the [Contribution Documents](./CONTRIBUTING.md) to see how to get your changes merged in.
-
-We follow a very simple development workflow: https://guides.github.com/introduction/flow/
-
-> GitHub flow is a lightweight, branch-based workflow. The GitHub flow is useful for everyone, not just developers.
-
-1. Check out the `main` branch and pull down the latest code.
-2. Create a new branch off of the latest from `main` prefixed with your initials: td-new-feature.
-3. Work on your feature.
-4. When you're done with your feature, create a pull request and request a review from another developer. Please follow the pull request template. Opening a PR will automatically run the tests and linting, make sure everything is passing.
-5. Fix up your PR if needed and "squash and merge" it once approved.
