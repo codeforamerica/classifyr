@@ -19,6 +19,7 @@ gem "bootsnap", "~> 1.12", require: false
 gem "paper_trail", "~> 12.3"
 gem "devise", github: "heartcombo/devise", ref: "f8d1ea90bc3"
 gem "active_storage_validations", "~> 0.9"
+gem "kaminari", "~> 1.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
