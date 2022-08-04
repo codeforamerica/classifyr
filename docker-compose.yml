@@ -6,16 +6,22 @@ services:
       - ./tmp/db:/var/lib/postgresql/data:rw
       - ./scripts:/opt/scripts
     environment:
-      CLASSIFYR_DATABASE_HOST: "db"
       POSTGRES_PASSWORD: "${CLASSIFYR_DATABASE_PASSWORD:-thisisprobablyabadidea!}"
       POSTGRES_USER: "${CLASSIFYR_DATABASE_USERNAME:-classifyr}"
     command: /opt/scripts/initdb.sh
   web:
     build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle install && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/opt/classifyr
     ports:
       - "3000:3000"
+    environment:
+      RAILS_DB_HOST: db
+      RAILS_DB_PASSWORD: "${CLASSIFYR_DATABASE_PASSWORD:-thisisprobablyabadidea!}"
+      RAILS_DB_USER: "${CLASSIFYR_DATABASE_USERNAME:-classifyr}"
+      # Our container has no browser, so we can't use letter opener.
+      LAUNCHY_DRY_RUN: true
+      BROWSER: /dev/null
     depends_on:
       - db

@@ -1,9 +1,13 @@
 # syntax=docker/dockerfile:1
 FROM ruby:3.1.2
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+
+RUN apt-get update -q && \
+    apt-get upgrade -q -y && \
+    apt-get install -q -y nodejs postgresql-client && \
+    apt-get clean
+
 WORKDIR /opt/classifyr
-COPY Gemfile /opt/classifyr/Gemfile
-COPY Gemfile.lock /opt/classifyr/Gemfile.lock
+COPY . /opt/classifyr
 RUN bundle install
 
 # Add a script to be executed every time the container starts.
