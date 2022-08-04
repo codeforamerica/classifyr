@@ -1,0 +1,7 @@
+.github
+.idea
+log/*
+storage/*
+tmp/cache/*
+tmp/db/*
+vendor/bundle/*

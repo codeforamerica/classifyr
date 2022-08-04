@@ -1,5 +1,9 @@
+require "health-monitor-rails"
+
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: "registrations" }
+
+  mount HealthMonitor::Engine, at: "/"
 
   resources :data_sets do
     member do

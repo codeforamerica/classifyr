@@ -17,12 +17,12 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: <%= ENV.fetch("CLASSIFYR_DATABASE_HOST") { 'localhost' } %>
-  username: <%= ENV.fetch("CLASSIFYR_DATABASE_USERNAME") { 'postgres' } %>
-  password: <%= ENV.fetch("CLASSIFYR_DATABASE_PASSWORD") { '' } %>
+  host: <%= ENV.fetch('RAILS_DB_HOST') { 'localhost' } %>
+  username: <%= ENV.fetch('RAILS_DB_USER') { 'postgres' } %>
+  password: <%= ENV.fetch('RAILS_DB_PASSWORD') { '' } %>
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS') { 5 } %>
 
 development:
   <<: *default
@@ -77,7 +77,7 @@ test:
 # URL environment variable explicitly:
 #
 #   production:
-#     url: <%= ENV["MY_APP_DATABASE_URL"] %>
+#     url: <%= ENV['MY_APP_DATABASE_URL'] %>
 #
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
@@ -86,4 +86,4 @@ production:
   <<: *default
   database: classifyr_production
   # Don't allow for a default password in production.
-  password: <%= ENV["CLASSIFYR_DATABASE_PASSWORD"] %>
+  password: <%= ENV['RAILS_DB_PASSWORD'] %>
