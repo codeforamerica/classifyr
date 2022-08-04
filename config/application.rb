@@ -20,7 +20,5 @@ module Datablade
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.active_storage.multiple_file_field_include_hidden = false
-
-    config.autoload_paths << Rails.root.join("app/errors/**/*")
   end
 end
