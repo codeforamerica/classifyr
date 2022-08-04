@@ -18,7 +18,7 @@ en:
       unconfirmed: "You have to confirm your email address before continuing."
     mailer:
       confirmation_instructions:
-        subject: "Confirmation instructions"
+        subject: "Please confirm your email with Classifyr"
       reset_password_instructions:
         subject: "Classifyr: reset password instructions"
       unlock_instructions:
@@ -29,7 +29,7 @@ en:
         subject: "Classifyr: password changed"
     omniauth_callbacks:
       failure: 'Could not authenticate you from %{kind} because "%{reason}".'
-      subject: "Please confirm your email with Classifyr"
+      success: "Successfully authenticated from %{kind} account."
     passwords:
       no_token: "You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."
       send_instructions: "You will receive an email with instructions on how to reset your password in a few minutes."
