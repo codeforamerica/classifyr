@@ -1,3 +1,5 @@
+require "health-monitor-rails"
+
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: "registrations" }, skip: [:sessions, :registrations]
   as :user do
@@ -12,6 +14,8 @@ Rails.application.routes.draw do
     put "profile", to: "devise/registrations#update"
     patch "profile", to: "devise/registrations#update"
   end
+
+  mount HealthMonitor::Engine, at: "/"
 
   resources :data_sets do
     member do
