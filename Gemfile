@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.1.2"
 
 gem "rails", "~> 7.0", ">= 7.0.2.3"
+gem "health-monitor-rails", "~> 9.3"
 gem "sprockets-rails", "~> 3.4"
 gem "pg", "~> 1.4"
 gem "puma", "~> 5.6"
@@ -18,6 +19,7 @@ gem "bootsnap", "~> 1.12", require: false
 gem "paper_trail", "~> 12.3"
 gem "devise", github: "heartcombo/devise", ref: "f8d1ea90bc3"
 gem "active_storage_validations", "~> 0.9"
+gem "kaminari", "~> 1.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
