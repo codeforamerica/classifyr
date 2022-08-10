@@ -1,0 +1,27 @@
+<div class="bg-white pt-12 pl-12">
+  <h3 class="text-2xl text-gray-900 font-bold"><%= title %></h3>
+  <% if defined?(description) %>
+    <p class="mt-1 text-sm text-gray-500">
+      <%= description %>
+    </p>
+  <% end %>
+  <div class="mt-4">
+    <div class="sm:hidden">
+      <label for="current-tab" class="sr-only">Select a tab</label>
+      <select id="current-tab" name="current-tab" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+        <% links.each do |link| %>
+          <option selected="<%= link[:selected] ? 'true' : 'false' %>%>"><%= link[:name] %></option>
+        <% end %>
+      </select>
+    </div>
+    <!-- Tabs at small breakpoint and up -->
+    <div class="hidden sm:block">
+      <nav class="-mb-px flex">
+        <% links.each do |link| %>
+          <% @classes = "whitespace-nowrap pb-2 first:pl-0 px-5 border-b-2 text-sm" %>
+          <%= link_to link[:name], link[:href], class: link[:selected] ? "#{@classes} border-indigo-500 text-indigo-600" : "#{@classes} border-transparent text-gray-400 hover:text-gray-700 hover:border-gray-300" %>
+        <% end %>
+      </nav>
+    </div>
+  </div>
+</div>
