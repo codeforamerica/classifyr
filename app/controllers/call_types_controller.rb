@@ -1,5 +1,6 @@
 class CallTypesController < ApplicationController
   before_action :set_data_set, only: [:index]
+  before_action :disable_turbo, only: [:index]
   before_action :set_breadcrumbs
 
   def index

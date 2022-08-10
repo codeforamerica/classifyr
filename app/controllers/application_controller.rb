@@ -25,6 +25,10 @@ class ApplicationController < ActionController::Base
     @breadcrumbs << { name:, path: }
   end
 
+  def disable_turbo
+    @disable_turbo = true
+  end
+
   private
 
   def not_authorized
