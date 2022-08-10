@@ -58,12 +58,18 @@ class DataSetsController < ApplicationController
 
   def map
     authorize! :create, :data_sets
+    add_breadcrumb(@data_set.title, data_set_path(@data_set))
+    add_breadcrumb("Map Data Fields", nil)
+
     @data_set.prepare_datamap
     @fields = @data_set.fields.order("position asc")
   end
 
   def analyze
     authorize! :create, :data_sets
+    add_breadcrumb(@data_set.title, data_set_path(@data_set))
+    add_breadcrumb("Analyze", nil)
+
     @data_set.analyze! unless @data_set.analyzed?
   end
 

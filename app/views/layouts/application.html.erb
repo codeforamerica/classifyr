@@ -24,6 +24,12 @@
           </div>
         </div>
       </div>
+      <% if notice %>
+        <p class="notice" id="notice"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="alert alert-danger"><%= alert %></p>
+      <% end %>
       <div class="md:pl-64 flex flex-col">
         <div class="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white">
           <button type="button" class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden">
@@ -58,7 +64,7 @@
                     <div data-dropdown-target="menu" class="absolute right-0 mt-2 transform transition hidden opacity-0 scale-95">
                       <div class="bg-white shadow rounded border overflow-hidden w-32">
                         <%= link_to "My Profile", profile_path, class: 'no-underline block pl-8 py-3 text-gray-900 bg-white hover:bg-gray-300 whitespace-no-wrap'  %>
-                        <a href="#" class='no-underline block pl-8 py-3 text-gray-900 bg-white hover:bg-gray-300 whitespace-no-wrap'>Settings</a>
+                        <a href="#" class='hidden no-underline block pl-8 py-3 text-gray-900 bg-white hover:bg-gray-300 whitespace-no-wrap'>Settings</a>
                         <%= link_to "Sign Out", destroy_user_session_path, data: { "turbo-method": :delete },
                                               method: :delete,
                                               class: 'no-underline block pl-8 py-3 text-gray-900 bg-white hover:bg-gray-300 whitespace-no-wrap border-t'  %>
@@ -70,12 +76,6 @@
             </div>
           </div>
         </div>
-        <% if notice %>
-          <p class="notice" id="notice"><%= notice %></p>
-        <% end %>
-        <% if alert %>
-          <p class="alert alert-danger"><%= alert %></p>
-        <% end %>
         <main class="flex-1">
           <%= yield %>
         </main>

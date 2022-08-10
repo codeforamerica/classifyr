@@ -1,72 +1,68 @@
-<div class="mx-auto md:w-3/4 w-full">
-  <%= render partial: 'data_set_steps', locals: {
+<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+  <div class="my-12 px-4 py-5 sm:px-6">
+    <%= render partial: 'data_set_steps', locals: {
     text: %w[text-gray-500 text-indigo-600 text-gray-500],
     borders: %w[border-indigo-600 border-indigo-600 border-gray-200],
   } %>
-
-  <br>
-  <%= render partial: 'shared/card_head', locals: {title: 'Map Data Fields', description: "Now you can map specific fields from your uploaded data set to a set of common fields, more broadly applicable to call data from any Emergency Call Center.   Some of the fields include Emergency Category: a high level breakdown of 911 versus other types of emergencies, and #{Classification::CALL_TYPE}: a more specific breakdown of the nature of the call for service.    You can also hover over the column headings to see sample data from that column."} %>
-
-  <div id="data_sets" class="header">
     <br>
-
-    <%= form_with(model: @data_set, class: "contents") do |form| %>
-      <%= render partial: 'errors', locals: {data_set: @data_set} %>
-
-      <%= form.hidden_field :step, value: 'map_fields' %>
-
-
-      <div id="data_sets" class="flex flex-col">
-        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-            <div class="overflow-hidden">
-              <table>
-                <thead>
-                <tr>
-                  <th scope="col" class="text-sm">Column<br>Position</th>
-                  <th scope="col" class="text-sm">Column<br>Heading</th>
-                  <th scope="col" class="text-sm">Unique<br>Values</th>
-                  <th scope="col" class="text-sm">Blank<br>Values</th>
-                  <th scope="col" class="text-sm">Common<br>Type</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <% @fields.each_with_index do |field, position| %>
-                  <tr>
-                    <td>
-                      <%= position %>
-                    </td>
-                    <td>
-                      <%= link_to field.heading, '#', title: field.sample_data %>
-
-                    </td>
-                    <td>
-                      <%= field.unique_value_count %>
-                    </td>
-                    <td>
-                      <%= field.empty_value_count %>
-                    </td>
-                    <td>
-                      <%= form.select "common_types[#{position}]", options_for_select(Field::TYPES, field.common_type), {}, { class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" } %>
-                    </td>
-                  </tr>
-                <% end %>
-                </tbody>
-              </table>
-
+    <%= render partial: 'shared/card_head', locals: {title: 'Map Data Fields', description: "Now you can map specific fields from your uploaded data set to a set of common fields, more broadly applicable to call data from any Emergency Call Center.   Some of the fields include Emergency Category: a high level breakdown of 911 versus other types of emergencies, and #{Classification::CALL_TYPE}: a more specific breakdown of the nature of the call for service.    You can also hover over the column headings to see sample data from that column."} %>
+    <div id="data_sets" class="header">
+      <br>
+      <%= form_with(model: @data_set, class: "contents") do |form| %>
+        <%= render partial: 'errors', locals: {data_set: @data_set} %>
+        <%= form.hidden_field :step, value: 'map_fields' %>
+        <div id="data_sets" class="flex flex-col">
+          <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+              <div class="overflow-hidden">
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col" class="text-sm">Column<br>
+                        Position</th>
+                      <th scope="col" class="text-sm">Column<br>
+                        Heading</th>
+                      <th scope="col" class="text-sm">Unique<br>
+                        Values</th>
+                      <th scope="col" class="text-sm">Blank<br>
+                        Values</th>
+                      <th scope="col" class="text-sm">Common<br>
+                        Type</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @fields.each_with_index do |field, position| %>
+                      <tr>
+                        <td>
+                          <%= position %>
+                        </td>
+                        <td>
+                          <%= link_to field.heading, '#', title: field.sample_data %>
+                        </td>
+                        <td>
+                          <%= field.unique_value_count %>
+                        </td>
+                        <td>
+                          <%= field.empty_value_count %>
+                        </td>
+                        <td>
+                          <%= form.select "common_types[#{position}]", options_for_select(Field::TYPES, field.common_type), {}, { class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" } %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
+        <br>
+        <div class="inline">
+          <%= form.submit value: 'Map Data Fields' %>
+        </div>
+      <% end %>
       <br>
-
-      <div class="inline">
-        <%= form.submit value: 'Map Data Fields' %>
-      </div>
-    <% end %>
-    <br>
-    <br>
+      <br>
+    </div>
   </div>
 </div>

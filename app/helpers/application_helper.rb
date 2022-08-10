@@ -74,14 +74,7 @@ module ApplicationHelper
   end
 
   def breadcrumbs
-    return @breadcrumbs if defined?(@breadcrumbs)
-
-    [
-      {
-        name: controller_name.singularize.humanize,
-        path: request.path,
-      },
-    ]
+    @breadcrumbs || @default_breadcrumbs
   end
 end
 # rubocop:enable Metrics/MethodLength

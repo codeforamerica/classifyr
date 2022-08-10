@@ -1,20 +1,17 @@
-<div class="three-four">
-  <%= render partial: 'data_set_steps', locals: {
+<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+  <div class="my-12 px-4 py-5 sm:px-6">
+    <%= render partial: 'data_set_steps', locals: {
     text: %w[text-gray-500 text-gray-500 text-indigo-600],
     borders: %w[border-indigo-600 border-indigo-600 border-indigo-600 ],
   } %>
-
-  <br>
-
-  <%= render partial: 'data_sets/data_set', locals: {data_set: @data_set} %>
-
-  <br>
-  <div class="inline-block ml-2">
-    <a href="<%= edit_data_set_path(@data_set) %>" type="button" class="button">Edit Dataset</a>
+    <br>
+    <%= render partial: 'data_sets/data_set', locals: {data_set: @data_set} %>
+    <br>
+    <div class="inline-block ml-2">
+      <a href="<%= edit_data_set_path(@data_set) %>" type="button" class="button">Edit Dataset</a>
+    </div>
+    <div class="inline-block ml-2">
+      <%= link_to 'List Datasets', data_sets_path, class: "button-secondary" %>
+    </div>
   </div>
-
-  <div class="inline-block ml-2">
-    <%= link_to 'List Datasets', data_sets_path, class: "button-secondary" %>
-  </div>
-
 </div>

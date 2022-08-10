@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[edit update destroy]
   before_action :set_roles, only: %i[edit update]
+  before_action :set_breadcrumbs
 
   def index
     authorize! :index, :users
@@ -9,6 +10,7 @@ class UsersController < ApplicationController
 
   def edit
     authorize! :update, :users, @user
+    add_breadcrumb("Edit #{@user.email}", edit_user_path(@user))
   end
 
   def update
@@ -43,5 +45,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :role_id)
+  end
+
+  def set_breadcrumbs
+    add_breadcrumb("Users", users_path)
   end
 end
