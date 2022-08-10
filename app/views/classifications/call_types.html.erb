@@ -1,0 +1,12 @@
+<div class="w-full">
+  <%= render 'shared/classifications/menu' %>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+    <div class="mt-12 px-4 py-5 sm:px-6">
+      <div class="grid grid-cols-2 gap-4">
+        <% @data_sets.each do |data_set| %>
+          <%= render 'data_set_card', data_set: data_set %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

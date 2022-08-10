@@ -45,7 +45,7 @@
     }
 
     table thead {
-        @apply bg-gray-50 border-b;
+        @apply bg-gray-50;
     }
 
     table th {
@@ -53,10 +53,10 @@
     }
 
     table tr {
-        @apply bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100;
+        @apply bg-white transition duration-300 ease-in-out;
     }
     table tr td {
-        @apply text-xs text-gray-900 font-light px-3 py-2 whitespace-nowrap;
+        @apply text-sm text-gray-900 font-light px-3 py-2 whitespace-nowrap;
     }
 
     h3 {
@@ -104,7 +104,7 @@
     }
 
     .nav-item-active {
-        @apply text-white bg-gray-700;
+        @apply text-white bg-indigo-600;
     }
 
     .nav-icon {

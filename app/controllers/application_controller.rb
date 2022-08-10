@@ -20,6 +20,11 @@ class ApplicationController < ActionController::Base
     ).run
   end
 
+  def add_breadcrumb(name, path = nil)
+    @breadcrumbs ||= []
+    @breadcrumbs << { name:, path: }
+  end
+
   private
 
   def not_authorized

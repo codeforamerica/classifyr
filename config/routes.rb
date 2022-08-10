@@ -30,7 +30,18 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :classifications
+  resources :classifications, param: :data_set_id, only: [:index] do
+    # get :dispositions
+    # get :priorities
+    collection do
+      get :call_types
+    end
+
+    member do
+      resources :call_types
+    end
+  end
+
   resources :users, only: [:index, :edit, :update, :destroy]
   resources :dashboards, only: [:index, :show]
 

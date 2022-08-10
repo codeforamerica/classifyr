@@ -59,6 +59,10 @@ class DataSet < ApplicationRecord
     end
   end
 
+  def pick_random_field(type = Classification::CALL_TYPE)
+    fields.where(common_type: type).order(Arel.sql("RANDOM()")).first
+  end
+
   def prepare_datamap
     return unless fields.empty?
 

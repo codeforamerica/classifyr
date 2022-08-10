@@ -1,0 +1,18 @@
+<div class="flex flex-1 items-center pl-12 text-sm">
+  <% breadcrumbs.each_with_index do |crumb| %>
+    <% last = breadcrumbs.last == crumb %>
+
+    <div class="flex flex-row font-medium last:text-gray-400">
+      <% if crumb[:path] %>
+        <%= link_to crumb[:name], crumb[:path], class: last ? "text-gray-400" : "" %>
+      <% else %>
+        <div class="<%= last ? "text-gray-400" : "" %>"><%= crumb[:name] %></div>
+      <% end %>
+      <div class="px-2 pt-0.5 <%= last ? "hidden" : "" %>">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </div>
+    </div>
+  <% end %>
+</div>

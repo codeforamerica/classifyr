@@ -9,9 +9,9 @@
   <table>
     <thead>
     <tr>
-      <% @headings.each do |header| %>
+      <% @fields.each do |field| %>
         <th scope="col" class="text-xs">
-          <%= header %>
+          <%= field.heading %>
         </th>
       <% end %>
     </tr>

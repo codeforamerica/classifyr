@@ -1,0 +1,43 @@
+<div class="w-full">
+  <%= render 'shared/classifications/menu' %>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+    <div class="mt-12 px-4 py-5 sm:px-6">
+      <div class="text-sm font-bold text-gray-500 pb-4"><%= @data_set.title %></div>
+      <div class="text-3xl font-bold text-black pb-4"><%= @term.value %></div>
+      <div class="text-black pb-8">
+        Please review the sample call records for this call type. From there, please classify the call type to the best of your ability by searching below for different common incident types. After you've selected an incident type, you can choose how confident you are about your selection. If you are unable to identify a common incident type to map to this call type, you can choose to skip this call type classification.
+      </div>
+      <section class="bg-white">
+        <div class="text-lg font-bold text-black px-6 py-6 border-b-2 border-gray-200">
+          Example Call Type Records
+        </div>
+        <section class="px-6 pb-6 bg-white">
+          <div class="overflow-x-auto">
+            <table class="border-collapse">
+              <thead>
+                <tr>
+                  <% @fields.each do |field| %>
+                    <th scope="col" class="text-sm whitespace-nowrap py-4 font-semibold text-gray-400">
+                      <%= field.heading&.humanize %>
+                    </th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% @data.each do |rows| %>
+                  <tr class="even:bg-white odd:bg-gray-100">
+                    <% rows.each do |column| %>
+                      <td class="first:p-6 font-semibold">
+                        <%= column %>
+                      </td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <section>
+          </section>
+        </div>
+      </div>
+    </div>
