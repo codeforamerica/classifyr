@@ -17,7 +17,7 @@
               <thead>
                 <tr>
                   <% @fields.each do |field| %>
-                    <th scope="col" class="text-sm whitespace-nowrap py-4 font-semibold text-gray-400">
+                    <th scope="col">
                       <%= field.heading&.humanize %>
                     </th>
                   <% end %>
@@ -25,9 +25,9 @@
               </thead>
               <tbody>
                 <% @data.each do |rows| %>
-                  <tr class="even:bg-white odd:bg-gray-100">
+                  <tr class="row">
                     <% rows.each do |column| %>
-                      <td class="first:p-6 font-semibold">
+                      <td>
                         <%= column %>
                       </td>
                     <% end %>
@@ -36,8 +36,7 @@
               </tbody>
             </table>
           </div>
-          <section>
-          </section>
-        </div>
+        </section>
       </div>
     </div>
+  </div>

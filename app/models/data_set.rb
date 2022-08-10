@@ -9,6 +9,8 @@ class DataSet < ApplicationRecord
 
   attr_accessor :step
 
+  scope :ordered, -> { order(created_at: :desc) }
+
   def storage_size
     files.sum(&:byte_size)
   end
