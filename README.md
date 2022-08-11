@@ -121,8 +121,8 @@ The live development environment is accessible at https://development.nprd.class
 
 You will first need to establish a [temporary session using your MFA device](https://aws.amazon.com/premiumsupport/knowledge-center/authenticate-mfa-cli/). To do so, replace the `MFA_ARN` and `MFA_CODE` in the command below.
 
-- MFA_ARN (from [AWS docs](https://aws.amazon.com/premiumsupport/knowledge-center/authenticate-mfa-cli/)): If you're using an MFA hardware device, then the value is similar to `GAHT12345678`. If you're using a virtual MFA, then the value is similar to `arn:aws:iam::123456789012:mfa/user`.
-- MFA_CODE: A temporary authentication code provided by your MFA device.
+- `MFA_ARN` (from [AWS docs](https://aws.amazon.com/premiumsupport/knowledge-center/authenticate-mfa-cli/)): If you're using an MFA hardware device, then the value is similar to `GAHT12345678`. If you're using a virtual MFA, then the value is similar to `arn:aws:iam::123456789012:mfa/user`.
+- `MFA_CODE`: A temporary authentication code provided by your MFA device.
 
 ```
 aws sts get-session-token --serial-number MFA_ARN --token-code MFA_CODE
