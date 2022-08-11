@@ -10,7 +10,12 @@ class ClassificationsController < ApplicationController
     authorize! :index, :classifications
     add_breadcrumb("Call Types", call_types_classifications_path)
 
-    @data_sets = DataSet.order(created_at: :desc).page(params[:page] || 1).per(10)
+    # Select data_sets that have at least one field with common_type = Classification::CALL_TYPE
+    @data_sets = DataSet
+      .joins(:fields)
+      .where(fields: { common_type: Classification::CALL_TYPE })
+      .order(created_at: :desc)
+      .page(params[:page] || 1).per(8)
   end
 
   def create

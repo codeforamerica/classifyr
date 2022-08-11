@@ -30,15 +30,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :classifications, param: :data_set_id, only: [:index] do
-    # get :dispositions
-    # get :priorities
+  resources :classifications, only: [:index] do
     collection do
+      get "/call_types/data_sets/:data_set_id/classify",
+          to: "classifications/call_types#classify",
+          as: :classify_data_sets_call_types
       get :call_types
-    end
-
-    member do
-      resources :call_types
     end
   end
 

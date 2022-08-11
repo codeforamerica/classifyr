@@ -1,10 +1,10 @@
-class CallTypesController < ApplicationController
-  before_action :set_data_set, only: [:index]
-  before_action :disable_turbo, only: [:index]
+class Classifications::CallTypesController < ApplicationController
+  before_action :set_data_set, only: [:classify]
+  before_action :disable_turbo, only: [:classify]
   before_action :set_breadcrumbs
 
-  def index
-    authorize! :index, :call_types
+  def classify
+    authorize! :create, :classifications
 
     add_breadcrumb("Call Types", call_types_classifications_path)
     add_breadcrumb(@data_set.title)
