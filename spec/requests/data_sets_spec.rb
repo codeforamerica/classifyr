@@ -26,7 +26,9 @@ RSpec.describe "DataSets", type: :request do
 
         it "renders the 'index' template" do
           get(path)
-          expect(response.body).to include("<h3>Datasets</h3>")
+          expect(response.body).to include(
+            "List of the public data sets uploaded by Code for",
+          )
         end
 
         it "returns all the data sets" do

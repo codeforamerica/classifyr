@@ -22,7 +22,7 @@ RSpec.describe "Dashboards", type: :request do
 
         it "renders the 'index' template" do
           get(path)
-          expect(response.body).to include("Dashboards")
+          expect(response.body).to include("Dashboard")
         end
       end
     end

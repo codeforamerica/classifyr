@@ -53,5 +53,14 @@ RSpec.describe Field, type: :model do
         end
       end
     end
+
+    describe "#pick_random_value" do
+      it "returns a random unique value" do
+        field = create(:field, common_type: Field::VALUE_TYPES[0])
+        unique_value = create(:unique_value, field:)
+
+        expect(field.pick_random_value).to eq unique_value
+      end
+    end
   end
 end

@@ -12,11 +12,11 @@ RSpec.describe "Update a user's role", type: :feature do
     visit root_path
 
     find("#sidenav").click_on "Users"
-    expect(page).to have_content("List of the users in the system")
+    expect(page).to have_content("List of users in the system.")
 
     find(:xpath, "//a[@href='/users/#{volunteer.id}/edit']", match: :first).click
     expect(page).to have_content(volunteer.email)
-    expect(page).to have_content("Make updates to this existing user.")
+    expect(page).to have_content("Make updates to an existing user.")
 
     find("#user_role_id").find(:xpath, "option[1]").select_option
 

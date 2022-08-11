@@ -33,7 +33,7 @@ class Field < ApplicationRecord
     where.not(common_type: VALUE_TYPES)
   end
 
-  def pick_random_values
+  def pick_random_value
     return [] unless unique_values.any?
 
     unique_values.order(Arel.sql("RANDOM()")).first

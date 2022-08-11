@@ -23,7 +23,7 @@ RSpec.describe "Users", type: :request do
 
         it "renders the 'index' template" do
           get(path)
-          expect(response.body).to include("List of the users in the system.")
+          expect(response.body).to include("List of users in the system.")
         end
 
         it "returns all the data sets" do
@@ -69,7 +69,7 @@ RSpec.describe "Users", type: :request do
         context "when user != current_user" do
           it "renders the 'edit' template" do
             get "/users/#{edit_user.id}/edit"
-            expect(response.body).to include("Make updates to this existing user.")
+            expect(response.body).to include("Make updates to an existing user.")
           end
         end
       end

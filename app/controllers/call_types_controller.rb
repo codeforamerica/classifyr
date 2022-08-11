@@ -12,7 +12,7 @@ class CallTypesController < ApplicationController
     @fields = @data_set.fields.order(:position)
     @field = @data_set.pick_random_field
 
-    @term = @field.pick_random_values
+    @term = @field.pick_random_value
     @data = @term&.examples
     @classification = @term ? Classification.new(value: @term.value, common_type: Classification::CALL_TYPE) : nil
 
