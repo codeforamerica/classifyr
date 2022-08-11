@@ -72,9 +72,5 @@ module ApplicationHelper
 
     ""
   end
-
-  def breadcrumbs
-    @breadcrumbs || @default_breadcrumbs
-  end
 end
 # rubocop:enable Metrics/MethodLength

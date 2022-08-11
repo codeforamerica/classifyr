@@ -1,7 +1,8 @@
 <div class="flex flex-1 items-center pl-12 text-sm">
-  <% if breadcrumbs %>
-    <% breadcrumbs.each_with_index do |crumb| %>
-      <% last = breadcrumbs.last == crumb %>
+  <% @breadcrumbs ||= @default_breadcrumbs %>
+  <% if @breadcrumbs %>
+    <% @breadcrumbs.each_with_index do |crumb| %>
+      <% last = @breadcrumbs.last == crumb %>
       <div class="flex flex-row font-medium last:text-gray-400">
         <% if crumb[:path] %>
           <%= link_to crumb[:name], crumb[:path], class: last ? "text-gray-400" : "" %>
