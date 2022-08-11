@@ -111,7 +111,7 @@ The live development environment is accessible at https://development.nprd.class
 ### Requirements
 
 - The AWS CLI (version 2.7+). Check out this [installation guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) if needed.
-- The [Session Manager Plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html)
+- The [Session Manager Plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html).
 - You will need an AWS account created by the Code for America team to do this.
 - Your account needs to have MFA set up.
 
