@@ -30,10 +30,6 @@ class ApplicationController < ActionController::Base
     }]
   end
 
-  def reset_default_breadcrumbs
-    @default_breadcrumbs = nil
-  end
-
   def add_breadcrumb(name, path = nil)
     @breadcrumbs ||= []
     @breadcrumbs << { name:, path: }
