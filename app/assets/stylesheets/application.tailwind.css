@@ -24,12 +24,16 @@
         @apply font-semibold text-3xl mb-5 text-indigo-600;
     }
 
-    a.button, button.button, input[type="submit"] {
-        @apply relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer;
+    .button, input[type="submit"] {
+        @apply relative inline-flex items-center px-6 py-2 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer;
     }
 
     a.button-secondary, button.button-secondary {
         @apply bg-gray-200 relative inline-flex justify-center px-4 py-2 border border-slate-300 hover:bg-gray-300 shadow-sm text-sm font-medium rounded-md active:shadow-lg transition duration-150 ease-in-out cursor-pointer;
+    }
+
+    .button-orange {
+        @apply relative inline-flex items-center px-6 py-2 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-orange-500 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer;
     }
 
     a.button-cancel, button.button-cancel {
@@ -114,6 +118,15 @@
 
     .nav-icon {
         @apply text-gray-400 mr-3 flex-shrink-0 h-6 w-6;
+    }
+
+    .truncate-2-lines {
+        max-height: 3.6em; /* double the size of line-height */
+        line-height: 1.8em;
+        display: block;
+        text-overflow: ellipsis;
+        word-wrap: break-word;
+        overflow: hidden;
     }
 }
 

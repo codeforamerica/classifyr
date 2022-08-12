@@ -29,6 +29,8 @@ ds = DataSet.create!(
 )
 
 CSV.foreach(Rails.root.join("db", "import", "apco_common_incident_types_2.103.2-2019.csv"), headers: true) do |line|
+  next if CommonIncidentType.find_by(code: line[0])
+
   CommonIncidentType.create! code: line[0], description: line["description"], notes: line["notes"]
 end
 

@@ -16,9 +16,7 @@ class Classifications::CallTypesController < ApplicationController
     @data = @term&.examples
     @classification = @term ? Classification.new(value: @term.value, common_type: Classification::CALL_TYPE) : nil
 
-    # @common_incident_types = CommonIncidentType.all.order(:code).to_h do |cit|
-    #   ["#{cit.code}: #{cit.notes || cit.description}", cit.id]
-    # end
+    @common_incident_types = CommonIncidentType.all.order(:code)
   end
 
   private

@@ -7,7 +7,7 @@
       <div class="text-black pb-8">
         Please review the sample call records for this call type. From there, please classify the call type to the best of your ability by searching below for different common incident types. After you've selected an incident type, you can choose how confident you are about your selection. If you are unable to identify a common incident type to map to this call type, you can choose to skip this call type classification.
       </div>
-      <section class="bg-white">
+      <section id="call-types-examples" class="bg-white mb-16">
         <div class="text-lg font-bold text-black px-6 py-6 border-b-2 border-gray-200">
           Example Call Type Records
         </div>
@@ -37,6 +37,45 @@
             </table>
           </div>
         </section>
-      </div>
+      </section>
+      <section id="classify-call-type">
+        <div class="text-3xl font-bold text-black pb-4">Classify Call Type</div>
+        <div class="text-black pb-8">
+          Assign a common incident type to this data set.
+        </div>
+        <div class="mb-10">
+          <form method="GET">
+            <div class="relative text-gray-400 focus-within:text-gray-400">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+                <button type="submit" class="py-1 pl-2 pr-3 focus:outline-none border-transparent focus:border-transparent focus:ring-0">
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
+              </span>
+              <input type="search" name="q" class="border-0 w-full text-sm bg-white rounded-md pl-12 py-4 focus:shadow focus:outline-none focus:bg-white border-transparent focus:border-transparent focus:ring-0 focus:text-gray-900 rounded-3xl" placeholder="Type to search..." autocomplete="off">
+            </div>
+          </form>
+        </div>
+      </section>
+      <section id="common-incident-types">
+        <div class="grid grid-cols-3 gap-8 mb-24">
+          <div class="bg-white border-gray-200 shadow rounded p-8">
+            <div class="w-100 flex justify-center mb-4">
+              <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <div class="text-xl font-bold pb-3 text-center">Unable to map call type</div>
+            <div class="text-sm text-gray-600 pb-2 text-center mb-3">An appropriate common incident type cannot be mapped.</div>
+            <div class="flex flex-grow justify-center">
+              <button class="button-orange h-12 self-center">
+                Select
+              </button>
+            </div>
+          </div>
+          <% @common_incident_types.each do |common_incident_type| %>
+            <%= render 'common_incident_type_card', common_incident_type: common_incident_type %>
+          <% end %>
+        </div>
+      </section>
     </div>
   </div>
