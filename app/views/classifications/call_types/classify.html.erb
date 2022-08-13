@@ -45,7 +45,7 @@
         </div>
         <div class="mb-10">
           <div class="relative text-gray-400 focus-within:text-gray-400">
-            <%= form_with(url: search_common_incident_types_path, class: "filters-container", method: :get, data: { controller: "filters", filters_target: "form", turbo_frame: "results" }) do |f| %>
+            <%= form_with(url: search_common_incident_types_path, class: "filtering-container", method: :get, data: { controller: "filtering", filtering_target: "form", turbo_frame: "results" }) do |f| %>
               <span class="absolute inset-y-0 left-0 flex items-center pl-2">
                 <button type="submit" class="py-1 pl-2 pr-3 focus:outline-none border-transparent focus:border-transparent focus:ring-0">
                   <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -54,8 +54,10 @@
               <%= f.text_field :q, {
                 placeholder: "Type to search...",
                 autocomplete: "off",
-                class: "border-0 w-full text-sm bg-white pl-12 py-4 focus:shadow focus:outline-none focus:bg-white border-transparent focus:border-transparent focus:ring-0 focus:text-gray-900 rounded-3xl",
-                data: { action: "filters#submit" }
+                class: "rounded-input",
+                data: {
+                  action: "filtering#submit",
+                }
               } %>
             <% end %>
           </div>
@@ -66,3 +68,4 @@
       <% end %>
     </div>
   </div>
+</div>

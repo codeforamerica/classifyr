@@ -6,6 +6,8 @@ export default class extends Controller {
   }
 
   submit(event) {
-    this.formTarget.requestSubmit();
+    if (event.target.value.length > 1) {
+      this.formTarget.requestSubmit();
+    }
   }
 }
