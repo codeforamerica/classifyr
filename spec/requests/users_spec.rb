@@ -169,9 +169,9 @@ RSpec.describe "Users", type: :request do
         context "when user != current_user" do
           context "with invalid params" do
             it "returns an error" do
-              expect {
+              expect do
                 delete "/users/123"
-              }.to raise_error(ActiveRecord::RecordNotFound)
+              end.to raise_error(ActiveRecord::RecordNotFound)
             end
           end
 

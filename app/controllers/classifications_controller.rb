@@ -18,23 +18,7 @@ class ClassificationsController < ApplicationController
       .page(params[:page] || 1).per(8)
   end
 
-  def create
-    authorize! :create, :classifications
-
-    @classification = Classification.new(classification_params)
-
-    if @classification.save && !@classification.unknown?
-      redirect_to classifications_path, notice: "'#{@classification.value}' successfully categorized."
-    else
-      redirect_to classifications_path, notice: "'#{@classification.value}' marked unknown."
-    end
-  end
-
   private
-
-  def classification_params
-    params.require(:classification).permit(:value, :common_type, :unknown, :common_incident_type_id)
-  end
 
   def set_breadcrumbs
     add_breadcrumb("Classification", call_types_classifications_path)

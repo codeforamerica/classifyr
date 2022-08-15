@@ -15,11 +15,11 @@ RSpec.describe DataSet, type: :model do
       let(:detailed_call_field) { create(:field, :with_unique_values, common_type: Classification::CALL_TYPE) }
       let(:priority_field) { create(:field, :with_unique_values, common_type: "Priority") }
 
-      let(:data_set) {
+      let(:data_set) do
         create(:data_set, fields: [
                  emergency_field, call_field, detailed_call_field, priority_field
                ])
-      }
+      end
 
       describe "#emergency_categories" do
         it "return the unique_values of the field matching the 'Emergency Category' type" do

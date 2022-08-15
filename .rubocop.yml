@@ -56,6 +56,8 @@ Metrics/BlockLength:
     - draw
     - configure
     - group
+  Exclude:
+    - "config/routes.rb"
 
 # Style Cops
 

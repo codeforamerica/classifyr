@@ -20,8 +20,8 @@ RSpec.describe "Update a user's role", type: :feature do
 
     find("#user_role_id").find(:xpath, "option[1]").select_option
 
-    expect {
+    expect do
       click_on "Update User"
-    }.to change { volunteer.reload.role.id }.from(volunteer_role.id).to(role.id)
+    end.to change { volunteer.reload.role.id }.from(volunteer_role.id).to(role.id)
   end
 end

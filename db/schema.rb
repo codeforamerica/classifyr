@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_29_084719) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_15_033113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,6 +54,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_29_084719) do
     t.boolean "unknown", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "confidence_rating"
+    t.text "confidence_reasoning"
     t.index ["common_incident_type_id"], name: "index_classifications_on_common_incident_type_id"
   end
 

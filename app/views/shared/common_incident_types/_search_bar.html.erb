@@ -1,0 +1,16 @@
+<%= form_with(url: search_common_incident_types_path, class: "filtering-container", method: :get, data: { controller: "filtering", filtering_target: "form", turbo_frame: "results" }) do |f| %>
+  <span class="absolute inset-y-0 left-0 flex items-center pl-2">
+    <button type="submit" class="py-1 pl-2 pr-3 focus:outline-none border-transparent focus:border-transparent focus:ring-0">
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+    </button>
+  </span>
+  <%= f.text_field :q, {
+    placeholder: "Type to search...",
+    autocomplete: "off",
+    class: "rounded-input",
+    autofocus: true,
+    data: {
+      action: "filtering#submit",
+    }
+  } %>
+<% end %>

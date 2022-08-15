@@ -5,4 +5,6 @@ class Classification < ApplicationRecord
 
   belongs_to :common_incident_type, optional: true
   belongs_to :user, optional: true
+
+  validates :confidence_rating, presence: true
 end

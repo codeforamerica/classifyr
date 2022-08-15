@@ -258,9 +258,9 @@ RSpec.describe "DataSets", type: :request do
 
         context "with invalid params" do
           it "returns an error" do
-            expect {
+            expect do
               delete "/data_sets/123"
-            }.to raise_error(ActiveRecord::RecordNotFound)
+            end.to raise_error(ActiveRecord::RecordNotFound)
           end
         end
 
@@ -277,11 +277,11 @@ RSpec.describe "DataSets", type: :request do
   end
 
   describe "#map" do
-    let(:data_set) {
+    let(:data_set) do
       create(:data_set, files: [
                Rack::Test::UploadedFile.new("spec/support/files/police-incidents-2022.csv", "text/csv"),
              ])
-    }
+    end
 
     let(:path) { "/data_sets/#{data_set.id}/map" }
 
@@ -314,11 +314,11 @@ RSpec.describe "DataSets", type: :request do
   end
 
   describe "#analyze" do
-    let(:data_set) {
+    let(:data_set) do
       create(:data_set, files: [
                Rack::Test::UploadedFile.new("spec/support/files/police-incidents-2022.csv", "text/csv"),
              ])
-    }
+    end
 
     let(:path) { "/data_sets/#{data_set.id}/analyze" }
 

@@ -1,0 +1,20 @@
+<%= turbo_frame_tag "results" do %>
+  <div class="mb-12">
+    <% if @success %>
+      <p class="mx-auto notice-border w-1/2">
+        <span class="font-bold">Success!</span>
+        Your classification has been submitted.
+      </p>
+    <% else %>
+      <p class="mx-auto alert-border w-1/2">
+        Something went wrong. Please try again.
+      </p>
+    <% end %>
+  </div>
+  <div class="text-center">
+    <%= link_to "Classify Another Call Type",
+                  classify_data_sets_call_types_classifications_path(@data_set.id),
+                  class: "button",
+                  data: { turbo: false } %>
+  </div>
+<% end %>
