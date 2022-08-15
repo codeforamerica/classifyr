@@ -21,18 +21,28 @@ export default class extends Controller {
       "[data-classify-target='incidentTypeCard']"
     );
 
+    // Disable search input
+    const selectedEvent = new CustomEvent("selected-incident-type");
+    window.dispatchEvent(selectedEvent);
+
+    // Hide "Select" button of selected card and
+    // show "Selected" button before cloning
     button.classList.add("hidden");
     button.nextElementSibling.classList.remove("hidden");
     const dupNode = this.selected.cloneNode(true);
 
+    // Hide all cards
     this.hideOnSelectTargets.forEach((el) => {
       el.classList.add("hidden");
     });
 
+    // Set cloned card in the appropriate div
+    // in the form
     this.selectedIncidentCardTarget.innerHTML = "";
     this.selectedIncidentCardTarget.appendChild(dupNode);
     this.selectedFormTarget.classList.remove("hidden");
 
+    // Set the incident type ID in a hidden field
     this.incidentTypeIdTarget.setAttribute(
       "value",
       this.selected.dataset.incidentId

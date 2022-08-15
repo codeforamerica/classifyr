@@ -12,12 +12,16 @@
         sm:text-sm border-gray-300 rounded-md;
     }
 
-    input.rounded-input {
+    input.rounded-input, input.disabled-rounded-input {
         @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full
                sm:text-sm border-gray-300 border-0 w-full bg-white pl-12
                py-4 focus:shadow focus:outline-none focus:bg-white border-transparent
                text-gray-600 focus:border-transparent focus:ring-0 focus:text-gray-900
                rounded-3xl;
+    }
+
+    input.disabled-rounded-input {
+        @apply bg-slate-100;
     }
 
     input[type="file"] {

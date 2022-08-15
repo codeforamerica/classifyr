@@ -5,9 +5,27 @@ export default class extends Controller {
     return ["form"];
   }
 
+  initialize() {
+    this.input = null;
+  }
+
   submit(event) {
-    if (event.target.value.length > 1) {
+    this.input = event.target;
+
+    if (this.input.value.length > 1) {
       this.formTarget.requestSubmit();
     }
+  }
+
+  enable() {
+    this.input.removeAttribute("disabled");
+    this.input.classList.add("rounded-input");
+    this.input.classList.remove("disabled-rounded-input");
+  }
+
+  disable() {
+    this.input.setAttribute("disabled", "");
+    this.input.classList.remove("rounded-input");
+    this.input.classList.add("disabled-rounded-input");
   }
 }
