@@ -21,6 +21,8 @@ export default class extends Controller {
     this.input.removeAttribute("disabled");
     this.input.classList.add("rounded-input");
     this.input.classList.remove("disabled-rounded-input");
+
+    this.formTarget.requestSubmit();
   }
 
   disable() {

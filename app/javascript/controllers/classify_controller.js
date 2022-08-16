@@ -9,10 +9,12 @@ export default class extends Controller {
     "incidentTypeId",
     "showOnSelectedConfidenceRating",
     "submitButton",
+    "deselectedHover",
   ];
 
   initialize() {
     this.selected = null;
+    this.hoveredButton = null;
   }
 
   selectIncidentType(event) {
@@ -51,6 +53,12 @@ export default class extends Controller {
 
   deselectIncidentType(event) {
     event.preventDefault();
+    this.selectedIncidentCardTarget.innerHTML = "";
+    this.selectedFormTarget.classList.add("hidden");
+
+    // Enable search input
+    const deselectedEvent = new CustomEvent("deselected-incident-type");
+    window.dispatchEvent(deselectedEvent);
   }
 
   selectConfidenceRating(event) {
@@ -68,6 +76,38 @@ export default class extends Controller {
       this.submitButtonTarget.classList.remove("hidden");
     } else {
       this.submitButtonTarget.classList.add("hidden");
+    }
+  }
+
+  mouseenter(event) {
+    this.hoveredButton = event.target;
+
+    this.hoveredButton.classList.remove("button-selected");
+    this.hoveredButton.classList.add("button-deselect");
+
+    this.hoveredButton.childNodes[1].classList.add("hidden");
+    this.hoveredButton.childNodes[3].classList.remove("hidden");
+
+    this.hoveredButton.innerHTML = this.hoveredButton.innerHTML.replace(
+      "Selected",
+      "Deselect"
+    );
+  }
+
+  mouseleave() {
+    if (this.hoveredButton !== null) {
+      this.hoveredButton.classList.add("button-selected");
+      this.hoveredButton.classList.remove("button-deselect");
+
+      this.hoveredButton.childNodes[1].classList.remove("hidden");
+      this.hoveredButton.childNodes[3].classList.add("hidden");
+
+      this.hoveredButton.innerHTML = this.hoveredButton.innerHTML.replace(
+        "Deselect",
+        "Selected"
+      );
+
+      this.hoveredButton = null;
     }
   }
 
