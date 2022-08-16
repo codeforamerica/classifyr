@@ -11,6 +11,10 @@ class DataSet < ApplicationRecord
 
   scope :ordered, -> { order(created_at: :desc) }
 
+  def call_type_field(type = Classification::CALL_TYPE)
+    fields.where(common_type: type).first
+  end
+
   def storage_size
     files.sum(&:byte_size)
   end
@@ -61,10 +65,6 @@ class DataSet < ApplicationRecord
     end
   end
 
-  def pick_random_field(type = Classification::CALL_TYPE)
-    fields.where(common_type: type).order(Arel.sql("RANDOM()")).first
-  end
-
   def prepare_datamap
     return unless fields.empty?
 
@@ -113,4 +113,39 @@ class DataSet < ApplicationRecord
     update_attribute :analyzed, true
   end
   # rubocop:enable all
+
+  def update_completion
+    results = calculate_completion
+
+    update(
+      completion_percent: results[:completion_percent],
+      completed_unique_values: results[:completed_unique_values],
+    )
+  end
+
+  private
+
+  def calculate_completion
+    # only expecting one Classification::CALL_TYPE field
+    call_type = fields.where(common_type: Classification::CALL_TYPE).first
+    return 0 unless call_type
+
+    completed_unique_values = 0
+    classified_rows = 0
+    total_rows = 0
+
+    call_type.unique_values.each do |unique_value|
+      total_rows += unique_value.frequency
+
+      if unique_value.classifications_count > 0
+        completed_unique_values += 1
+        classified_rows += unique_value.frequency
+      end
+    end
+
+    {
+      completion_percent: classified_rows * 100 / total_rows,
+      completed_unique_values:,
+    }
+  end
 end

@@ -5,21 +5,19 @@ class Classifications::CallTypesController < ApplicationController
 
   def index
     authorize! :create, :classifications
-
     add_breadcrumb("Call Types", call_types_classifications_path)
     add_breadcrumb(@data_set.title)
 
     @fields = @data_set.fields.order(:position)
-    @field = @data_set.pick_random_field
+    @field = @data_set.call_type_field
 
-    @term = @field.pick_random_value
+    @term = @field.pick_value_to_classify_for(current_user)
     @data = @term&.examples
-    @classification = @term ? Classification.new(value: @term.value, common_type: Classification::CALL_TYPE) : nil
-
     @common_incident_types = []
 
     @classification = Classification.new(
-      value: @term.value, common_type: Classification::CALL_TYPE, user: current_user,
+      unique_value: @term, value: @term.value,
+      common_type: Classification::CALL_TYPE, user: current_user
     )
   end
 
@@ -34,9 +32,10 @@ class Classifications::CallTypesController < ApplicationController
 
   def classification_params
     params.require(:classification).permit(
-      :value, :common_type, :unknown,
+      :common_type, :unknown,
       :common_incident_type_id, :confidence_rating,
-      :confidence_reasoning, :user_id
+      :confidence_reasoning, :user_id,
+      :unique_value_id, :value
     )
   end
 

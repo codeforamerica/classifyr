@@ -5,4 +5,13 @@ class Classification < ApplicationRecord
 
   belongs_to :common_incident_type, optional: true
   belongs_to :user, optional: true
+  belongs_to :unique_value, optional: true, counter_cache: true
+
+  after_save :update_data_set_completion
+
+  private
+
+  def update_data_set_completion
+    unique_value.field.data_set.update_completion
+  end
 end

@@ -3,6 +3,7 @@
               data: { classify_target: "selectedForm",
                       turbo_frame: "results" }) do |f|  %>
   <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :unique_value_id %>
   <%= f.hidden_field :common_type %>
   <%= f.hidden_field :value %>
   <%= f.hidden_field :common_incident_type_id, data: { classify_target: "incidentTypeId" } %>

@@ -14,7 +14,7 @@ class ClassificationsController < ApplicationController
     @data_sets = DataSet
       .joins(:fields)
       .where(fields: { common_type: Classification::CALL_TYPE })
-      .order(created_at: :desc)
+      .order(completion_percent: :asc, created_at: :asc)
       .page(params[:page] || 1).per(8)
   end
 

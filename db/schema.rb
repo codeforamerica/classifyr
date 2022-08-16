@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_15_033113) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_16_091726) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,7 +56,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_15_033113) do
     t.datetime "updated_at", null: false
     t.integer "confidence_rating"
     t.text "confidence_reasoning"
+    t.bigint "unique_value_id"
     t.index ["common_incident_type_id"], name: "index_classifications_on_common_incident_type_id"
+    t.index ["unique_value_id"], name: "index_classifications_on_unique_value_id"
   end
 
   create_table "common_incident_types", force: :cascade do |t|
@@ -90,6 +92,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_15_033113) do
     t.boolean "analyzed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "completion_percent", default: 0
+    t.integer "completed_unique_values", default: 0
   end
 
   create_table "fields", force: :cascade do |t|
@@ -119,6 +123,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_15_033113) do
     t.bigint "field_id"
     t.string "value"
     t.integer "frequency"
+    t.integer "classifications_count"
     t.index ["field_id"], name: "index_unique_values_on_field_id"
   end
 

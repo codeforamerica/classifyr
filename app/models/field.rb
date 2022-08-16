@@ -33,9 +33,9 @@ class Field < ApplicationRecord
     where.not(common_type: VALUE_TYPES)
   end
 
-  def pick_random_value
+  def pick_value_to_classify_for(user)
     return [] unless unique_values.any?
 
-    unique_values.order(Arel.sql("RANDOM()")).first
+    unique_values.not_classified_by(user).not_completed.ordered_by_completion.first
   end
 end

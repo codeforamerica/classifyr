@@ -7,15 +7,15 @@
       </svg>
     </div>
     <div class="text-4xl text-black font-bold mb-4">
-      37%
+      <%= data_set.completion_percent %>%
     </div>
     <div class="mb-3">
       <div class="w-full rounded bg-gray-100 h-1">
-        <div class="bg-purple-600 rounded h-1" style="width: 37%"></div>
+        <div class="bg-purple-600 rounded h-1" style="width: <%= data_set.completion_percent %>%"></div>
       </div>
     </div>
     <div class="text-xs text-gray-400">
-      37/99 complete
+      <%= data_set.completed_unique_values %>/<%= data_set.call_type_field.unique_values.length %> complete
     </div>
   </div>
 <% end %>
