@@ -156,13 +156,11 @@
         @apply text-gray-400 mr-3 flex-shrink-0 h-6 w-6;
     }
 
-    .truncate-2-lines {
-        max-height: 3.6em; /* double the size of line-height */
-        line-height: 1.8em;
-        display: block;
-        text-overflow: ellipsis;
-        word-wrap: break-word;
+    .line-clamp-2 {
         overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
     }
 }
 
