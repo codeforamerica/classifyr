@@ -7,14 +7,18 @@ export default class extends Controller {
 
   initialize() {
     this.input = null;
+    this.timeout = null;
   }
 
   submit(event) {
-    this.input = event.target;
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.input = event.target;
 
-    if (this.input.value.length > 1 || this.input.value.length === 0) {
-      this.formTarget.requestSubmit();
-    }
+      if (this.input.value.length > 1 || this.input.value.length === 0) {
+        this.formTarget.requestSubmit();
+      }
+    }, 200);
   }
 
   enable() {
