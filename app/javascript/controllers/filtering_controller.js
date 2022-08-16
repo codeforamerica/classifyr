@@ -12,7 +12,7 @@ export default class extends Controller {
   submit(event) {
     this.input = event.target;
 
-    if (this.input.value.length > 1) {
+    if (this.input.value.length > 1 || this.input.value.length === 0) {
       this.formTarget.requestSubmit();
     }
   }

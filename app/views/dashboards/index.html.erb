@@ -48,13 +48,7 @@
                       <% end %>
                     </td>
                     <td>
-                      <% if classification.unknown? %>
-                        <i>
-                          UNKNOWN
-                        </i>
-                      <% else %>
-                        UNKNOWN
-                      <% end %>
+                      <%= classification.user&.email || 'UNKNOWN' %>
                     </td>
                   </tr>
                 <% end %>

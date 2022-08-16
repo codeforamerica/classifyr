@@ -6,6 +6,7 @@
   <%= f.hidden_field :common_type %>
   <%= f.hidden_field :value %>
   <%= f.hidden_field :common_incident_type_id, data: { classify_target: "incidentTypeId" } %>
+  <%= f.hidden_field :unknown, data: { classify_target: "incidentTypeUnknown" } %>
   <div class="mb-6">
     <button class="button-white" data-action="click->classify#deselectIncidentType">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">

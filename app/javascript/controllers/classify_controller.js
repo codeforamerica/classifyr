@@ -7,6 +7,7 @@ export default class extends Controller {
     "selectedForm",
     "selectedIncidentCard",
     "incidentTypeId",
+    "incidentTypeUnknown",
     "showOnSelectedConfidenceRating",
     "submitButton",
     "deselectedHover",
@@ -111,7 +112,12 @@ export default class extends Controller {
     }
   }
 
-  submit(event) {
+  submitUnknown() {
+    this.incidentTypeUnknownTarget.setAttribute("value", true);
+    this.selectedFormTarget.requestSubmit();
+  }
+
+  submit() {
     this.selectedFormTarget.requestSubmit();
     this.selectedFormTarget.classList.add("hidden");
   }
