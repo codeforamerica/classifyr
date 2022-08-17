@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Forgot password", type: :feature do
-  let(:user) { create(:user) }
+  let(:role) { create(:role, name: :volunteer) }
+  let(:user) { create(:user, role:) }
 
   it "sends an email to the user to reset their password" do
     visit root_path

@@ -12,6 +12,8 @@ class Classification < ApplicationRecord
   private
 
   def update_data_set_completion
+    return true unless unique_value
+
     unique_value.field.data_set.update_completion
   end
 end

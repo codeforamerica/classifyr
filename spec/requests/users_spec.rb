@@ -94,9 +94,9 @@ RSpec.describe "Users", type: :request do
       include_examples "unauthorized", :patch, :data_consumer
       include_examples "unauthorized", :patch, :data_reviewer
       include_examples "unauthorized", :patch, :volunteer
+      include_examples "unauthorized", :patch, :data_importer, :found
 
       include_examples "authorized", :patch, :data_admin, :found
-      include_examples "authorized", :patch, :data_importer, :found
 
       context "when authorized" do
         let(:role) { create(:role, name: :data_admin) }

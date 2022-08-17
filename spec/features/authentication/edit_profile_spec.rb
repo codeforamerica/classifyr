@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Edit profile", type: :feature do
-  let(:user) { create(:user) }
+  let(:role) { create(:role, name: :volunteer) }
+  let(:user) { create(:user, role:) }
 
   it "updates the user email and sends a confirmation email" do
     sign_in user

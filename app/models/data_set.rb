@@ -10,6 +10,11 @@ class DataSet < ApplicationRecord
   attr_accessor :step
 
   scope :ordered, -> { order(created_at: :desc) }
+  scope :to_classify, lambda {
+    joins(:fields)
+      .where(fields: { common_type: Classification::CALL_TYPE })
+      .order(completion_percent: :asc, created_at: :asc)
+  }
 
   def call_type_field(type = Classification::CALL_TYPE)
     fields.where(common_type: type).first
@@ -116,28 +121,9 @@ class DataSet < ApplicationRecord
   # rubocop:enable all
 
   def update_completion
-    update(calculate_completion)
-  end
+    results = DataSets::Completion.new(self).calculate
+    return true unless results
 
-  private
-
-  def calculate_completion
-    # only expecting one Classification::CALL_TYPE field
-    call_type = fields.where(common_type: Classification::CALL_TYPE).first
-    return 0 unless call_type
-
-    completed_unique_values = 0
-
-    call_type.unique_values.each do |unique_value|
-      if unique_value.classifications_count > 2
-        completed_unique_values += 1
-      end
-    end
-
-    {
-      completion_percent: completed_unique_values * 100 / call_type.unique_values.count,
-      completed_unique_values: completed_unique_values,
-      total_unique_values: call_type.unique_values.count
-    }
+    update(results)
   end
 end
