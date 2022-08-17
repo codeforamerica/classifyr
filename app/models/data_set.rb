@@ -111,6 +111,7 @@ class DataSet < ApplicationRecord
     end
 
     update_attribute :analyzed, true
+    reload.update_completion
   end
   # rubocop:enable all
 
