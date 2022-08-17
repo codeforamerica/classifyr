@@ -115,12 +115,7 @@ class DataSet < ApplicationRecord
   # rubocop:enable all
 
   def update_completion
-    results = calculate_completion
-
-    update(
-      completion_percent: results[:completion_percent],
-      completed_unique_values: results[:completed_unique_values],
-    )
+    update(calculate_completion)
   end
 
   private
@@ -131,21 +126,17 @@ class DataSet < ApplicationRecord
     return 0 unless call_type
 
     completed_unique_values = 0
-    classified_rows = 0
-    total_rows = 0
 
     call_type.unique_values.each do |unique_value|
-      total_rows += unique_value.frequency
-
-      if unique_value.classifications_count > 0
+      if unique_value.classifications_count > 2
         completed_unique_values += 1
-        classified_rows += unique_value.frequency
       end
     end
 
     {
-      completion_percent: classified_rows * 100 / total_rows,
-      completed_unique_values:,
+      completion_percent: completed_unique_values * 100 / call_type.unique_values.count,
+      completed_unique_values: completed_unique_values,
+      total_unique_values: call_type.unique_values.count
     }
   end
 end
