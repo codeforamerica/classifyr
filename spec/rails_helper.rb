@@ -9,7 +9,7 @@ require "rspec/rails"
 
 Dir["./spec/support/**/*.rb"].each { |f| require f }
 
-Capybara.javascript_driver = :selenium # _headless
+Capybara.javascript_driver = :selenium_headless
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

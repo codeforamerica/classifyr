@@ -15,7 +15,7 @@ class Classification < ApplicationRecord
     "Very Confident" => 2,
   }
 
-  validates :user_id, :unique_value_id, :common_type, :value,
+  validates :user, :unique_value, :common_type, :value,
             presence: true
 
   def confidence_rating=(rating)

@@ -57,7 +57,7 @@ RSpec.describe "Classifications", type: :request do
 
           get(path)
           html = Nokogiri::HTML(response.body)
-          data_set_titles = html.css("[data-data-set-id]")
+          data_set_titles = html.css(".data-set-title")
           expect(data_set_titles.count).to eq(1)
           expect(data_set_titles.children.first.to_s).to eq(data_set.title)
         end

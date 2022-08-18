@@ -9,7 +9,7 @@ module DataSets
       return unless call_type
 
       call_type.unique_values.each do |unique_value|
-        if unique_value.classifications_count > 2
+        if unique_value.classifications_count > UniqueValue::COMPLETION_COUNT - 1
           @completed_unique_values += 1
         end
       end
