@@ -69,15 +69,21 @@ RSpec.describe Field, type: :model do
           # lowest amount of classifications
           unique_value_4 = create(:unique_value, field:, classifications_count: 1)
 
-          classification_1 = create(:classification, unique_value: unique_value_1, user: jack)
-          classification_2 = create(:classification, unique_value: unique_value_2, user: john)
-          classification_3 = create(:classification, unique_value: unique_value_3, user: john)
+          create(:classification, unique_value: unique_value_1, user: jack)
+          create(:classification, unique_value: unique_value_2, user: john)
+          create(:classification, unique_value: unique_value_3, user: john)
 
           expect(field.pick_value_to_classify_for(jack)).to eq unique_value_4
         end
       end
 
       context "when unique_values.any? is false" do
+        it "returns nil" do
+          jack = create(:user)
+          field = create(:field, common_type: Classification::CALL_TYPE)
+
+          expect(field.pick_value_to_classify_for(jack)).to be_nil
+        end
       end
     end
   end

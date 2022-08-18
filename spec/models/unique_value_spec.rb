@@ -10,46 +10,56 @@ RSpec.describe UniqueValue, type: :model do
     let(:jack) { create(:user, role:) }
     let(:john) { create(:user, role:) }
 
-    let!(:unique_value_1) { create(:unique_value, classifications_count: 2) } # + 1 (=3) from below
-    let!(:unique_value_2) { create(:unique_value, classifications_count: 0) } # + 2 = 2
-    let!(:unique_value_3) { create(:unique_value, classifications_count: 0) } # + 1 = 1
+    let(:unique_value_1) { create(:unique_value, classifications_count: 2) } # + 1 (=3) from below
+    let(:unique_value_2) { create(:unique_value, classifications_count: 0) } # + 2 = 2
+    let(:unique_value_3) { create(:unique_value, classifications_count: 0) } # + 1 = 1
     let!(:unique_value_4) { create(:unique_value, classifications_count: 0) } # + 0 = 0
 
-    let!(:classification_1) { create(:classification, unique_value: unique_value_1, user: jack) }
-    let!(:classification_2) { create(:classification, unique_value: unique_value_2, user: jack) }
-    let!(:classification_3) { create(:classification, unique_value: unique_value_2, user: john) }
-    let!(:classification_4) { create(:classification, unique_value: unique_value_3, user: john) }
+    before do
+      create(:classification, unique_value: unique_value_1, user: jack)
+      create(:classification, unique_value: unique_value_2, user: jack)
+      create(:classification, unique_value: unique_value_2, user: john)
+      create(:classification, unique_value: unique_value_3, user: john)
+    end
 
     describe "ordered_by_completion" do
       it "returns unique_values sorted by completion" do
-        expect(described_class.ordered_by_completion).to eq([
-                                                              unique_value_4, unique_value_3,
-                                                              unique_value_2, unique_value_1
-                                                            ])
+        expect(described_class.ordered_by_completion).to eq(
+          [
+            unique_value_4, unique_value_3,
+            unique_value_2, unique_value_1
+          ],
+        )
       end
     end
 
     describe "not_completed" do
       it "returns unique_values that have less than 3 classifications_count" do
-        expect(described_class.not_completed).to match_array([
-                                                               unique_value_2, unique_value_3, unique_value_4
-                                                             ])
+        expect(described_class.not_completed).to match_array(
+          [
+            unique_value_2, unique_value_3, unique_value_4
+          ],
+        )
       end
     end
 
     describe "classified_by" do
       it "returns all unique_values classified by a specific user" do
-        expect(described_class.classified_by(jack)).to match_array([
-                                                                     unique_value_1, unique_value_2
-                                                                   ])
+        expect(described_class.classified_by(jack)).to match_array(
+          [
+            unique_value_1, unique_value_2
+          ],
+        )
       end
     end
 
     describe "not_classified_by" do
       it "returns all unique_values not classified by a specific user" do
-        expect(described_class.not_classified_by(jack)).to match_array([
-                                                                         unique_value_3, unique_value_4
-                                                                       ])
+        expect(described_class.not_classified_by(jack)).to match_array(
+          [
+            unique_value_3, unique_value_4
+          ],
+        )
       end
     end
   end
@@ -65,29 +75,31 @@ RSpec.describe UniqueValue, type: :model do
         data_set.fields.find_by(heading: "call_type").update(common_type: "Detailed Call Type")
         data_set.reload.analyze!
 
-        expect(data_set.call_type_field.unique_values.first.examples).to eq([[
-                                                                              "22BU000002",
-                                                                              "Welfare Check",
-                                                                              "Public Service",
-                                                                              "2021-12-31T20:08:55-05:00",
-                                                                              "Main St",
-                                                                              "911",
-                                                                              "0",
-                                                                              "1",
-                                                                              "0",
-                                                                              "1",
-                                                                              "E",
-                                                                              "SouthEnd",
-                                                                              "44.475410548309",
-                                                                              "-73.1971131641151",
-                                                                              "1 am",
-                                                                              "Saturday",
-                                                                              "8",
-                                                                              "East",
-                                                                              "Priority 2",
-                                                                              "January",
-                                                                              "2022\r",
-                                                                            ]])
+        expect(data_set.call_type_field.unique_values.first.examples).to eq(
+          [[
+            "22BU000002",
+            "Welfare Check",
+            "Public Service",
+            "2021-12-31T20:08:55-05:00",
+            "Main St",
+            "911",
+            "0",
+            "1",
+            "0",
+            "1",
+            "E",
+            "SouthEnd",
+            "44.475410548309",
+            "-73.1971131641151",
+            "1 am",
+            "Saturday",
+            "8",
+            "East",
+            "Priority 2",
+            "January",
+            "2022\r",
+          ]],
+        )
       end
     end
   end

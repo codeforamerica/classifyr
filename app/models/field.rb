@@ -34,7 +34,7 @@ class Field < ApplicationRecord
   end
 
   def pick_value_to_classify_for(user)
-    return [] unless unique_values.any?
+    return nil unless unique_values.any?
 
     unique_values.not_classified_by(user).not_completed.ordered_by_completion.first
   end

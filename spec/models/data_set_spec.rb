@@ -28,12 +28,12 @@ RSpec.describe DataSet, type: :model do
         data_set_2 = create(:data_set, id: 2)
         data_set_3 = create(:data_set, id: 3)
         data_set_4 = create(:data_set, id: 4)
-        data_set_5 = create(:data_set, id: 5)
+        _data_set_5 = create(:data_set, id: 5)
 
         field_1 = create(:field, data_set: data_set_1, common_type: Classification::CALL_TYPE)
         field_2 = create(:field, data_set: data_set_2, common_type: Classification::CALL_TYPE)
         field_3 = create(:field, data_set: data_set_3, common_type: Classification::CALL_TYPE)
-        field_4 = create(:field, data_set: data_set_4, common_type: Classification::CALL_TYPE)
+        _field_4 = create(:field, data_set: data_set_4, common_type: Classification::CALL_TYPE)
 
         unique_value_1 = create(:unique_value, field: field_1)
         unique_value_2 = create(:unique_value, field: field_2)
@@ -46,13 +46,15 @@ RSpec.describe DataSet, type: :model do
         create_list(:classification, 1, unique_value: unique_value_3)
 
         # Oldest with lowest completion first
-        expect(described_class.to_classify.map(&:id)).to eq([
-                                                              # data_set_5.id is not present because it doesn't have a Call Type field
-                                                              data_set_3.id, # Oldest one with no completion
-                                                              data_set_4.id, # More recent with no completion
-                                                              data_set_2.id, # Partial completion 1/2 unique values classified
-                                                              data_set_1.id, # Completed is last
-                                                            ])
+        expect(described_class.to_classify.map(&:id)).to eq(
+          [
+            # data_set_5.id is not present because it doesn't have a Call Type field
+            data_set_3.id, # Oldest one with no completion
+            data_set_4.id, # More recent with no completion
+            data_set_2.id, # Partial completion 1/2 unique values classified
+            data_set_1.id, # Completed is last
+          ],
+        )
       end
     end
   end

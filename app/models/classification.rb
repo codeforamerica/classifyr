@@ -9,6 +9,17 @@ class Classification < ApplicationRecord
 
   after_save :update_data_set_completion
 
+  enum :confidence_rating, {
+    "Low Confidence" => 0,
+    "Somewhat Confident" => 1,
+    "Very Confident" => 2,
+  }
+
+  def confidence_rating=(rating)
+    rating = rating.to_i if rating.is_a?(String)
+    super(rating)
+  end
+
   private
 
   def update_data_set_completion

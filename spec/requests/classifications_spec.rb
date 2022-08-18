@@ -53,7 +53,7 @@ RSpec.describe "Classifications", type: :request do
 
         it "lists data sets in the expected order" do
           data_set = create(:data_set)
-          field = create(:field, data_set:, common_type: Classification::CALL_TYPE)
+          create(:field, data_set:, common_type: Classification::CALL_TYPE)
 
           get(path)
           html = Nokogiri::HTML(response.body)

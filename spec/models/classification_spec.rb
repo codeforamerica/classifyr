@@ -15,6 +15,18 @@ RSpec.describe Classification, type: :model do
     end
   end
 
+  describe "enum" do
+    context "when confidence_rating is an integer" do
+      it "saves the confidence_rating" do
+        classification = create(:classification)
+        classification.confidence_rating = 1
+        classification.save
+
+        expect(classification.confidence_rating).to eq("Somewhat Confident")
+      end
+    end
+  end
+
   describe "callbacks" do
     describe "#update_data_set_completion" do
       context "with associated unique_value" do

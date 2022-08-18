@@ -26,16 +26,14 @@
       <label class="text-base mb-6">
         How confident are you in your selection?
       </label>
-      <%= f.select :confidence_rating, [
-        ["Low Confidence", 0],
-        ["Somewhat Confident", 1],
-        ["Very Confident", 2]
-      ], {
-        prompt: "Select Confidence Rating"
-      }, {
-        class: "w-80 text-gray-500 text-base mb-12",
-        data: { action: "change->classify#selectConfidenceRating" }
-      } %>
+      <%= f.select :confidence_rating, options_for_select(Classification.confidence_ratings),
+        {
+          prompt: "Select Confidence Rating"
+        }, {
+          class: "w-80 text-gray-500 text-base mb-12",
+          data: { action: "change->classify#selectConfidenceRating" }
+        }
+      %>
       <div class="hidden" data-classify-target="showOnSelectedConfidenceRating">
         <p class="text-base mb-4 text-black">Describe your reasoning (optional)</p>
         <%= f.text_area :confidence_reasoning,
