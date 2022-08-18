@@ -37,6 +37,7 @@ class Role < ApplicationRecord
     },
     data_classifier: {
       dashboard: [:index, :show],
+      common_incident_types: [:index],
       classifications: [:index, :create],
       categories: [:request],
     },

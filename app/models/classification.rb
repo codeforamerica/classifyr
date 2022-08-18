@@ -15,6 +15,9 @@ class Classification < ApplicationRecord
     "Very Confident" => 2,
   }
 
+  validates :user_id, :unique_value_id, :common_type, :value,
+            presence: true
+
   def confidence_rating=(rating)
     rating = rating.to_i if rating.is_a?(String)
     super(rating)

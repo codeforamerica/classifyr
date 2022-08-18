@@ -4,13 +4,11 @@ class CommonIncidentTypesController < ApplicationController
 
     if params[:q].blank?
       @results = []
+      @show_unknown = false
     else
-      term = "%#{params[:q]&.downcase}%"
-      @results = CommonIncidentType.where("lower(code) LIKE ?", term).or(
-        CommonIncidentType.where("lower(notes) LIKE ?", term).or(
-          CommonIncidentType.where("lower(description) LIKE ?", term),
-        ),
-      )
+      @results = CommonIncidentType.search("%#{params[:q]&.downcase}%")
+
+      @show_unknown = true if @results.none?
     end
 
     render layout: false

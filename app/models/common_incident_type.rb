@@ -7,6 +7,14 @@ class CommonIncidentType < ApplicationRecord
 
   has_many :classifications, dependent: :destroy
 
+  scope :search, lambda { |term|
+    where("lower(code) LIKE ?", term).or(
+      where("lower(notes) LIKE ?", term).or(
+        where("lower(description) LIKE ?", term),
+      ),
+    )
+  }
+
   def self.to_csv
     cits = all
     CSV.generate do |csv|

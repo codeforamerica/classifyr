@@ -1,3 +1,5 @@
 <%= turbo_frame_tag "results" do %>
-  <%= render 'shared/common_incident_types/results', common_incident_types: @results %>
+  <%= render 'shared/common_incident_types/results',
+             common_incident_types: @results,
+             show_unknown: @show_unknown %>
 <% end %>

@@ -17,7 +17,7 @@ class Classifications::CallTypesController < ApplicationController
 
     @classification = Classification.new(
       unique_value: @term, value: @term.value,
-      common_type: Classification::CALL_TYPE, user: current_user
+      common_type: Classification::CALL_TYPE
     )
   end
 
@@ -25,6 +25,7 @@ class Classifications::CallTypesController < ApplicationController
     authorize! :create, :classifications
 
     @classification = Classification.new(classification_params)
+    @classification.user = current_user
     @success = @classification.save
   end
 
