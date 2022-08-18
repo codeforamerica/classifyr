@@ -21,7 +21,7 @@ module DataSets
 
     def call_type
       # only expecting one Classification::CALL_TYPE field
-      @call_type ||= @data_set.fields.where(common_type: Classification::CALL_TYPE).first
+      @call_type ||= @data_set.call_type_field
     end
 
     def format
