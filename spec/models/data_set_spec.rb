@@ -60,6 +60,48 @@ RSpec.describe DataSet, type: :model do
   end
 
   describe "instance methods" do
+    describe "#call_type_field" do
+      it "returns the data_set call_type field" do
+        data_set = create(:data_set)
+        create(:field, data_set:)
+        create(:field, data_set:)
+        field = create(:field, data_set:, common_type: Classification::CALL_TYPE)
+
+        expect(data_set.call_type_field).to eq(field)
+      end
+    end
+
+    describe "#pick_value_to_classify_for" do
+      it "returns a unique_value to classify" do
+        user = create(:user)
+        data_set = create(:data_set)
+        field = create(:field, data_set:, common_type: Classification::CALL_TYPE)
+
+        unique_value_1 = create(:unique_value, field:)
+        unique_value_2 = create(:unique_value, field:)
+
+        create_list(:classification, 3, unique_value: unique_value_1)
+
+        expect(data_set.pick_value_to_classify_for(user)).to eq(unique_value_2)
+      end
+    end
+
+    describe "completed?" do
+      context "when completion_percent != 100" do
+        it "returns false" do
+          data_set = create(:data_set, completion_percent: 50)
+          expect(data_set.completed?).to be(false)
+        end
+      end
+
+      context "when completion_percent = 100" do
+        it "returns true" do
+          data_set = create(:data_set, completion_percent: 100)
+          expect(data_set.completed?).to be(true)
+        end
+      end
+    end
+
     describe "#field types" do
       let(:emergency_field) { create(:field, :with_unique_values, common_type: "Emergency Category") }
       let(:call_field) { create(:field, :with_unique_values, common_type: "Call Category") }

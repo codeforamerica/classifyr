@@ -10,16 +10,62 @@ RSpec.describe UniqueValue, type: :model do
     let(:jack) { create(:user, role:) }
     let(:john) { create(:user, role:) }
 
-    let(:unique_value_1) { create(:unique_value, classifications_count: 2) } # + 1 (=3) from below
-    let(:unique_value_2) { create(:unique_value, classifications_count: 0) } # + 2 = 2
-    let(:unique_value_3) { create(:unique_value, classifications_count: 0) } # + 1 = 1
-    let!(:unique_value_4) { create(:unique_value, classifications_count: 0) } # + 0 = 0
+    let(:data_set_1) { create(:data_set, completion_percent: 33) }
+    let(:data_set_2) { create(:data_set, completion_percent: 15) }
+
+    let(:field_1) { create(:field, data_set: data_set_1, common_type: Classification::CALL_TYPE) }
+    let(:field_2) { create(:field, data_set: data_set_2, common_type: Classification::CALL_TYPE) }
+
+    let(:unique_value_1) { create(:unique_value, field: field_1) }
+    let(:unique_value_2) { create(:unique_value, field: field_1) }
+    let(:unique_value_3) { create(:unique_value, field: field_1) }
+    let!(:unique_value_4) { create(:unique_value, field: field_2) }
 
     before do
-      create(:classification, unique_value: unique_value_1, user: jack)
+      create(:classification, unique_value: unique_value_1)
+      create(:classification, unique_value: unique_value_1)
+      create(:classification, unique_value: unique_value_1)
       create(:classification, unique_value: unique_value_2, user: jack)
       create(:classification, unique_value: unique_value_2, user: john)
       create(:classification, unique_value: unique_value_3, user: john)
+    end
+
+    describe "to_classify_with_data_set_priority" do
+      it "returns values to classify based on data set completion" do
+        expect(described_class.to_classify_with_data_set_priority(jack)).to match_array(
+          [
+            unique_value_4, # data_set_2 has 15% completion so its value should come up first
+            unique_value_3, # not classified by jack yet, in data_set_1
+            # unique_value_2, classified by jack already
+            # unique_value_1, # classified 3 times
+          ],
+        )
+      end
+    end
+
+    describe "to_classify" do
+      it "returns all values to classify for the given user" do
+        expect(described_class.to_classify(jack)).to match_array(
+          [
+            unique_value_3,
+            unique_value_4,
+          ],
+        )
+      end
+    end
+
+    describe "call_types" do
+      it "returns unique_values with a type of Classification::CALL_TYPE" do
+        # The 4 unique values created in the before block
+        expect(described_class.call_types).to match_array(
+          [
+            unique_value_1,
+            unique_value_2,
+            unique_value_3,
+            unique_value_4,
+          ],
+        )
+      end
     end
 
     describe "ordered_by_completion" do
@@ -45,11 +91,7 @@ RSpec.describe UniqueValue, type: :model do
 
     describe "classified_by" do
       it "returns all unique_values classified by a specific user" do
-        expect(described_class.classified_by(jack)).to match_array(
-          [
-            unique_value_1, unique_value_2
-          ],
-        )
+        expect(described_class.classified_by(jack)).to match_array([unique_value_2])
       end
     end
 
@@ -57,7 +99,7 @@ RSpec.describe UniqueValue, type: :model do
       it "returns all unique_values not classified by a specific user" do
         expect(described_class.not_classified_by(jack)).to match_array(
           [
-            unique_value_3, unique_value_4
+            unique_value_1, unique_value_3, unique_value_4
           ],
         )
       end

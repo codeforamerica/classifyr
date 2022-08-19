@@ -16,8 +16,16 @@ class DataSet < ApplicationRecord
       .order(completion_percent: :asc, created_at: :asc)
   }
 
-  def call_type_field(type = Classification::CALL_TYPE)
-    fields.where(common_type: type).first
+  def call_type_field
+    fields.where(common_type: Classification::CALL_TYPE).first
+  end
+
+  def pick_value_to_classify_for(user)
+    call_type_field&.pick_value_to_classify_for(user)
+  end
+
+  def completed?
+    completion_percent == 100
   end
 
   def storage_size

@@ -15,25 +15,29 @@ RSpec.describe "Classify call types", type: :feature, js: true do
                                   notes: "Intoxicated person, drunk & disorderly")
   }
 
-  let(:data_set) { create(:data_set) }
+  let(:data_set_1) { create(:data_set) }
+  let(:data_set_2) { create(:data_set) }
 
-  let(:field) { create(:field, data_set:, common_type: Classification::CALL_TYPE) }
+  let(:field_1) { create(:field, data_set: data_set_1, common_type: Classification::CALL_TYPE) }
+  let(:field_2) { create(:field, data_set: data_set_2, common_type: Classification::CALL_TYPE) }
 
-  let(:unique_value_1) { create(:unique_value, field:, value: "Intoxication") }
-  let(:unique_value_2) { create(:unique_value, field:, value: "DUI") }
-  let(:unique_value_3) { create(:unique_value, field:, value: "Welfare Check") }
+  let(:unique_value_1_1) { create(:unique_value, field: field_1, value: "Intoxication") }
+  let(:unique_value_1_2) { create(:unique_value, field: field_1, value: "DUI") }
+  let(:unique_value_1_3) { create(:unique_value, field: field_1, value: "Welfare Check") }
+
+  let(:unique_value_2_1) { create(:unique_value, field: field_2, value: "Something") }
 
   before do
-    create_list(:classification, 1, unique_value: unique_value_1)
-    create_list(:classification, 2, unique_value: unique_value_2)
-    create_list(:classification, 2, unique_value: unique_value_3)
+    create_list(:classification, 1, unique_value: unique_value_1_1)
+    create_list(:classification, 2, unique_value: unique_value_1_2)
+    create_list(:classification, 2, unique_value: unique_value_1_3)
   end
 
-  def go_to_classify(user, data_set)
+  def go_to_classify(user, data_set, percent = 0, completion = "0/3")
     sign_in user
     visit root_path
     find("#sidenav").click_on "Classification"
-    check_data_set_card(data_set, 0, "0/3")
+    check_data_set_card(data_set, percent, completion)
 
     find(:xpath, "//a[@href='/classifications/call_types/data_sets/#{data_set.id}/classify']", match: :first).click
   end
@@ -68,8 +72,8 @@ RSpec.describe "Classify call types", type: :feature, js: true do
 
   context "when selecting 'Unable to map call type'" do
     it "stores the classification as unknown" do
-      go_to_classify(jack, data_set)
-      check_classify_page(unique_value_1)
+      go_to_classify(jack, data_set_1)
+      check_classify_page(unique_value_1_1)
 
       fill_in "q", with: "something else"
 
@@ -77,16 +81,16 @@ RSpec.describe "Classify call types", type: :feature, js: true do
       click_on "Select"
       expect(page).to have_content("Success! Your classification has been submitted.")
 
-      unique_value_1.reload
-      expect(unique_value_1.classifications_count).to eq(2)
-      expect(unique_value_1.classifications.last.unknown).to be(true)
+      unique_value_1_1.reload
+      expect(unique_value_1_1.classifications_count).to eq(2)
+      expect(unique_value_1_1.classifications.last.unknown).to be(true)
     end
   end
 
   context "when cancelling and trying again" do
     it "allows the user to search again" do
-      go_to_classify(jack, data_set)
-      check_classify_page(unique_value_1)
+      go_to_classify(jack, data_set_1)
+      check_classify_page(unique_value_1_1)
 
       fill_in "q", with: "into"
 
@@ -105,13 +109,65 @@ RSpec.describe "Classify call types", type: :feature, js: true do
     end
   end
 
+  context "when a user has classified all call types for a data set" do
+    context "when there are no other data sets" do
+      it "redirects to the data sets page and show a notice" do
+        # Ensure all unique values have all been classified by jack
+        create(:classification, unique_value: unique_value_1_1, user: jack)
+        create(:classification, unique_value: unique_value_1_2, user: jack)
+
+        go_to_classify(jack, data_set_1, 33, "1/3")
+        check_classify_page(unique_value_1_3)
+        fill_in "q", with: "into"
+        find("[data-incident-id='#{intox.id}']").click_on("Select")
+        select "Very Confident", from: "classification[confidence_rating]"
+
+        expect {
+          click_on "Submit"
+        }.to change { unique_value_1_3.reload.classifications_count }.from(2).to(3)
+
+        click_on "Classify Another Call Type"
+
+        expect(page).to have_current_path("/classifications/call_types")
+        expect(page).to have_content("All current data sets have been fully classified, thank you!")
+      end
+    end
+
+    context "when there are more data sets to classify" do
+      it "continues to the following data set" do
+        # Ensure all unique values have all been classified by jack
+        create(:classification, unique_value: unique_value_1_1, user: jack)
+        create(:classification, unique_value: unique_value_1_2, user: jack)
+        # create(:classification, unique_value: unique_value_1_3, user: jack)
+
+        create_list(:classification, 1, unique_value: unique_value_2_1)
+
+        go_to_classify(jack, data_set_1, 33, "1/3")
+        check_classify_page(unique_value_1_3)
+        fill_in "q", with: "into"
+        find("[data-incident-id='#{intox.id}']").click_on("Select")
+        select "Very Confident", from: "classification[confidence_rating]"
+
+        expect {
+          click_on "Submit"
+        }.to change { unique_value_1_3.reload.classifications_count }.from(2).to(3)
+
+        click_on "Classify Another Call Type"
+
+        expect(page).to have_current_path("/classifications/call_types/data_sets/#{data_set_2.id}/classify")
+        expect(page).to have_content(data_set_2.title)
+        expect(page).to have_content(unique_value_2_1.value)
+      end
+    end
+  end
+
   context "when selecting a common incident" do
     it "creates the classification successfully" do
       # ----------------------------------- #
       # Do a first classification with Jack #
       # ----------------------------------- #
-      go_to_classify(jack, data_set)
-      check_classify_page(unique_value_1)
+      go_to_classify(jack, data_set_1)
+      check_classify_page(unique_value_1_1)
 
       fill_in "q", with: "into"
 
@@ -127,20 +183,20 @@ RSpec.describe "Classify call types", type: :feature, js: true do
 
       expect {
         click_on "Submit"
-      }.to change { unique_value_1.reload.classifications_count }.from(1).to(2)
+      }.to change { unique_value_1_1.reload.classifications_count }.from(1).to(2)
 
       expect(page).to have_content("Success! Your classification has been submitted.")
 
       # completion percent, completed unique values, total unique values
-      check_data_completion(data_set, 0, 0, 3)
+      check_data_completion(data_set_1, 0, 0, 3)
 
       click_on "Classify Another Call Type"
-      check_classify_page(unique_value_2)
+      check_classify_page(unique_value_1_2)
 
       # ----------------------------------- #
       # Do another classification with John #
       # ----------------------------------- #
-      go_to_classify(john, data_set)
+      go_to_classify(john, data_set_1)
 
       # For some reason, the first fill_in doesn't trigger the search
       fill_in "q", with: "into"
@@ -155,16 +211,16 @@ RSpec.describe "Classify call types", type: :feature, js: true do
 
       expect {
         click_on "Submit"
-      }.to change { unique_value_1.reload.classifications_count }.from(2).to(3)
+      }.to change { unique_value_1_1.reload.classifications_count }.from(2).to(3)
 
       # -------------------------------------------- #
-      # With 3 classifications for unique_value_1, #
-      # the completion of the data_set changes       #
+      # With 3 classifications for unique_value_1_1, #
+      # the completion of the data_set_1 changes       #
       # -------------------------------------------- #
-      check_data_completion(data_set, 33, 1, 3)
+      check_data_completion(data_set_1, 33, 1, 3)
 
       find("#sidenav").click_on "Classification"
-      check_data_set_card(data_set, 33, "1/3")
+      check_data_set_card(data_set_1, 33, "1/3")
     end
   end
 end
