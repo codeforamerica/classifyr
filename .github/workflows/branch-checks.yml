@@ -51,6 +51,12 @@ jobs:
         run: |
           bundle exec rspec
 
+      - name: Archive error screenshots
+        uses: actions/upload-artifact@v3
+        with:
+          name: capybara-error-screenshots
+          path: tmp/capybara/**/*
+
   lint:
     runs-on: ubuntu-latest
 

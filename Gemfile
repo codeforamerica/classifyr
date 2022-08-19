@@ -50,6 +50,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "~> 3.37"
+  gem "capybara-screenshot", "~> 1.0"
   gem "selenium-webdriver", "~> 4.3"
   gem "webdrivers", "~> 5.0"
   gem "webmock", "~> 3.14"
