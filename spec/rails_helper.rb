@@ -12,7 +12,7 @@ require "capybara-screenshot/rspec"
 
 Dir["./spec/support/**/*.rb"].each { |f| require f }
 
-Capybara.javascript_driver = :selenium_headless
+Capybara.javascript_driver = :selenium_chrome_headless
 Capybara::Screenshot.prune_strategy = { keep: 20 }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
