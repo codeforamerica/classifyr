@@ -62,12 +62,12 @@ RSpec.describe DataSet, type: :model do
   describe "instance methods" do
     describe "#call_type_field" do
       it "returns the data_set call_type field" do
-        data_set = create(:data_set)
-        create(:field, data_set:)
-        create(:field, data_set:)
-        field = create(:field, data_set:, common_type: Classification::CALL_TYPE)
+        set = create(:data_set)
+        create(:field, data_set: set, common_type: Field::VALUE_TYPES[1])
+        create(:field, data_set: set, common_type: Field::VALUE_TYPES[5])
+        field = create(:field, data_set: set, common_type: Classification::CALL_TYPE)
 
-        expect(data_set.call_type_field).to eq(field)
+        expect(set.call_type_field).to eq(field)
       end
     end
 

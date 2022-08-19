@@ -122,11 +122,11 @@ RSpec.describe "Classify call types", type: :feature, js: true do
         find("[data-incident-id='#{intox.id}']").click_on("Select")
         select "Very Confident", from: "classification[confidence_rating]"
 
-        expect {
-          click_on "Submit"
-        }.to change { unique_value_1_3.reload.classifications_count }.from(2).to(3)
+        expect(unique_value_1_3.reload.classifications_count).to eq(2)
+        click_on "Submit"
 
         click_on "Classify Another Call Type"
+        expect(unique_value_1_3.reload.classifications_count).to eq(3)
 
         expect(page).to have_current_path("/classifications/call_types")
         expect(page).to have_content("All current data sets have been fully classified, thank you!")
@@ -138,7 +138,6 @@ RSpec.describe "Classify call types", type: :feature, js: true do
         # Ensure all unique values have all been classified by jack
         create(:classification, unique_value: unique_value_1_1, user: jack)
         create(:classification, unique_value: unique_value_1_2, user: jack)
-        # create(:classification, unique_value: unique_value_1_3, user: jack)
 
         create_list(:classification, 1, unique_value: unique_value_2_1)
 
@@ -148,11 +147,11 @@ RSpec.describe "Classify call types", type: :feature, js: true do
         find("[data-incident-id='#{intox.id}']").click_on("Select")
         select "Very Confident", from: "classification[confidence_rating]"
 
-        expect {
-          click_on "Submit"
-        }.to change { unique_value_1_3.reload.classifications_count }.from(2).to(3)
+        expect(unique_value_1_3.reload.classifications_count).to eq(2)
+        click_on "Submit"
 
         click_on "Classify Another Call Type"
+        expect(unique_value_1_3.reload.classifications_count).to eq(3)
 
         expect(page).to have_current_path("/classifications/call_types/data_sets/#{data_set_2.id}/classify")
         expect(page).to have_content(data_set_2.title)
@@ -181,11 +180,11 @@ RSpec.describe "Classify call types", type: :feature, js: true do
       select "Low Confidence", from: "classification[confidence_rating]"
       fill_in "classification[confidence_reasoning]", with: "I'm not sure."
 
-      expect {
-        click_on "Submit"
-      }.to change { unique_value_1_1.reload.classifications_count }.from(1).to(2)
+      expect(unique_value_1_1.reload.classifications_count).to eq(1)
+      click_on "Submit"
 
       expect(page).to have_content("Success! Your classification has been submitted.")
+      expect(unique_value_1_1.reload.classifications_count).to eq(2)
 
       # completion percent, completed unique values, total unique values
       check_data_completion(data_set_1, 0, 0, 3)
@@ -194,7 +193,7 @@ RSpec.describe "Classify call types", type: :feature, js: true do
       check_classify_page(unique_value_1_2)
 
       # ----------------------------------- #
-      # Do another classification with John #
+      # Now do a classification with John #
       # ----------------------------------- #
       go_to_classify(john, data_set_1)
 
@@ -209,9 +208,11 @@ RSpec.describe "Classify call types", type: :feature, js: true do
       select "Very Confident", from: "classification[confidence_rating]"
       expect(page).not_to have_content("Describe your reasoning (optional)")
 
-      expect {
-        click_on "Submit"
-      }.to change { unique_value_1_1.reload.classifications_count }.from(2).to(3)
+      expect(unique_value_1_1.reload.classifications_count).to eq(2)
+      click_on "Submit"
+
+      expect(page).to have_content("Success! Your classification has been submitted.")
+      expect(unique_value_1_1.reload.classifications_count).to eq(3)
 
       # -------------------------------------------- #
       # With 3 classifications for unique_value_1_1, #
