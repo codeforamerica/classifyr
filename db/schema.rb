@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_16_091726) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_19_093937) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_16_091726) do
     t.bigint "unique_value_id"
     t.index ["common_incident_type_id"], name: "index_classifications_on_common_incident_type_id"
     t.index ["unique_value_id"], name: "index_classifications_on_unique_value_id"
+    t.index ["user_id", "unique_value_id"], name: "index_classifications_on_user_id_and_unique_value_id", unique: true
   end
 
   create_table "common_incident_types", force: :cascade do |t|
