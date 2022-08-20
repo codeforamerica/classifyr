@@ -1,19 +1,15 @@
 <div data-classify-target="loader">
   <%= render "shared/turbo_loader" %>
 </div>
-<% if common_incident_types.any? %>
+<% if common_incident_types %>
   <div  class="loading-hide">
     <div data-classify-target="hideOnSelect" class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 mb-24">
       <%= render "shared/common_incident_types/unable_to_map" %>
-      <% common_incident_types.each do |common_incident_type| %>
-        <%= render 'shared/common_incident_types/card', common_incident_type: common_incident_type %>
+      <% if common_incident_types.any? %>
+        <% common_incident_types.each do |common_incident_type| %>
+          <%= render 'shared/common_incident_types/card', common_incident_type: common_incident_type %>
+        <% end %>
       <% end %>
-    </div>
-  </div>
-<% elsif defined?(show_unknown) && show_unknown %>
-  <div  class="loading-hide">
-    <div data-classify-target="hideOnSelect" class="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 mb-24">
-      <%= render "shared/common_incident_types/unable_to_map" %>
     </div>
   </div>
 <% else %>

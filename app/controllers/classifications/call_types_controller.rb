@@ -18,8 +18,6 @@ class Classifications::CallTypesController < ApplicationController
     end
 
     @data = @term&.examples
-    @common_incident_types = []
-
     @classification = Classification.new(
       unique_value: @term, value: @term.value, common_type: Classification::CALL_TYPE,
     )

@@ -2,13 +2,10 @@ class CommonIncidentTypesController < ApplicationController
   def search
     authorize! :index, :common_incident_types
 
-    if params[:q].blank?
-      @results = []
-      @show_unknown = false
-    else
-      @results = CommonIncidentType.search("%#{params[:q]&.downcase}%")
+    @results = nil
 
-      @show_unknown = true if @results.none?
+    if params[:q].present?
+      @results = CommonIncidentType.search("%#{params[:q]&.downcase}%")
     end
 
     render layout: false
