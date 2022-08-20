@@ -32,6 +32,7 @@ RSpec.describe Classification, type: :model do
       context "with associated unique_value" do
         it "calls update_completion on the related data_set" do
           expect_any_instance_of(DataSet).to receive(:update_completion)
+          expect_any_instance_of(UniqueValue).to receive(:update_approval_status)
           classification = build(:classification)
           classification.save
         end
@@ -40,6 +41,7 @@ RSpec.describe Classification, type: :model do
       context "without associated unique_value" do
         it "does nothing" do
           expect_any_instance_of(DataSet).not_to receive(:update_completion)
+          expect_any_instance_of(UniqueValue).not_to receive(:update_approval_status)
           classification = build(:classification, unique_value: nil)
           classification.save
         end
