@@ -1,4 +1,4 @@
- <% if data_set.completed? %>
+ <% if data_set.completed? || !authorized?(:create, :classifications) %>
   <%= render "data_set_card_content", data_set: data_set %>
 <% else %>
   <%= link_to classify_data_sets_call_types_classifications_path(data_set.id) do %>
