@@ -1,5 +1,6 @@
 class UniqueValue < ApplicationRecord
   COMPLETION_COUNT = 3
+  MIN_APPROVAL_CONFIDENCE = Classification::SOMEWHAT_CONFIDENT
 
   has_paper_trail
 
@@ -26,6 +27,16 @@ class UniqueValue < ApplicationRecord
     where.not(id: classified_by(user))
   }
 
+  def update_approval_status
+    return if classifications_count < COMPLETION_COUNT
+
+    if can_auto_approve?
+      update(approved_at: Time.now.utc)
+    else
+      update(review_required: true, auto_reviewed_at: Time.now.utc)
+    end
+  end
+
   def examples
     data = []
     field.data_set.datafile.with_file do |f|
@@ -35,5 +46,25 @@ class UniqueValue < ApplicationRecord
     end
 
     data
+  end
+
+  private
+
+  def can_auto_approve?
+    confident_enough = true
+    incident_type_ids = []
+
+    classifications.each do |classification|
+      incident_type_ids << classification.common_incident_type_id
+
+      ratings = Classification.confidence_ratings
+      if classification.confidence_rating.blank? ||
+          (ratings[classification.confidence_rating] < ratings[MIN_APPROVAL_CONFIDENCE])
+        confident_enough = false
+      end
+    end
+
+    # A single incident type for all classifications
+    incident_type_ids.uniq.length == 1 && confident_enough
   end
 end

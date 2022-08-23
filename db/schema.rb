@@ -127,6 +127,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_22_131638) do
     t.string "value"
     t.integer "frequency"
     t.integer "classifications_count", default: 0
+    t.datetime "approved_at"
+    t.boolean "review_required", default: false
+    t.datetime "auto_reviewed_at"
     t.index ["field_id"], name: "index_unique_values_on_field_id"
   end
 

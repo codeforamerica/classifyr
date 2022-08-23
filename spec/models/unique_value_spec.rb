@@ -107,6 +107,90 @@ RSpec.describe UniqueValue, type: :model do
   end
 
   describe "instance methods" do
+    describe "#update_approval_status" do
+      let(:ratings) { Classification.confidence_ratings }
+      let(:incident_type_1) { create(:common_incident_type, code: "Trespass") }
+      let(:incident_type_2) { create(:common_incident_type, code: "DUI") }
+      let(:unique_value) { create(:unique_value) }
+      let(:datetime) { Time.utc(2022, 0o1, 0o1, 14, 0, 0) }
+
+      before { travel_to datetime }
+
+      context "when classifications_count is inferior to COMPLETION_COUNT (3)" do
+        it "returns nil" do
+          create(:classification, unique_value:, common_incident_type: incident_type_1,
+                                  confidence_rating: ratings[Classification::SOMEWHAT_CONFIDENT])
+          create(:classification, unique_value:, common_incident_type: incident_type_1,
+                                  confidence_rating: ratings[Classification::SOMEWHAT_CONFIDENT])
+
+          expect(unique_value.update_approval_status).to be_nil
+          expect(unique_value.approved_at).to be_nil
+          expect(unique_value.review_required).to be(false)
+          expect(unique_value.auto_reviewed_at).to be_nil
+        end
+      end
+
+      context "when classifications have different incident types" do
+        it "sets the value as requiring review" do
+          create(:classification, unique_value:, common_incident_type: incident_type_1,
+                                  confidence_rating: ratings[Classification::SOMEWHAT_CONFIDENT])
+          create(:classification, unique_value:, common_incident_type: incident_type_1,
+                                  confidence_rating: ratings[Classification::SOMEWHAT_CONFIDENT])
+          create(:classification, unique_value:, common_incident_type: incident_type_2,
+                                  confidence_rating: ratings[Classification::VERY_CONFIDENT])
+
+          expect(unique_value.approved_at).to be_nil
+          expect(unique_value.review_required).to be(true)
+          expect(unique_value.auto_reviewed_at).to eq(datetime)
+        end
+      end
+
+      context "when one of the classifications has no confidence rating (unknown)" do
+        it "sets the value as requiring review" do
+          create(:classification, unique_value:, common_incident_type: incident_type_1,
+                                  confidence_rating: nil)
+          create(:classification, unique_value:, common_incident_type: incident_type_1,
+                                  confidence_rating: ratings[Classification::SOMEWHAT_CONFIDENT])
+          create(:classification, unique_value:, common_incident_type: incident_type_1,
+                                  confidence_rating: ratings[Classification::VERY_CONFIDENT])
+
+          expect(unique_value.approved_at).to be_nil
+          expect(unique_value.review_required).to be(true)
+          expect(unique_value.auto_reviewed_at).to eq(datetime)
+        end
+      end
+
+      context "when one of the classifications has a 'Low Confidence' rating" do
+        it "sets the value as requiring review" do
+          create(:classification, unique_value:, common_incident_type: incident_type_1,
+                                  confidence_rating: ratings[Classification::LOW_CONFIDENCE])
+          create(:classification, unique_value:, common_incident_type: incident_type_1,
+                                  confidence_rating: ratings[Classification::SOMEWHAT_CONFIDENT])
+          create(:classification, unique_value:, common_incident_type: incident_type_1,
+                                  confidence_rating: ratings[Classification::VERY_CONFIDENT])
+
+          expect(unique_value.approved_at).to be_nil
+          expect(unique_value.review_required).to be(true)
+          expect(unique_value.auto_reviewed_at).to eq(datetime)
+        end
+      end
+
+      context "when classifications have the same incident type and good enough confidence ratings" do
+        it "approves the value" do
+          create(:classification, unique_value:, common_incident_type: incident_type_1,
+                                  confidence_rating: ratings[Classification::SOMEWHAT_CONFIDENT])
+          create(:classification, unique_value:, common_incident_type: incident_type_1,
+                                  confidence_rating: ratings[Classification::SOMEWHAT_CONFIDENT])
+          create(:classification, unique_value:, common_incident_type: incident_type_1,
+                                  confidence_rating: ratings[Classification::VERY_CONFIDENT])
+
+          expect(unique_value.approved_at).to eq(datetime)
+          expect(unique_value.review_required).to be(false)
+          expect(unique_value.auto_reviewed_at).to be_nil
+        end
+      end
+    end
+
     describe "#examples" do
       it "returns X examples" do
         data_set = create(:data_set, files: [
