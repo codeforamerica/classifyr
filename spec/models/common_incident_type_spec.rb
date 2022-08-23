@@ -42,8 +42,8 @@ RSpec.describe CommonIncidentType, type: :model do
       }
 
       context "when providing a correct partial word (full-text search)" do
-        it "returns the expected results for 'intox'" do
-          results = described_class.search("intox")
+        it "returns the expected results for 'iNtOx'" do
+          results = described_class.search("iNtOx")
 
           expect(results.count).to eq(1)
           expect(results.first.id).to eq(dui.id)
