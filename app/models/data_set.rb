@@ -1,3 +1,4 @@
+# rubocop:disable all
 class DataSet < ApplicationRecord
   has_paper_trail
 
@@ -96,31 +97,22 @@ class DataSet < ApplicationRecord
   end
 
   def unique_value_count(i, path)
-    shorter = "cut -f#{i + 1} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'"
-
-    `sed -E 's/("([^"]*)")?,/\2\t/g' #{path} | #{shorter} | sort | uniq | wc -l`.to_i - 1
+    `sed -E 's/("([^"]*)")?,/\2\t/g' #{path} | cut -f#{i + 1} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' | sort | uniq | wc -l`.to_i - 1
   end
 
   def blank_value_count(i, path)
-    shorter2 = "cut -f#{i + 1} | grep -v -e '[[:space:]]*$' | wc -l"
-
-    `sed -E 's/("([^"]*)")?,/\2\t/g' #{path} | #{shorter2}`
+    `sed -E 's/("([^"]*)")?,/\2\t/g' #{path} | cut -f#{i + 1} | grep -v -e '[[:space:]]*$' | wc -l`
   end
 
   def set_metadata!
     files.each(&:set_metadata!)
   end
 
-  # rubocop:disable all
   def analyze!
     return if analyzed?
 
     datafile.with_file do |f|
       fields.mapped.each do |field|
-        # if field.common_type == 'Call Time'
-        #   # parse dates and find earliest / latest
-        # end
-
         field.min_value = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | tail -n +2 | cut -f#{field.position + 1} | sort | uniq | head -1`&.chomp
         field.max_value = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | tail -n +2 | cut -f#{field.position + 1} | sort | uniq | tail -1`&.chomp
 
@@ -138,7 +130,6 @@ class DataSet < ApplicationRecord
     update_attribute :analyzed, true
     reload.update_completion
   end
-  # rubocop:enable all
 
   def update_completion
     results = DataSets::Completion.new(self).calculate
@@ -147,3 +138,4 @@ class DataSet < ApplicationRecord
     update(results)
   end
 end
+# rubocop:enable all
