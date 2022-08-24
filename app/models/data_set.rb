@@ -85,17 +85,26 @@ class DataSet < ApplicationRecord
     # check there's an attached file
     datafile.headers.split(",").each_with_index do |heading, i|
       datafile.with_file do |f|
-        shorter = "cut -f#{i + 1} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'"
-        shorter2 = "cut -f#{i + 1} | grep -v -e '[[:space:]]*$' | wc -l"
-
-        unique_value_count =
-          `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | #{shorter} | sort | uniq | wc -l`.to_i - 1
-        blank_value_count = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | #{shorter2}`
-        sample_data = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | tail -n +2 | cut -f#{i + 1} | sort | uniq | head`
-        fields.create heading:, position: i, unique_value_count:,
-                      empty_value_count: blank_value_count, sample_data:
+        fields.create heading:, position: i, unique_value_count: unique_value_count(i, f.path),
+                      empty_value_count: blank_value_count(i, f.path), sample_data: sample_data(i, f.path)
       end
     end
+  end
+
+  def sample_data(i, path)
+    `sed -E 's/("([^"]*)")?,/\2\t/g' #{path} | tail -n +2 | cut -f#{i + 1} | sort | uniq | head`
+  end
+
+  def unique_value_count(i, path)
+    shorter = "cut -f#{i + 1} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//'"
+
+    `sed -E 's/("([^"]*)")?,/\2\t/g' #{path} | #{shorter} | sort | uniq | wc -l`.to_i - 1
+  end
+
+  def blank_value_count(i, path)
+    shorter2 = "cut -f#{i + 1} | grep -v -e '[[:space:]]*$' | wc -l"
+
+    `sed -E 's/("([^"]*)")?,/\2\t/g' #{path} | #{shorter2}`
   end
 
   def set_metadata!
