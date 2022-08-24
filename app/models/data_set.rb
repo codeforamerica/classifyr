@@ -59,13 +59,13 @@ class DataSet < ApplicationRecord
   def start_time
     return unless (call_time = fields.find_by(common_type: "Call Time")&.min_value)
 
-    DateTime.parse call_time
+    Chronic.parse call_time.gsub(/[[:^ascii:]]/, "")
   end
 
   def end_time
     return unless (call_time = fields.find_by(common_type: "Call Time")&.max_value)
 
-    DateTime.parse call_time
+    Chronic.parse call_time.gsub(/[[:^ascii:]]/, "")
   end
 
   def timeframe(full: false)
@@ -86,9 +86,9 @@ class DataSet < ApplicationRecord
     datafile.headers.split(",").each_with_index do |heading, i|
       datafile.with_file do |f|
         unique_value_count =
-          `cut -d, -f#{i + 1} #{f.path} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' | sort | uniq | wc -l`.to_i - 1
-        blank_value_count = `cut -d, -f#{i + 1} #{f.path} | grep -v -e '[[:space:]]*$' | wc -l`
-        sample_data = `tail -n +2 #{f.path} | cut -d, -f#{i + 1} | sort | uniq | head`
+          `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | cut -f#{i + 1} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' | sort | uniq | wc -l`.to_i - 1
+        blank_value_count = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | cut -f#{i + 1} | grep -v -e '[[:space:]]*$' | wc -l`
+        sample_data = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | tail -n +2 | cut -f#{i + 1} | sort | uniq | head`
         fields.create heading:, position: i, unique_value_count:,
                       empty_value_count: blank_value_count, sample_data:
       end
@@ -109,11 +109,11 @@ class DataSet < ApplicationRecord
         #   # parse dates and find earliest / latest
         # end
 
-        field.min_value = `tail -n +2 #{f.path} | cut -d, -f#{field.position + 1} | sort | uniq | head -1`&.chomp
-        field.max_value = `tail -n +2 #{f.path} | cut -d, -f#{field.position + 1} | sort | uniq | tail -1`&.chomp
+        field.min_value = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | tail -n +2 | cut -f#{field.position + 1} | sort | uniq | head -1`&.chomp
+        field.max_value = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | tail -n +2 | cut -f#{field.position + 1} | sort | uniq | tail -1`&.chomp
 
         if Field::VALUE_TYPES.include? field.common_type
-          `tail -n +2 #{f.path} | cut -d, -f#{field.position + 1} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' | sort -rn | uniq -c`.split("\n").each do |line|
+          `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | tail -n +2 | cut -f#{field.position + 1} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' | sort -rn | uniq -c`.split("\n").each do |line|
             x = line.strip.split("\s", 2)
             field.unique_values.build value: x[1], frequency: x[0]
           end
