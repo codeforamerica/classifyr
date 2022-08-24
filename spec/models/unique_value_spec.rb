@@ -201,7 +201,7 @@ RSpec.describe UniqueValue, type: :model do
         data_set.fields.find_by(heading: "call_type").update(common_type: "Detailed Call Type")
         data_set.reload.analyze!
 
-        expect(data_set.call_type_field.unique_values.first.examples.flatten.map {|v| v.gsub(/\u0002/,"") }).to eq(
+        expect(data_set.call_type_field.unique_values.first.examples.flatten.map { |v| v.delete("\u0002") }).to eq(
           [
             "22BU000002",
             "Welfare Check",
