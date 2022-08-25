@@ -3,7 +3,7 @@ class DashboardsController < ApplicationController
 
   def index
     authorize! :index, :dashboard
-    @call_type_maps = Classification.all.order(:value).includes(:common_incident_type)
+    redirect_to call_types_classifications_path
   end
 
   def show

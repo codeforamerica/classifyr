@@ -28,24 +28,28 @@ class Role < ApplicationRecord
       all: [:all],
     },
     volunteer: {
+      classifications: [:index],
       dashboard: [:index, :show],
       data_sets: [:index, :show],
     },
     data_importer: {
+      classifications: [:index],
       dashboard: [:index, :show],
       data_sets: [:index, :show, :create, :update],
     },
     data_classifier: {
-      dashboard: [:index, :show],
-      common_incident_types: [:index],
-      classifications: [:index, :create],
       categories: [:request],
+      classifications: [:index, :create],
+      common_incident_types: [:index],
+      dashboard: [:index, :show],
     },
     data_consumer: {
+      classifications: [:index],
       dashboard: [:index, :show],
       data_sets: [:export],
     },
     data_reviewer: {
+      classifications: [:index],
       dashboard: [:index, :show],
       data_categorization: [:review],
     },
