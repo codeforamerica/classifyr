@@ -8,6 +8,16 @@ RSpec.describe DataSet, type: :model do
   include_examples "papertrail versioning", :data_set, "title"
   include_examples "associations", :data_set, [:files, :fields]
 
+  describe "FriendlyID" do
+    it "updates the slug when the title changes" do
+      data_set = create(:data_set, title: "My New Data Set")
+      expect(data_set.slug).to eq("my-new-data-set")
+
+      data_set.update(title: "My Updated Data Set")
+      expect(data_set.slug).to eq("my-updated-data-set")
+    end
+  end
+
   describe "scopes" do
     describe "ordered" do
       it "sorts data sets by creation date (desc)" do

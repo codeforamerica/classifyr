@@ -43,7 +43,7 @@ class Classifications::CallTypesController < ApplicationController
   end
 
   def set_data_set
-    @data_set = DataSet.find(params[:data_set_id])
+    @data_set = DataSet.friendly.find(params[:slug])
 
     return unless @data_set.completed?
 
@@ -55,7 +55,7 @@ class Classifications::CallTypesController < ApplicationController
     value = UniqueValue.to_classify_with_data_set_priority(current_user).first
 
     if value
-      redirect_to classify_data_sets_call_types_classifications_path(value.data_set.id)
+      redirect_to classify_data_sets_call_types_classifications_path(value.data_set.slug)
     else
       # We couldn't find anything left to classify
       redirect_to call_types_classifications_path,

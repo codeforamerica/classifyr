@@ -1,4 +1,4 @@
-<div data-data-set-id="<%= data_set.id %>" class="<%= completed_card_class(data_set) %> p-6 border-gray-200 shadow rounded">
+<div data-data-set-slug="<%= data_set.slug %>" class="<%= completed_card_class(data_set) %> p-6 border-gray-200 shadow rounded">
   <div class="flex flex-row mb-4">
     <div class="data-set-title grow text-gray-500 font-medium"><%= data_set.title %></div>
     <% if data_set.completed? %>

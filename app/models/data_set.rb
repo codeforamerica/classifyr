@@ -1,5 +1,8 @@
 # rubocop:disable all
 class DataSet < ApplicationRecord
+  extend FriendlyId
+  friendly_id :title, use: [:slugged, :history]
+
   has_paper_trail
 
   has_many_attached :files, dependent: :destroy
@@ -16,6 +19,10 @@ class DataSet < ApplicationRecord
       .where(fields: { common_type: Classification::CALL_TYPE })
       .order(completion_percent: :asc, created_at: :asc)
   }
+
+  def should_generate_new_friendly_id?
+    title_changed? || super
+  end
 
   def call_type_field
     fields.where(common_type: Classification::CALL_TYPE).first

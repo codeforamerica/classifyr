@@ -77,7 +77,7 @@ class DataSetsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_data_set
-    @data_set = DataSet.find(params[:id])
+    @data_set = find_by_slug_with_history(DataSet, params[:slug])
   end
 
   # Only allow a list of trusted parameters through.

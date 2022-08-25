@@ -43,7 +43,7 @@ RSpec.describe "DataSets", type: :request do
   end
 
   describe "#show" do
-    let(:path) { "/data_sets/#{data_set.id}" }
+    let(:path) { "/data_sets/#{data_set.slug}" }
 
     include_examples "unauthenticated", :get
 
@@ -99,7 +99,7 @@ RSpec.describe "DataSets", type: :request do
   end
 
   describe "#edit" do
-    let(:path) { "/data_sets/#{data_set.id}/edit" }
+    let(:path) { "/data_sets/#{data_set.slug}/edit" }
 
     include_examples "unauthenticated", :get
 
@@ -119,7 +119,7 @@ RSpec.describe "DataSets", type: :request do
         before { sign_in user }
 
         it "renders the 'edit' template" do
-          get "/data_sets/#{data_set.id}/edit"
+          get "/data_sets/#{data_set.slug}/edit"
           expect(response.body).to include("Make updates to this existing dataset.")
         end
       end
@@ -185,7 +185,7 @@ RSpec.describe "DataSets", type: :request do
   end
 
   describe "#update" do
-    let(:path) { "/data_sets/#{data_set.id}" }
+    let(:path) { "/data_sets/#{data_set.slug}" }
     let(:valid_params) do
       {
         data_set: {
@@ -213,7 +213,7 @@ RSpec.describe "DataSets", type: :request do
 
         context "with invalid params" do
           it "returns an error" do
-            patch "/data_sets/#{data_set.id}", params: {
+            patch "/data_sets/#{data_set.slug}", params: {
               data_set: {
                 title: nil,
               },
@@ -226,7 +226,7 @@ RSpec.describe "DataSets", type: :request do
 
         context "with valid params" do
           it "updates a dataset" do
-            patch "/data_sets/#{data_set.id}", params: valid_params
+            patch "/data_sets/#{data_set.slug}", params: valid_params
 
             expect(response).to have_http_status(:found)
             expect(data_set.reload.title).to eq("My Updated Dataset")
@@ -237,7 +237,7 @@ RSpec.describe "DataSets", type: :request do
   end
 
   describe "#destroy" do
-    let(:path) { "/data_sets/#{data_set.id}" }
+    let(:path) { "/data_sets/#{data_set.slug}" }
 
     include_examples "unauthenticated", :delete
 
@@ -283,7 +283,7 @@ RSpec.describe "DataSets", type: :request do
              ])
     end
 
-    let(:path) { "/data_sets/#{data_set.id}/map" }
+    let(:path) { "/data_sets/#{data_set.slug}/map" }
 
     include_examples "unauthenticated", :get
 
@@ -320,7 +320,7 @@ RSpec.describe "DataSets", type: :request do
              ])
     end
 
-    let(:path) { "/data_sets/#{data_set.id}/analyze" }
+    let(:path) { "/data_sets/#{data_set.slug}/analyze" }
 
     include_examples "unauthenticated", :get
 
@@ -340,7 +340,7 @@ RSpec.describe "DataSets", type: :request do
         before { sign_in user }
 
         it "analyses the dataset" do
-          get "/data_sets/#{data_set.id}/analyze"
+          get "/data_sets/#{data_set.slug}/analyze"
 
           expect(response).to have_http_status(:ok)
           expect(data_set.reload.analyzed?).to be(true)

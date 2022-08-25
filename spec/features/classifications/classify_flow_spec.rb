@@ -39,11 +39,11 @@ RSpec.describe "Classify call types", type: :feature, js: true do
     find("#sidenav").click_on "Classification"
     check_data_set_card(data_set, percent, completion)
 
-    find(:xpath, "//a[@href='/classifications/call_types/data_sets/#{data_set.id}/classify']", match: :first).click
+    find(:xpath, "//a[@href='/classifications/call_types/data_sets/#{data_set.slug}/classify']", match: :first).click
   end
 
   def check_data_set_card(data_set, percent, completion)
-    data_set_card = find("[data-data-set-id='#{data_set.id}']")
+    data_set_card = find("[data-data-set-slug='#{data_set.slug}']")
 
     expect(data_set_card).to have_content(data_set.title)
     expect(data_set_card).to have_content("#{percent}%")
@@ -153,7 +153,7 @@ RSpec.describe "Classify call types", type: :feature, js: true do
         click_on "Classify Another Call Type"
         expect(unique_value_1_3.reload.classifications_count).to eq(3)
 
-        expect(page).to have_current_path("/classifications/call_types/data_sets/#{data_set_2.id}/classify")
+        expect(page).to have_current_path("/classifications/call_types/data_sets/#{data_set_2.slug}/classify")
         expect(page).to have_content(data_set_2.title)
         expect(page).to have_content(unique_value_2_1.value)
       end

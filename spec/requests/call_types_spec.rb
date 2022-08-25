@@ -6,7 +6,7 @@ RSpec.describe "CallTypes", type: :request do
   let(:common_incident_type) { create(:common_incident_type) }
 
   describe "#index" do
-    let(:path) { "/classifications/call_types/data_sets/#{data_set.id}/classify" }
+    let(:path) { "/classifications/call_types/data_sets/#{data_set.slug}/classify" }
 
     include_examples "unauthenticated", :get
 
@@ -39,7 +39,7 @@ RSpec.describe "CallTypes", type: :request do
   end
 
   describe "#create" do
-    let(:path) { "/classifications/call_types/data_sets/#{data_set.id}/classify" }
+    let(:path) { "/classifications/call_types/data_sets/#{data_set.slug}/classify" }
     let(:valid_params) do
       {
         classification: {

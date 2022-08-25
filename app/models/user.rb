@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  extend FriendlyId
+  friendly_id :slug_candidates, use: [:slugged]
+
   has_paper_trail
 
   belongs_to :role, optional: true
@@ -24,5 +27,13 @@ class User < ApplicationRecord
     return if role
 
     update(role: Role.find_default_role) # volunteer
+  end
+
+  def slug_candidates
+    # We pass 5 potential random strings to use to FriendlyID.
+    # There is a very small chance we still have conflicts
+    # after those 5 are checked, in which case, FriendlyID
+    # will append a full UUID.
+    [SecureRandom.urlsafe_base64(4)] * 5
   end
 end

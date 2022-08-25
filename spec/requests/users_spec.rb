@@ -40,7 +40,7 @@ RSpec.describe "Users", type: :request do
 
   describe "#edit" do
     let(:edit_user) { create(:user, role: nil) }
-    let(:path) { "/users/#{edit_user.id}/edit" }
+    let(:path) { "/users/#{edit_user.slug}/edit" }
 
     include_examples "unauthenticated", :get
 
@@ -61,14 +61,14 @@ RSpec.describe "Users", type: :request do
 
         context "when user == current_user" do
           it "redirects" do
-            get "/users/#{user.id}/edit"
+            get "/users/#{user.slug}/edit"
             expect(response).to have_http_status(:redirect)
           end
         end
 
         context "when user != current_user" do
           it "renders the 'edit' template" do
-            get "/users/#{edit_user.id}/edit"
+            get "/users/#{edit_user.slug}/edit"
             expect(response.body).to include("Make updates to an existing user.")
           end
         end
@@ -78,7 +78,7 @@ RSpec.describe "Users", type: :request do
 
   describe "#update" do
     let(:update_user) { create(:user, role: nil) }
-    let(:path) { "/users/#{update_user.id}" }
+    let(:path) { "/users/#{update_user.slug}" }
     let(:valid_params) do
       {
         user: {
@@ -106,7 +106,7 @@ RSpec.describe "Users", type: :request do
 
         context "when user == current_user" do
           it "redirects" do
-            patch "/users/#{user.id}", params: valid_params
+            patch "/users/#{user.slug}", params: valid_params
             expect(response).to have_http_status(:redirect)
           end
         end
@@ -114,7 +114,7 @@ RSpec.describe "Users", type: :request do
         context "when user != current_user" do
           context "with invalid params" do
             it "returns an error" do
-              patch "/users/#{update_user.id}", params: {
+              patch "/users/#{update_user.slug}", params: {
                 user: {
                   email: nil,
                 },
@@ -127,7 +127,7 @@ RSpec.describe "Users", type: :request do
 
           context "with valid params" do
             it "updates a user" do
-              patch "/users/#{update_user.id}", params: valid_params
+              patch "/users/#{update_user.slug}", params: valid_params
 
               expect(response).to have_http_status(:found)
               expect(update_user.reload.role.to_s).to eq("Other")
@@ -140,7 +140,7 @@ RSpec.describe "Users", type: :request do
 
   describe "#destroy" do
     let(:destroy_user) { create(:user, role: nil) }
-    let(:path) { "/users/#{destroy_user.id}" }
+    let(:path) { "/users/#{destroy_user.slug}" }
 
     include_examples "unauthenticated", :delete
 
@@ -161,7 +161,7 @@ RSpec.describe "Users", type: :request do
 
         context "when user == current_user" do
           it "redirects" do
-            delete "/users/#{user.id}"
+            delete "/users/#{user.slug}"
             expect(response).to have_http_status(:redirect)
           end
         end
