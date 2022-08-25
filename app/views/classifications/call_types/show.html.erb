@@ -3,7 +3,7 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
     <div class="mt-12 px-4 py-5 sm:px-6">
       <div class="text-sm font-bold text-gray-500 pb-4"><%= @data_set.title %></div>
-      <div class="text-3xl font-bold text-black pb-4"><%= @term.value %></div>
+      <div class="text-3xl font-bold text-black pb-4"><%= @call_type.value %></div>
       <div class="text-black pb-8">
         Please review the sample call records for this call type. From there, please classify the call type to the best of your ability by searching below for different common incident types. After you've selected an incident type, you can choose how confident you are about your selection. If you are unable to identify a common incident type to map to this call type, you can choose to skip this call type classification.
       </div>
@@ -43,19 +43,35 @@
         <div class="text-black pb-8">
           Assign a common incident type to this data set.
         </div>
-        <div class="mb-10">
-          <div class="relative text-gray-400 focus-within:text-gray-400">
-            <%= render 'shared/common_incident_types/search_bar' %>
+        <% if @existing_classication %>
+          <p class="mx-auto notice-border w-1/2 mb-12" id="notice">
+            You classified this call type
+            <%= distance_of_time_in_words_to_now(@existing_classication.created_at) %>
+            ago.
+          </p>
+          <div class="text-center">
+            <%= link_to "Classify Another Call Type",
+                            classify_data_sets_call_types_classifications_path(data_set_slug: @data_set.slug),
+                            class: "button",
+                            data: { turbo: false } %>
           </div>
-        </div>
-      </section>
-      <div class="min-h-[320px]" data-controller="classify">
-        <%= turbo_frame_tag "results" do %>
-          <%= render 'shared/common_incident_types/results',
-              common_incident_types: nil %>
+        <% else %>
+          <div class="mb-10">
+            <div class="relative text-gray-400 focus-within:text-gray-400">
+              <%= render 'shared/common_incident_types/search_bar' %>
+            </div>
+          </div>
         <% end %>
-        <%= render "classifications/call_types/selected_common_incident_type" %>
-      </div>
+      </section>
+      <% unless @existing_classication %>
+        <div class="min-h-[320px]" data-controller="classify">
+          <%= turbo_frame_tag "results" do %>
+            <%= render 'shared/common_incident_types/results',
+                common_incident_types: nil %>
+          <% end %>
+          <%= render "classifications/call_types/selected_common_incident_type" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

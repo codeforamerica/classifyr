@@ -1,31 +1,40 @@
 class Classifications::CallTypesController < ApplicationController
-  before_action :set_data_set, only: [:index, :create]
-  before_action :disable_turbo, only: [:index, :create]
+  before_action :set_data_set, only: [:index]
+  before_action :set_call_type, only: [:show, :create]
+  before_action :disable_turbo, only: [:show, :create]
   before_action :set_breadcrumbs
-  before_action :set_index_breacrumbs, only: [:index]
+  before_action :set_show_breacrumbs, only: [:show]
 
   def index
     authorize! :create, :classifications
 
-    @fields = @data_set.fields.order(:position)
-    @term = @data_set.pick_value_to_classify_for(current_user)
+    @call_type = @data_set.pick_value_to_classify_for(current_user)
 
-    # No unique value left to classify for the current_user,
-    # find a unique value from another data_set to classify
-    unless @term
-      handle_term_not_found
+    unless @call_type
+      redirect_to call_types_classifications_path,
+                  notice: "You have already classified all call types for this data set."
       return
     end
 
-    @data = @term&.examples
+    redirect_to classify_call_type_classifications_path(slug: @call_type.slug)
+  end
+
+  def show
+    authorize! :create, :classifications
+
+    @data_set = @call_type.data_set
+    @fields = @data_set.fields.order(:position)
+    @data = @call_type&.examples
+    @existing_classication = @call_type.classification_by(current_user)
     @classification = Classification.new(
-      unique_value: @term, value: @term.value, common_type: Classification::CALL_TYPE,
+      unique_value: @call_type, value: @call_type.value, common_type: Classification::CALL_TYPE,
     )
   end
 
   def create
     authorize! :create, :classifications
 
+    @data_set = @call_type.data_set
     @classification = Classification.new(classification_params)
     @classification.user = current_user
     @success = @classification.save
@@ -43,7 +52,7 @@ class Classifications::CallTypesController < ApplicationController
   end
 
   def set_data_set
-    @data_set = DataSet.friendly.find(params[:slug])
+    @data_set = find_by_slug_with_history(DataSet, params[:data_set_slug])
 
     return unless @data_set.completed?
 
@@ -51,24 +60,21 @@ class Classifications::CallTypesController < ApplicationController
                 notice: "This data set has already been fully classified."
   end
 
-  def handle_term_not_found
-    value = UniqueValue.to_classify_with_data_set_priority(current_user).first
+  def set_call_type
+    @call_type = UniqueValue.friendly.find(params[:slug])
+  end
 
-    if value
-      redirect_to classify_data_sets_call_types_classifications_path(value.data_set.slug)
-    else
-      # We couldn't find anything left to classify
-      redirect_to call_types_classifications_path,
-                  notice: "All current data sets have been fully classified, thank you!"
-    end
+  def go_to_next_call_type
+    redirect_to call_types_classifications_path,
+                notice: "You have already classified all call types for this data set."
   end
 
   def set_breadcrumbs
     add_breadcrumb("Classification", call_types_classifications_path)
   end
 
-  def set_index_breacrumbs
+  def set_show_breacrumbs
     add_breadcrumb("Call Types", call_types_classifications_path)
-    add_breadcrumb(@data_set.title)
+    add_breadcrumb(@call_type.data_set.title)
   end
 end

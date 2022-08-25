@@ -4,6 +4,8 @@ RSpec.describe "CallTypes", type: :request do
   let(:user) { create(:user) }
   let(:data_set) { create(:data_set) }
   let(:common_incident_type) { create(:common_incident_type) }
+  let!(:field) { create(:field, data_set:, common_type: Classification::CALL_TYPE) }
+  let!(:unique_value) { create(:unique_value, field:) }
 
   describe "#index" do
     let(:path) { "/classifications/call_types/data_sets/#{data_set.slug}/classify" }
@@ -11,9 +13,36 @@ RSpec.describe "CallTypes", type: :request do
     include_examples "unauthenticated", :get
 
     context "when authenticated" do
-      let!(:field) { create(:field, data_set:, common_type: Classification::CALL_TYPE) }
-      let!(:unique_value) { create(:unique_value, field:) }
+      include_examples "unauthorized", :get, :data_consumer
+      include_examples "unauthorized", :get, :data_reviewer
+      include_examples "unauthorized", :get, :volunteer
+      include_examples "unauthorized", :get, :data_importer
 
+      include_examples "authorized", :get, :data_admin, :found
+      include_examples "authorized", :get, :data_classifier, :found
+
+      context "when authorized" do
+        let(:role) { create(:role, name: :data_admin) }
+        let(:user) { create(:user, role:) }
+
+        before { sign_in user }
+
+        it "shows the classification page" do
+          get(path)
+
+          expect(response.body).to include(data_set.title)
+          expect(response.body).to include(unique_value.value)
+        end
+      end
+    end
+  end
+
+  describe "#show" do
+    let(:path) { "/classifications/call_types/#{unique_value.slug}" }
+
+    include_examples "unauthenticated", :get
+
+    context "when authenticated" do
       include_examples "unauthorized", :get, :data_consumer
       include_examples "unauthorized", :get, :data_reviewer
       include_examples "unauthorized", :get, :volunteer
@@ -39,7 +68,7 @@ RSpec.describe "CallTypes", type: :request do
   end
 
   describe "#create" do
-    let(:path) { "/classifications/call_types/data_sets/#{data_set.slug}/classify" }
+    let(:path) { "/classifications/call_types/#{unique_value.slug}" }
     let(:valid_params) do
       {
         classification: {
@@ -54,9 +83,6 @@ RSpec.describe "CallTypes", type: :request do
     include_examples "unauthenticated", :post
 
     context "when authenticated" do
-      let!(:field) { create(:field, data_set:, common_type: Classification::CALL_TYPE) }
-      let!(:unique_value) { create(:unique_value, field:) }
-
       include_examples "unauthorized", :post, :data_consumer
       include_examples "unauthorized", :post, :data_reviewer
       include_examples "unauthorized", :post, :volunteer

@@ -1,7 +1,7 @@
  <% if data_set.completed? || !authorized?(:create, :classifications) %>
   <%= render "data_set_card_content", data_set: data_set %>
 <% else %>
-  <%= link_to classify_data_sets_call_types_classifications_path(data_set.slug) do %>
+  <%= link_to classify_data_sets_call_types_classifications_path(data_set_slug: data_set.slug) do %>
     <%= render "data_set_card_content", data_set: data_set %>
   <% end %>
 <% end %>

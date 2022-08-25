@@ -1,4 +1,4 @@
-<%= form_with(model: @classification, url: data_sets_call_types_classifications_path(@data_set.slug),
+<%= form_with(model: @classification, url: create_call_types_classifications_path(slug: @call_type.slug),
               class: "hidden mb-24",
               data: { classify_target: "selectedForm",
                       turbo_frame: "results" }) do |f|  %>

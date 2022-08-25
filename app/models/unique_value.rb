@@ -2,6 +2,9 @@ class UniqueValue < ApplicationRecord
   COMPLETION_COUNT = 3
   MIN_APPROVAL_CONFIDENCE = Classification::SOMEWHAT_CONFIDENT
 
+  extend FriendlyId
+  friendly_id :slug_candidates, use: [:slugged]
+
   has_paper_trail
 
   belongs_to :field
@@ -26,6 +29,10 @@ class UniqueValue < ApplicationRecord
   scope :not_classified_by, lambda { |user|
     where.not(id: classified_by(user))
   }
+
+  def classification_by(user)
+    classifications.where(user_id: user.id).first
+  end
 
   def update_approval_status
     return if classifications_count < COMPLETION_COUNT
@@ -67,5 +74,13 @@ class UniqueValue < ApplicationRecord
 
     # A single incident type for all classifications
     incident_type_ids.uniq.length == 1 && confident_enough
+  end
+
+  def slug_candidates
+    if data_set
+      ["#{data_set.slug}-#{value}"]
+    else
+      [:value]
+    end
   end
 end

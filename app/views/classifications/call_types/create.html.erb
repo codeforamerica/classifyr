@@ -13,7 +13,7 @@
   </div>
   <div class="text-center">
     <%= link_to "Classify Another Call Type",
-                  classify_data_sets_call_types_classifications_path(@data_set.slug),
+                  classify_data_sets_call_types_classifications_path(data_set_slug: @data_set.slug),
                   class: "button",
                   data: { turbo: false } %>
   </div>

@@ -156,6 +156,13 @@
         @apply text-gray-400 mr-3 flex-shrink-0 h-6 w-6;
     }
 
+    .line-clamp-1 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+    }
+
     .line-clamp-2 {
         overflow: hidden;
         display: -webkit-box;

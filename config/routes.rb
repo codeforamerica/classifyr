@@ -32,13 +32,17 @@ Rails.application.routes.draw do
 
   resources :classifications, only: [:index] do
     collection do
-      get "/call_types/data_sets/:slug/classify",
+      get "/call_types/data_sets/:data_set_slug/classify",
           to: "classifications/call_types#index",
           as: :classify_data_sets_call_types
 
-      post "/call_types/data_sets/:slug/classify",
+      get "/call_types/:slug",
+          to: "classifications/call_types#show",
+          as: :classify_call_type
+
+      post "/call_types/:slug",
            to: "classifications/call_types#create",
-           as: :data_sets_call_types
+           as: :create_call_types
 
       get :call_types
     end

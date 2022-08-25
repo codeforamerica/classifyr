@@ -5,6 +5,28 @@ RSpec.describe UniqueValue, type: :model do
   include_examples "papertrail versioning", :unique_value, "value"
   include_examples "associations", :unique_value, [:field, :classifications, :users]
 
+  describe "FriendlyID" do
+    context "when slug value is available" do
+      it "receives a random slug on creation" do
+        unique_value = create(:unique_value, value: "Minor Issue")
+        expect(unique_value.slug).to eq("#{unique_value.data_set.slug}-minor-issue")
+      end
+    end
+
+    context "when slug is already taken" do
+      it "appends a UUID to the slug" do
+        data_set = create(:data_set, title: "My Data Set")
+        field = create(:field, data_set:)
+        unique_value_1 = create(:unique_value, field:, value: "Minor Issue")
+        unique_value_2 = create(:unique_value, field:, value: "Minor Issue")
+
+        expect(unique_value_1.slug).not_to eq(unique_value_2.slug)
+        expect(unique_value_1.slug).to eq("my-data-set-minor-issue")
+        expect(unique_value_2.slug).to start_with("my-data-set-minor-issue")
+      end
+    end
+  end
+
   describe "scopes" do
     let(:role) { create(:role) }
     let(:jack) { create(:user, role:) }
