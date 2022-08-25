@@ -147,7 +147,7 @@ RSpec.describe DataSet, type: :model do
         context "when there is one field with common_type = 'Call Time" do
           it "returns nil" do
             data_set = create(:data_set, fields: [call_time_field])
-            expect(data_set.start_time).to eq(DateTime.parse(datetime))
+            expect(data_set.start_time).to eq(Chronic.parse(datetime))
           end
         end
 
@@ -179,7 +179,8 @@ RSpec.describe DataSet, type: :model do
 
         expect(data_set.reload.analyze!).to be(true)
 
-        expect(data_set.fields.find_by(heading: "call_type").unique_values.pluck(:value)).to eq(
+        expect(data_set.fields.find_by(heading: "call_type").unique_values.
+          pluck(:value).map { |v| v.delete("\u0002") }).to eq(
           [
             "Welfare Check",
             "Trespass",

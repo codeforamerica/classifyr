@@ -93,7 +93,7 @@
     }
 
     table tr td {
-        @apply first:p-6 font-medium text-sm text-gray-900 py-2 px-4 whitespace-nowrap;
+        @apply first:p-6 font-medium text-sm text-gray-900 py-2 px-3 whitespace-nowrap;
     }
 
     h3 {
