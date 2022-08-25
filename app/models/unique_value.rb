@@ -77,10 +77,8 @@ class UniqueValue < ApplicationRecord
   end
 
   def slug_candidates
-    if data_set
-      ["#{data_set.slug}-#{value}"]
-    else
-      [:value]
-    end
+    return [:value] unless data_set
+
+    ["#{data_set.slug}-#{value}"]
   end
 end
