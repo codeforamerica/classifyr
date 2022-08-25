@@ -47,11 +47,13 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_if_previous_slug(klass, slug)
-    if (slug_record = FriendlyId::Slug.find_by(sluggable_type: klass.to_s, slug:))
-      redirect_to slug_record.sluggable, status: :moved_permanently
-    else
+    slug_record = FriendlyId::Slug.find_by(sluggable_type: klass.to_s, slug:)
+
+    unless slug_record
       raise ActiveRecord::RecordNotFound, "can't find record with slug: \"#{slug}\""
     end
+
+    redirect_to slug_record.sluggable, status: :moved_permanently
   end
 
   private
