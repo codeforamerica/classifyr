@@ -1,0 +1,23 @@
+@layer components {
+  p.notice {
+    @apply py-2 px-3 bg-green-50 text-green-500
+           font-medium text-center;
+  }
+
+  p.notice-border {
+    @apply py-2 px-3 bg-green-50 text-green-500
+           font-medium text-center border-2
+           border-green-500;
+  }
+
+  p.alert {
+    @apply py-2 px-3 bg-orange-50 text-orange-500
+           font-medium text-center;
+  }
+
+  p.alert-border {
+    @apply py-2 px-3 bg-orange-50 text-orange-500
+           font-medium text-center border-2
+           border-orange-500;
+  }
+}

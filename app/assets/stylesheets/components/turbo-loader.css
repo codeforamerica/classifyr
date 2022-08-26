@@ -1,5 +1,15 @@
-turbo-frame .loading-element { display: none; }
-turbo-frame[busy] .loading-element { display: block; }
+turbo-frame .loading-element {
+  display: none;
+}
 
-turbo-frame .loading-hide { display: block; }
-turbo-frame[busy] .loading-hide { display: none; }
+turbo-frame[busy] .loading-element {
+  display: block;
+}
+
+turbo-frame .loading-hide {
+  display: block;
+}
+
+turbo-frame[busy] .loading-hide {
+  display: none;
+}

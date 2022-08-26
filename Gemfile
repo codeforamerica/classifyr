@@ -11,7 +11,7 @@ gem "puma", "~> 5.6"
 gem "importmap-rails", "~> 1.1"
 gem "turbo-rails", "~> 1.1"
 gem "stimulus-rails", "~> 1.1"
-gem "tailwindcss-rails", "2.0.5"
+gem "tailwindcss-rails", "2.0.12"
 gem "jbuilder", "~> 2.11"
 gem "seed_dump", "~> 3.3"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]

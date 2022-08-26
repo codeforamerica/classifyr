@@ -1,0 +1,17 @@
+@layer components {
+  .nav-item {
+    @apply text-gray-300 hover:bg-gray-700
+           hover:text-white flex items-center
+           px-2 py-2 text-sm font-medium
+           rounded-md;
+  }
+
+  .nav-item-active {
+    @apply text-white bg-indigo-600;
+  }
+
+  .nav-icon {
+    @apply text-gray-400 mr-3 flex-shrink-0
+           h-6 w-6;
+  }
+}
