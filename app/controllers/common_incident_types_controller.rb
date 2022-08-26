@@ -5,7 +5,7 @@ class CommonIncidentTypesController < ApplicationController
     @results = nil
 
     if params[:q].present?
-      @results = CommonIncidentType.search("%#{params[:q]&.downcase}%")
+      @results = CommonIncidentType.search(params[:q])
     end
 
     render layout: false

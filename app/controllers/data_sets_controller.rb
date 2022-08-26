@@ -4,7 +4,7 @@ class DataSetsController < ApplicationController
 
   def index
     authorize! :index, :data_sets
-    @data_sets = DataSet.ordered
+    @data_sets = DataSet.includes(files_attachments: :blob).ordered
   end
 
   def show
