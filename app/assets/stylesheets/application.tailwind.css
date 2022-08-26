@@ -1,13 +1,10 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
+@import "./components/tailwind.css";
 @import "./components/buttons.css";
 @import "./components/form.css";
 @import "./components/helpers.css";
 @import "./components/nav.css";
 @import "./components/notice.css";
 @import "./components/table.css";
-@import "./components/turob-loader.css";
+@import "./components/turbo-loader.css";
 @import "./components/typography.css";
 
