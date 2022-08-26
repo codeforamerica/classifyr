@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def index
     authorize! :index, :users
-    @users = User.order(created_at: :desc).page(params[:page] || 1).per(10)
+    @users = User.includes(:role).order(created_at: :desc).page(params[:page] || 1).per(10)
   end
 
   def edit

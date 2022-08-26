@@ -1,9 +1,6 @@
 <div class="header">
-  <div class="py-3 sm:px-3">
-    <h3>
-      <%= @data_set.title %>
-    </h3>
-    <p class="description">
+  <div class="sm:px-3">
+    <p class="pb-3 description">
       <%= @data_set.description %>
     </p>
   </div>
@@ -14,7 +11,6 @@
       <%= render partial: 'data_sets/data_details', locals: {label: 'Location', value: "#{data_set.city}, #{data_set.state}", index: 0} %>
       <%= render partial: 'data_sets/data_details', locals: {label: 'Size', value: "#{number_to_human_size(data_set.storage_size)} (#{data_set.row_count} x #{data_set.fields.count})", index: 1} %>
       <%= render partial: 'data_sets/data_details', locals: {label: 'License', value:  data_set.license, index: 0} %>
-
       <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="text-sm font-medium text-gray-500">Links</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
@@ -36,14 +32,11 @@
                 </li>
               <% end %>
             <% end %>
-
           </ul>
         </dd>
       </div>
-
       <%= render partial: 'data_sets/data_details', locals: {label: 'Exclusions', value: data_set.exclusions, index: 0} %>
       <%= render partial: 'data_sets/data_details', locals: {label: 'Format', value: data_set.format, index: 1} %>
-
       <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
         <dt class="text-sm font-medium text-gray-500">Scope</dt>
         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
@@ -104,4 +97,3 @@
     </dl>
   </div>
 </div>
-

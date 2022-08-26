@@ -20,6 +20,7 @@ gem "paper_trail", "~> 12.3"
 gem "devise", github: "heartcombo/devise", ref: "f8d1ea90bc3"
 gem "active_storage_validations", "~> 0.9"
 gem "kaminari", "~> 1.2"
+gem "pg_search", "~> 2.3"
 gem "chronic", "~> 0.10.2"
 gem "friendly_id", "~> 5.4.0"
 
