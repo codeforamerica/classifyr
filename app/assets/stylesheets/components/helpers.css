@@ -1,4 +1,8 @@
 @layer components {
+  .responsive-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 md:px-8;
+  }
+
   .three-four {
     @apply mx-auto md:w-3/4 w-full;
   }

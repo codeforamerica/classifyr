@@ -1,16 +1,16 @@
 <div class="w-full">
   <%= render 'shared/classifications/header' %>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+  <div class="responsive-container">
     <div class="mt-12 px-4 py-5 sm:px-6">
-      <div class="text-sm font-bold text-gray-500 pb-4"><%= @data_set.title %></div>
-      <div class="text-3xl font-bold text-black pb-4"><%= @call_type.value %></div>
+      <h6><%= @data_set.title %></h6>
+      <h2><%= @call_type.value %></h2>
       <div class="text-black pb-8">
         Please review the sample call records for this call type. From there, please classify the call type to the best of your ability by searching below for different common incident types. After you've selected an incident type, you can choose how confident you are about your selection. If you are unable to identify a common incident type to map to this call type, you can choose to skip this call type classification.
       </div>
       <section id="call-types-examples" class="bg-white mb-16">
-        <div class="text-lg font-bold text-black px-6 py-6 border-b-2 border-gray-200">
+        <h4 class="px-6 pt-6 border-b-2 border-gray-200">
           Example Call Type Records
-        </div>
+        </h4>
         <section class="px-6 pb-6 bg-white">
           <div class="overflow-x-auto">
             <table class="border-collapse">
@@ -39,7 +39,7 @@
         </section>
       </section>
       <section id="classify-call-type">
-        <div class="text-3xl font-bold text-black pb-4">Classify Call Type</div>
+        <h2>Classify Call Type</h2>
         <div class="text-black pb-8">
           Assign a common incident type to this data set.
         </div>
