@@ -1,0 +1,9 @@
+<div class="relative flex items-start">
+  <div class="flex items-center h-5">
+    <%= form.check_box field, class: form.object.errors[field].any? ? "invalid" : "" %>
+  </div>
+  <div class="ml-3 text-sm">
+    <label for="data_set_<%= field %>" class="<%= form.object.errors[field].any? ? "invalid" : "" %>"><%= label %></label>
+    <p class="text-gray-500 <%= form.object.errors[field].any? ? "invalid" : "" %>"><%= description %></p>
+  </div>
+</div>

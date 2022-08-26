@@ -180,7 +180,7 @@ RSpec.describe "DataSets", type: :request do
 
             expect(response).to have_http_status(:unprocessable_entity)
             expect(DataSet.count).to eq(0)
-            expect(response.body).to include("1 error prohibited this data_set from being saved")
+            expect(response.body).to include("Files can&#39;t be blank")
           end
         end
 
@@ -233,7 +233,7 @@ RSpec.describe "DataSets", type: :request do
             }
 
             expect(response).to have_http_status(:unprocessable_entity)
-            expect(response.body).to include("1 error prohibited this data_set from being saved")
+            expect(response.body).to include("Title can&#39;t be blank")
           end
         end
 

@@ -1,135 +1,58 @@
 <%= form_with(model: data_set, class: "contents") do |form| %>
-  <% if data_set.errors.any? %>
-    <div id="error_explanation" class="errors">
-      <h2><%= pluralize(data_set.errors.count, "error") %> prohibited this data_set from being saved:</h2>
-
-      <ul>
-        <% data_set.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-
-  <div class="sm:col-span-6">
-    <%= form.label :title %>
-    <div class="mt-1">
-      <%= form.text_field :title, placeholder: 'The name as listed on web page or report' %>
-    </div>
-  </div>
-
-  <div class="sm:col-span-6 my-4">
-    <%= form.label :description %>
-
-    <div class="mt-1">
-      <%= form.text_area :description, rows: 3, placeholder: 'Describe this data set from web page or report if possible, or in your own words if no explanation is provided.' %>
-    </div>
-  </div>
-
-  <div class="sm:col-span-6 my-4">
-    <%= form.label :source %>
-    <div class="mt-1">
-      <%= form.text_field :source, placeholder: 'The organization providing the data' %>
-    </div>
-  </div>
-
-  <div class="sm:col-span-6 my-4">
-    <%= form.label :data_link %>
-    <div class="mt-1">
-      <%= form.text_field :data_link, placeholder: 'Complete URL to original source / owner of data.' %>
-    </div>
-  </div>
-
-  <div class="sm:col-span-6 my-4">
-    <%= form.label :documentation_link %>
-    <div class="mt-1">
-      <%= form.text_field :documentation_link, placeholder: 'Complete URL to online documentation, data dictionary, etc.' %>
-    </div>
-  </div>
-
-  <div class="sm:col-span-6 my-4">
-    <%= form.label :api_links %>
-    <div class="mt-1">
-      <%= form.text_area :api_links, rows: 2, placeholder: 'Links to application programming interfaces, if available.  Add one link per line.' %>
-    </div>
-  </div>
-
-  <div class="sm:col-span-6 my-4">
-    <%= form.label :license %>
-    <div class="mt-1">
-      <%= form.text_field :license, placeholder: 'Intellectual property legal conditions for use of the data. Default is "presumed copyright" unless otherwise stated.' %>
-    </div>
-  </div>
-
-  <div class="sm:col-span-6 my-4">
-    <%= form.label :format %>
-    <div class="mt-1">
-      <%= form.select :format, options_for_select(['', 'OpenGov', 'Socrata', 'ArcGIS'], data_set.format), {}, { class: "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" } %>
-    </div>
-  </div>
-
-  <div class="sm:col-span-6 my-4">
-    <%= form.label :exclusions %>
-    <div class="mt-1">
-      <%= form.text_area :exclusions, rows: 2, placeholder: 'List types of records excluded from the dataset. See this example: http://gisapps1.mapoakland.com/callsforservice/' %>
-    </div>
-  </div>
-
-
-  <div class="sm:col-span-6 my-4">
-    <%= form.label :city %>
-    <div class="mt-1">
-      <%= form.text_field :city, placeholder: 'City or county where the data are reported' %>
-    </div>
-  </div>
-
-  <div class="sm:col-span-6 my-4">
-    <%= form.label :state %>
-    <div class="mt-1">
-      <%= form.select :state, options_for_select(us_states, data_set.state) %>
-    </div>
-  </div>
-
+  <%= render "shared/form/text_field", form: form,
+                                       field: :title,
+                                       placeholder: "The name as listed on web page or report" %>
+  <%= render "shared/form/text_area", form: form,
+                                      field: :description,
+                                      rows: 3,
+                                      placeholder: "Describe this data set from web page or report if possible, or in your own words if no explanation is provided." %>
+  <%= render "shared/form/text_field", form: form,
+                                       field: :source,
+                                       placeholder: "The organization providing the data" %>
+  <%= render "shared/form/text_field", form: form,
+                                       field: :data_link,
+                                       placeholder: "Complete URL to original source / owner of data." %>
+  <%= render "shared/form/text_field", form: form,
+                                       field: :documentation_link,
+                                       placeholder: "Complete URL to online documentation, data dictionary, etc." %>
+  <%= render "shared/form/text_area", form: form,
+                                       field: :api_links,
+                                       rows: 2,
+                                       placeholder: "Links to application programming interfaces, if available. Add one link per line." %>
+  <%= render "shared/form/text_field", form: form,
+                                       field: :license,
+                                       placeholder: 'Intellectual property legal conditions for use of the data. Default is "presumed copyright" unless otherwise stated.' %>
+  <%= render "shared/form/select", form: form,
+                                   field: :format,
+                                   options: options_for_select(['', 'OpenGov', 'Socrata', 'ArcGIS'], data_set.format) %>
+  <%= render "shared/form/text_area", form: form,
+                                       field: :exclusions,
+                                       rows: 2,
+                                       placeholder: "List types of records excluded from the dataset. See this example: http://gisapps1.mapoakland.com/callsforservice/" %>
+  <%= render "shared/form/text_field", form: form,
+                                       field: :city,
+                                       placeholder: 'City or county where the data are reported' %>
+  <%= render "shared/form/select", form: form,
+                                   field: :state,
+                                   options: options_for_select(us_states, form.object.state) %>
   <% if action_name == 'new' || action_name == 'create' %>
-    <div class="sm:col-span-6 my-4">
-      <%= form.label :files %>
-      <div class="mt-1">
-        <%= form.file_field :files, multiple: true %>
-      </div>
-    </div>
+    <%= render "shared/form/file_field", form: form, field: :files %>
   <% end %>
-
   <div class="mb-12">
     <fieldset>
       <div class="mt-4 space-y-4">
-        <div class="relative flex items-start">
-          <div class="flex items-center h-5">
-            <%= form.check_box :has_911 %>
-          </div>
-          <div class="ml-3 text-sm">
-            <label for="data_set_has_911">911 Data</label>
-            <p class="text-gray-500">This data set includes calls to 911.</p>
-          </div>
-        </div>
-        <div class="relative flex items-start">
-          <div class="flex items-center h-5">
-            <%= form.check_box :has_fire %>
-          </div>
-          <div class="ml-3 text-sm">
-            <label for="data_set_has_fire">Fire Data</label>
-            <p class="text-gray-500">This data set includes fire department calls.</p>
-          </div>
-        </div>
-        <div class="relative flex items-start">
-          <div class="flex items-center h-5">
-            <%= form.check_box :has_ems %>
-          </div>
-          <div class="ml-3 text-sm">
-            <label for="data_set_has_ems">EMS Data</label>
-            <p class="text-gray-500">This data set includes EMS calls.</p>
-          </div>
-        </div>
+        <%= render "shared/form/checkbox", form: form,
+                                           field: :has_911,
+                                           label: "911 Data",
+                                           description: "This data set includes calls to 911." %>
+        <%= render "shared/form/checkbox", form: form,
+                                           field: :has_fire,
+                                           label: "Fire Data",
+                                           description: "This data set includes fire department calls." %>
+        <%= render "shared/form/checkbox", form: form,
+                                           field: :has_ems,
+                                           label: "EMS Data",
+                                           description: "This data set includes EMS calls." %>
       </div>
     </fieldset>
   </div>
