@@ -21,6 +21,7 @@ gem "devise", github: "heartcombo/devise", ref: "f8d1ea90bc3"
 gem "active_storage_validations", "~> 0.9"
 gem "kaminari", "~> 1.2"
 gem "aws-sdk-rails", "~> 3.6"
+gem "aws-sdk-s3", "~> 1.114"
 gem "pg_search", "~> 2.3"
 gem "chronic", "~> 0.10.2"
 
