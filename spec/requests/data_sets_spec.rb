@@ -246,9 +246,9 @@ RSpec.describe "DataSets", type: :request do
       include_examples "unauthorized", :delete, :data_consumer
       include_examples "unauthorized", :delete, :data_reviewer
       include_examples "unauthorized", :delete, :volunteer
+      include_examples "unauthorized", :delete, :data_importer, :found
 
       include_examples "authorized", :delete, :data_admin, :found
-      include_examples "authorized", :delete, :data_importer, :found
 
       context "when authorized" do
         let(:role) { create(:role, name: :data_admin) }

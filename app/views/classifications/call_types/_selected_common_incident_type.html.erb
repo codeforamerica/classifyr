@@ -2,7 +2,7 @@
               class: "hidden mb-24",
               data: { classify_target: "selectedForm",
                       turbo_frame: "results" }) do |f|  %>
-  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :unique_value_id %>
   <%= f.hidden_field :common_type %>
   <%= f.hidden_field :value %>
   <%= f.hidden_field :common_incident_type_id, data: { classify_target: "incidentTypeId" } %>
@@ -15,26 +15,24 @@
       Back
     </button>
   </div>
-  <div class="flex">
-    <div data-classify-target="selectedIncidentCard" class="w-1/3">
+  <div class="grid grid-cols-1 xl:flex">
+    <div data-classify-target="selectedIncidentCard" class="mb-12 lg:max-w-sm 2xl:w-1/3">
     </div>
-    <div class="w-2/3 pl-12">
+    <div class="2xl:w-2/3 xl:pl-12">
       <h5 class="text-2xl font-bold mb-2">
         Assign a confidence rating
       </h5>
       <label class="text-base mb-6">
         How confident are you in your selection?
       </label>
-      <%= f.select :confidence_rating, [
-        ["Low Confidence", 0],
-        ["Somewhat Confident", 1],
-        ["Very Confident", 2]
-      ], {
-        prompt: "Select Confidence Rating"
-      }, {
-        class: "w-80 text-gray-500 text-base mb-12",
-        data: { action: "change->classify#selectConfidenceRating" }
-      } %>
+      <%= f.select :confidence_rating, options_for_select(Classification.confidence_ratings),
+        {
+          prompt: "Select Confidence Rating"
+        }, {
+          class: "w-80 text-gray-500 text-base mb-12",
+          data: { action: "change->classify#selectConfidenceRating" }
+        }
+      %>
       <div class="hidden" data-classify-target="showOnSelectedConfidenceRating">
         <p class="text-base mb-4 text-black">Describe your reasoning (optional)</p>
         <%= f.text_area :confidence_reasoning,

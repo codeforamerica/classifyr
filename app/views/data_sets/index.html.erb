@@ -8,42 +8,42 @@
     ]
   %>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-    <div class="mt-12 px-4 py-5 sm:px-6">
+    <div class="mt-12 py-5">
       <section class="px-6 pb-6 bg-white">
-        <div class="overflow-hidden">
+        <div class="overflow-x-auto">
           <table class="min-w-full">
             <thead class="bg-gray-50 border-b">
               <tr>
-                <th scope="col" class="text-sm px-6 py-4">Name</th>
-                <th scope="col" class="text-sm px-6 py-4">Location</th>
-                <th scope="col" class="text-sm px-6 py-4">Timeframe</th>
-                <th scope="col" class="text-sm px-6 py-4">Files</th>
-                <th scope="col" class="text-sm px-6 py-4">Rows</th>
-                <th scope="col" class="text-sm px-6 py-4">Fields</th>
+                <th scope="col">Name</th>
+                <th scope="col">Location</th>
+                <th scope="col">Timeframe</th>
+                <th scope="col">Files</th>
+                <th scope="col">Rows</th>
+                <th scope="col">Fields</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               <% @data_sets.each do |data_set| %>
                 <tr class="row">
-                  <td class="text-sm px-6 py-4">
+                  <td>
                     <%= link_to data_set.title, data_set %>
                   </td>
-                  <td class="text-sm px-6 py-4"><%= data_set.city %>, <%= data_set.state %></td>
-                  <td class="text-sm px-6 py-4"><%= data_set.timeframe %></td>
-                  <td class="text-sm px-6 py-4">
+                  <td><%= location(data_set) %></td>
+                  <td><%= data_set.timeframe %></td>
+                  <td>
                     <% data_set.files.each do |file| %>
                       <%= file.filename %>
                       <br>
                     <% end %>
                   </td>
-                  <td class="text-sm px-6 py-4">
+                  <td>
                     <%= data_set.row_count %>
                   </td>
-                  <td class="text-sm px-6 py-4">
+                  <td>
                     <%= data_set.datafile.headers ? data_set.files.first.headers.split(',').count : 0 %>
                   </td>
-                  <td class="text-sm px-6 py-4">
+                  <td>
                     <div class="inline-block ml-2">
                       <%= link_to edit_data_set_path(data_set), class: 'inline-block', title: 'Edit Dataset' do %>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

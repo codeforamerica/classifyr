@@ -52,7 +52,7 @@
       <div class="min-h-[320px]" data-controller="classify">
         <%= turbo_frame_tag "results" do %>
           <%= render 'shared/common_incident_types/results',
-              common_incident_types: @common_incident_types %>
+              common_incident_types: nil %>
         <% end %>
         <%= render "classifications/call_types/selected_common_incident_type" %>
       </div>
