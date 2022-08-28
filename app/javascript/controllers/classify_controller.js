@@ -112,12 +112,14 @@ export default class extends Controller {
     }
   }
 
-  submitUnknown() {
+  submitUnknown(e) {
+    e.preventDefault();
     this.incidentTypeUnknownTarget.setAttribute("value", true);
     this.selectedFormTarget.requestSubmit();
   }
 
-  submit() {
+  submit(e) {
+    e.preventDefault();
     this.selectedFormTarget.requestSubmit();
     this.selectedFormTarget.classList.add("hidden");
   }

@@ -21,6 +21,8 @@ gem "devise", github: "heartcombo/devise", ref: "f8d1ea90bc3"
 gem "active_storage_validations", "~> 0.9"
 gem "kaminari", "~> 1.2"
 gem "aws-sdk-rails", "~> 3.6"
+gem "pg_search", "~> 2.3"
+gem "chronic", "~> 0.10.2"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -51,6 +53,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara", "~> 3.37"
+  gem "capybara-screenshot", "~> 1.0"
   gem "selenium-webdriver", "~> 4.3"
   gem "webdrivers", "~> 5.0"
   gem "webmock", "~> 3.14"

@@ -1,6 +1,22 @@
 require "csv"
 
 class CommonIncidentType < ApplicationRecord
+  include PgSearch::Model
+  pg_search_scope :search,
+                  against: [
+                    :code, :description, :notes,
+                    :humanized_code, :humanized_description
+                  ],
+                  using: {
+                    tsearch: {
+                      dictionary: "english",
+                      prefix: true,
+                    },
+                    trigram: {
+                      word_similarity: true,
+                    },
+                  }
+
   has_paper_trail
 
   EXPORT_COLUMNS = %w[id standard version code description notes humanized_code humanized_description].freeze

@@ -54,12 +54,36 @@ RSpec.describe Field, type: :model do
       end
     end
 
-    describe "#pick_random_value" do
-      it "returns a random unique value" do
-        field = create(:field, common_type: Field::VALUE_TYPES[0])
-        unique_value = create(:unique_value, field:)
+    describe "#pick_value_to_classify_for" do
+      context "when unique_values.any? is true" do
+        it "returns the first available unique_value for the given user" do
+          role = create(:role)
+          jack = create(:user, role:)
+          john = create(:user, role:)
 
-        expect(field.pick_random_value).to eq unique_value
+          field = create(:field, common_type: Classification::CALL_TYPE)
+
+          unique_value_1 = create(:unique_value, field:) # already classified by jack
+          unique_value_2 = create(:unique_value, field:, classifications_count: 3) # completed
+          unique_value_3 = create(:unique_value, field:, classifications_count: 2)
+          # lowest amount of classifications
+          unique_value_4 = create(:unique_value, field:, classifications_count: 1)
+
+          create(:classification, unique_value: unique_value_1, user: jack)
+          create(:classification, unique_value: unique_value_2, user: john)
+          create(:classification, unique_value: unique_value_3, user: john)
+
+          expect(field.pick_value_to_classify_for(jack)).to eq unique_value_4
+        end
+      end
+
+      context "when unique_values.any? is false" do
+        it "returns nil" do
+          jack = create(:user)
+          field = create(:field, common_type: Classification::CALL_TYPE)
+
+          expect(field.pick_value_to_classify_for(jack)).to be_nil
+        end
       end
     end
   end

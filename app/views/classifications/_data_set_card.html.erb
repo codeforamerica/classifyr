@@ -1,21 +1,7 @@
- <%= link_to classify_data_sets_call_types_classifications_path(data_set.id) do %>
-  <div class="bg-white p-6 border-gray-200 shadow rounded">
-    <div class="flex flex-row mb-4">
-      <div class="grow text-gray-500 font-medium"><%= data_set.title %></div>
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
-      </svg>
-    </div>
-    <div class="text-4xl text-black font-bold mb-4">
-      37%
-    </div>
-    <div class="mb-3">
-      <div class="w-full rounded bg-gray-100 h-1">
-        <div class="bg-purple-600 rounded h-1" style="width: 37%"></div>
-      </div>
-    </div>
-    <div class="text-xs text-gray-400">
-      37/99 complete
-    </div>
-  </div>
+ <% if data_set.completed? || !authorized?(:create, :classifications) %>
+  <%= render "data_set_card_content", data_set: data_set %>
+<% else %>
+  <%= link_to classify_data_sets_call_types_classifications_path(data_set.id) do %>
+    <%= render "data_set_card_content", data_set: data_set %>
+  <% end %>
 <% end %>
