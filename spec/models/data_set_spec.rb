@@ -46,15 +46,16 @@ RSpec.describe DataSet, type: :model do
         create_list(:classification, 1, unique_value: unique_value_3)
 
         # Oldest with lowest completion first
-        expect(described_class.to_classify.map(&:id)).to eq(
-          [
-            # data_set_5.id is not present because it doesn't have a Call Type field
-            data_set_3.id, # Oldest one with no completion
-            data_set_4.id, # More recent with no completion
-            data_set_2.id, # Partial completion 1/2 unique values classified
-            data_set_1.id, # Completed is last
-          ],
-        )
+        expect(described_class.to_classify.map(&:id)).to \
+          eq(
+           [
+             # data_set_5.id is not present because it doesn't have a Call Type field
+             data_set_3.id, # Oldest one with no completion
+             data_set_4.id, # More recent with no completion
+             data_set_2.id, # Partial completion 1/2 unique values classified
+             data_set_1.id, # Completed is last
+           ],
+         )
       end
     end
   end
@@ -162,11 +163,6 @@ RSpec.describe DataSet, type: :model do
 
     describe "#analyze!" do
       it "analyses a datafile" do
-        CSV.foreach(Rails.root.join("db/import/apco_common_incident_types_2.103.2-2019.csv"),
-                    headers: true) do |line|
-          CommonIncidentType.create! code: line[0], description: line["description"], notes: line["notes"]
-        end
-
         data_set = create(:data_set, files: [
                             Rack::Test::UploadedFile.new("spec/support/files/police-incidents-2022.csv", "text/csv"),
                           ])
@@ -179,16 +175,15 @@ RSpec.describe DataSet, type: :model do
 
         expect(data_set.reload.analyze!).to be(true)
 
-        expect(data_set.fields.find_by(heading: "call_type").unique_values.
-          pluck(:value).map { |v| v.delete("\u0002") }).to eq(
-          [
-            "Welfare Check",
-            "Trespass",
-            "Mental Health Issue",
-            "Intoxication",
-            "DUI",
-          ],
-        )
+        expect(data_set.fields.find_by(heading: "call_type").unique_values
+                       .pluck(:value).map { |v| v.delete("\u0002") }).to \
+                         eq([
+                              "Welfare Check",
+                              "Trespass",
+                              "Mental Health Issue",
+                              "Intoxication",
+                              "DUI",
+                            ])
       end
     end
 
