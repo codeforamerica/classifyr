@@ -83,25 +83,15 @@ class DataSet < ApplicationRecord
     return unless fields.empty?
 
     set_metadata!
-    # check there's an attached file
-    datafile.headers.split(",").each_with_index do |heading, i|
-      datafile.with_file do |f|
-        fields.create heading:, position: i, unique_value_count: unique_value_count(i, f.path),
-                      empty_value_count: blank_value_count(i, f.path), sample_data: sample_data(i, f.path)
+    datafile.with_file do |f|
+      contents = CSV.read(f, headers: true)
+      contents.headers.each_with_index do |heading, i|
+        fields.create heading:, position: i,
+                     unique_value_count: contents[heading].uniq.length,
+                     empty_value_count: contents[heading].count(''),
+                     sample_data: contents[heading].uniq[0..9]
       end
     end
-  end
-
-  def sample_data(i, path)
-    `sed -E 's/("([^"]*)")?,/\2\t/g' #{path} | tail -n +2 | cut -f#{i + 1} | sort | uniq | head`
-  end
-
-  def unique_value_count(i, path)
-    `sed -E 's/("([^"]*)")?,/\2\t/g' #{path} | cut -f#{i + 1} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' | sort | uniq | wc -l`.to_i - 1
-  end
-
-  def blank_value_count(i, path)
-    `sed -E 's/("([^"]*)")?,/\2\t/g' #{path} | cut -f#{i + 1} | grep -v -e '[[:space:]]*$' | wc -l`
   end
 
   def set_metadata!
