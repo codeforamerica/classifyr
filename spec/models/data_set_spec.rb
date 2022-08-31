@@ -176,14 +176,13 @@ RSpec.describe DataSet, type: :model do
         expect(data_set.reload.analyze!).to be(true)
 
         expect(data_set.fields.find_by(heading: "call_type").unique_values
-                       .pluck(:value).map { |v| v.delete("\u0002") }).to \
-                         eq([
-                              "Welfare Check",
-                              "Trespass",
-                              "Mental Health Issue",
-                              "Intoxication",
-                              "DUI",
-                            ])
+                       .pluck(:value)).to(eq([
+                                               "Welfare Check",
+                                               "DUI",
+                                               "Intoxication",
+                                               "Mental Health Issue",
+                                               "Trespass",
+                                             ]))
       end
     end
 

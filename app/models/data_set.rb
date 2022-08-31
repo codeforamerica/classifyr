@@ -102,14 +102,15 @@ class DataSet < ApplicationRecord
     return if analyzed?
 
     datafile.with_file do |f|
+      contents = CSV.read(f, headers: true)
       fields.mapped.each do |field|
-        field.min_value = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | tail -n +2 | cut -f#{field.position + 1} | sort | uniq | head -1`&.chomp
-        field.max_value = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | tail -n +2 | cut -f#{field.position + 1} | sort | uniq | tail -1`&.chomp
+        field.min_value = contents[field.heading].compact.min
+        field.max_value = contents[field.heading].compact.max
 
         if Field::VALUE_TYPES.include? field.common_type
-          `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} | tail -n +2 | cut -f#{field.position + 1} | sed 's/^[[:blank:]]*//;s/[[:blank:]]*$//' | sort -rn | uniq -c`.split("\n").each do |line|
-            x = line.strip.split("\s", 2)
-            field.unique_values.build value: x[1], frequency: x[0]
+          contents[field.heading].uniq.each do |value|
+            field.unique_values.build value: value,
+                                      frequency: contents[field.heading].count(value)
           end
         end
 
