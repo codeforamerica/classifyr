@@ -20,4 +20,12 @@
            font-medium text-center border-2
            border-orange-500;
   }
+
+  .authenticated-notice {
+    @apply bg-green-100 border-l-4 border-green-700 text-white;
+  }
+
+  .authenticated-error {
+    @apply bg-red-300 border-l-4 border-red-700 text-black;
+  }
 }
