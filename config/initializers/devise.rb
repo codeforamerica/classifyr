@@ -26,7 +26,8 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = "no-reply@classifyr.com"
+  email_domain = ENV.fetch("RAILS_EMAIL_DOMAIN", "classifyr.org")
+  config.mailer_sender = "no-reply@#{email_domain}"
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
