@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_220_825_071_049) do
+ActiveRecord::Schema[7.0].define(version: 20_220_829_191_431) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -74,6 +74,8 @@ ActiveRecord::Schema[7.0].define(version: 20_220_825_071_049) do
     t.datetime "updated_at", null: false
     t.string "humanized_code"
     t.string "humanized_description"
+    t.index %w[standard version code], name: "index_common_incident_types_on_standard_and_version_and_code",
+                                       unique: true
   end
 
   create_table "data_sets", force: :cascade do |t|
