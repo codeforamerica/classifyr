@@ -35,6 +35,9 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
+  if ENV['AWS_S3_BUCKET'].present?
+    config.active_storage.service = :amazon
+  end
 
   # Raise an error if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true
@@ -70,8 +73,12 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
-  config.action_mailer.delivery_method = :letter_opener
-  config.action_mailer.perform_deliveries = true
+  config.action_mailer.delivery_method = ENV.fetch('RAILS_DELIVERY_METHOD',
+                                                   'letter_opener').to_sym
+  if config.action_mailer.delivery_method == :letter_opener
+    config.action_mailer.perform_deliveries = true
+  end
+
 
   config.hosts << /^.+\.us-.+-\d.elb.amazonaws.com/
   config.hosts << /^.+\.nprd.classifyr.org/

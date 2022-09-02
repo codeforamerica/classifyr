@@ -23,6 +23,7 @@ RSpec.describe "Auth flow", type: :feature do
 
       # Redirects to Log in page
       expect(page).to have_current_path(new_user_session_path)
+      expect(page).to have_content("A message with a confirmation link has been sent to your email address.")
 
       # Expect confirmation email to be sent out
       expect(ActionMailer::Base.deliveries.length).to eq(1)
