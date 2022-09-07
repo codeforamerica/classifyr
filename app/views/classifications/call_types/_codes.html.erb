@@ -1,0 +1,23 @@
+<h4 class="px-6 pt-6 border-b-2 border-gray-200">
+  APCO Codes
+</h4>
+<section class="px-6 pb-6 bg-white mb-12 h-96 overflow-y-scroll">
+  <table class="table-fixed lg:w-full border-collapse">
+    <thead>
+      <tr>
+        <th class="w-1/5" scope="col">Code</th>
+        <th class="w-2/5" scope="col">Description</th>
+        <th class="w-2/5" scope="col">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% apco_codes.each do |apco_code| %>
+        <tr class="row">
+          <td class="p-1"><%= apco_code.code %></td>
+          <td class="p-1 break-normal whitespace-normal"><%= apco_code.description %></td>
+          <td class="p-1 break-normal whitespace-normal"><%= apco_code.notes %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

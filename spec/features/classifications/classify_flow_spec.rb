@@ -87,6 +87,22 @@ RSpec.describe "Classify call types", type: :feature, js: true do
     end
   end
 
+  context "when checking the APCO codes table" do
+    it "displays the APCO codes" do
+      go_to_classify(jack, data_set_1)
+      check_classify_page(unique_value_1_1)
+
+      find("#show-apco").click
+
+      first_cit = CommonIncidentType.first
+      last_cit = CommonIncidentType.last
+
+      expect(page).to have_content("APCO Codes")
+      expect(page).to have_content(first_cit.code)
+      expect(page).to have_content(last_cit.code)
+    end
+  end
+
   context "when cancelling and trying again" do
     it "allows the user to search again" do
       go_to_classify(jack, data_set_1)

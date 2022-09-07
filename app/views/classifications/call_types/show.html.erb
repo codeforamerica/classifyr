@@ -42,11 +42,26 @@
           </div>
         </section>
       </section>
-      <section id="classify-call-type">
-        <h2>Classify Call Type</h2>
-        <div class="text-black pb-8">
-          Assign a common incident type to this data set.
+      <section id="classify-call-type" data-controller="visibility">
+        <div class="flex flex-col lg:flex-row justify-between">
+          <div>
+            <h2>Classify Call Type</h2>
+            <div class="text-black pb-8">
+              Assign a common incident type to this data set.
+            </div>
+          </div>
+          <div class="mb-8">
+            <button id="show-apco" class="button" data-action="click->visibility#show" data-visibility-target="temporaryHide">
+              View all APCO codes
+            </button>
+            <button class="button hidden" data-action="click->visibility#hide" data-visibility-target="hide">
+              Hide APCO codes
+            </button>
+          </div>
         </div>
+        <section data-visibility-target="hide" class="hidden bg-white mb-12">
+          <%= render 'codes', apco_codes: @apco_codes %>
+        </section>
         <% if @existing_classication %>
           <p class="mx-auto notice-border w-1/2 mb-12" id="notice">
             You classified this call type
