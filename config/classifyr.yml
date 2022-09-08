@@ -1,0 +1,18 @@
+# Custom Classifyr configurations.
+default: &default
+  role:
+    # The role that is assigned to new users when they are created.
+    default: volunteer
+
+development:
+  <<: *default
+  role:
+    default: data_admin
+
+test:
+  <<: *default
+
+production:
+  <<: *default
+  role:
+    default: data_classifier
