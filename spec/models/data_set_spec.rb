@@ -188,6 +188,7 @@ RSpec.describe DataSet, type: :model do
         expect(data_set.fields.find_by(heading: "call_type").unique_values
                        .pluck(:value)).to(eq([
                                                "Welfare Check",
+                                               "Fraud Under $250",
                                                "DUI",
                                                "Intoxication",
                                                "Mental Health Issue",

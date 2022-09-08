@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_07_015121) do
+ActiveRecord::Schema[7.0].define(version: 20_220_907_084_807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -26,7 +26,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_015121) do
     t.date "start_date"
     t.date "end_date"
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+    t.index %w[record_type record_id name blob_id], name: "index_active_storage_attachments_uniqueness",
+                                                    unique: true
   end
 
   create_table "active_storage_blobs", force: :cascade do |t|
@@ -44,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_015121) do
   create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
-    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+    t.index %w[blob_id variation_digest], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "classifications", force: :cascade do |t|
@@ -60,12 +61,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_015121) do
     t.bigint "unique_value_id"
     t.index ["common_incident_type_id"], name: "index_classifications_on_common_incident_type_id"
     t.index ["unique_value_id"], name: "index_classifications_on_unique_value_id"
-    t.index ["user_id", "unique_value_id"], name: "index_classifications_on_user_id_and_unique_value_id", unique: true
+    t.index %w[user_id unique_value_id], name: "index_classifications_on_user_id_and_unique_value_id", unique: true
   end
 
   create_table "common_incident_types", force: :cascade do |t|
     t.string "standard", default: "APCO"
-    t.string "code_version", default: "2.103.2-2019"
+    t.string "code_code_version", default: "2.103.2-2019"
     t.string "code"
     t.string "description"
     t.string "notes"
@@ -73,7 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_015121) do
     t.datetime "updated_at", null: false
     t.string "humanized_code"
     t.string "humanized_description"
-    t.index ["standard", "code_version", "code"], name: "index_common_incident_types_on_standard_and_version_and_code"
+    t.index %w[standard code_version code], name: "index_common_incident_types_on_standard_and_version_and_code"
   end
 
   create_table "data_sets", force: :cascade do |t|
@@ -124,9 +125,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_015121) do
     t.string "sluggable_type", limit: 50
     t.string "scope"
     t.datetime "created_at"
-    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
-    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
-    t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+    t.index %w[slug sluggable_type scope], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope",
+                                           unique: true
+    t.index %w[slug sluggable_type], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index %w[sluggable_type sluggable_id], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -147,6 +149,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_015121) do
     t.string "slug"
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.json "examples", default: [], null: false
     t.index ["field_id"], name: "index_unique_values_on_field_id"
     t.index ["slug"], name: "index_unique_values_on_slug", unique: true
   end
@@ -185,7 +188,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_015121) do
     t.text "object"
     t.datetime "created_at"
     t.text "object_changes"
-    t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+    t.index %w[item_type item_id], name: "index_versions_on_item_type_and_item_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

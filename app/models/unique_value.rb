@@ -44,12 +44,23 @@ class UniqueValue < ApplicationRecord
     end
   end
 
-  def examples
+  def find_or_generate_examples
+    return examples if examples.present?
+
+    new_examples = generate_examples
+    update(examples: new_examples)
+    new_examples
+  end
+
+  def generate_examples
     data = []
     tail = "| tail -n +2 | "
+
     field.data_set.datafile.with_file do |f|
-      data = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} #{tail} grep "#{value}" | head -5`&.split("\n")&.map do |line|
-        line.split("\t")
+      grep_value = escape_for_grep(value)
+      data = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} #{tail} grep "#{grep_value}" | head -5`
+      &.split("\n")&.map do |line|
+        line.delete("\u0002").delete("\r").split("\t")
       end
     end
 
@@ -57,6 +68,10 @@ class UniqueValue < ApplicationRecord
   end
 
   private
+
+  def escape_for_grep(str)
+    str.gsub("$", "\\$")
+  end
 
   def can_auto_approve?
     confident_enough = true
