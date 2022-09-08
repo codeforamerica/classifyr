@@ -5,7 +5,7 @@ class CommonIncidentTypesController < ApplicationController
     @results = nil
 
     if params[:q].present?
-      @results = CommonIncidentType.search(params[:q])
+      @results = CommonIncidentType.search(params[:q]).to_a
     end
 
     render layout: false

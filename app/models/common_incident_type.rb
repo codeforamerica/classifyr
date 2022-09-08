@@ -5,7 +5,8 @@ class CommonIncidentType < ApplicationRecord
   pg_search_scope :search,
                   against: [
                     :code, :description, :notes,
-                    :humanized_code, :humanized_description
+                    :humanized_code, :humanized_description,
+                    :humanized_notes
                   ],
                   using: {
                     tsearch: {
@@ -24,6 +25,18 @@ class CommonIncidentType < ApplicationRecord
   has_many :classifications, dependent: :destroy
 
   scope :apco, -> { where(standard: "APCO") }
+
+  def formatted_code
+    humanized_code || code
+  end
+
+  def formatted_description
+    humanized_description || description
+  end
+
+  def formatted_notes
+    humanized_notes || notes
+  end
 
   def self.to_csv
     cits = all
