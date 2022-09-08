@@ -4,7 +4,12 @@
                              required: defined?(required) ? required : false %>
   </div>
   <div class="ml-3 text-sm">
-    <label for="data_set_<%= field %>" class="<%= form.object.errors[field].any? ? "invalid" : "" %> <%= defined?(required) ? "required" : "" %>"><%= label %></label>
+    <label
+      for="data_set_<%= field %>"
+      class="<%= form.object.errors[field].any? ? "invalid" : "" %> <%= defined?(required) ? "required" : "" %>"
+    >
+      <%= label %>
+    </label>
     <p class="text-gray-500 <%= form.object.errors[field].any? ? "invalid" : "" %>"><%= description %></p>
   </div>
 </div>
