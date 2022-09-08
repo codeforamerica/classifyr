@@ -41,6 +41,10 @@
            rounded;
   }
 
+  .required:after {
+    content:"*";
+  }
+
   .jumbo {
     @apply font-semibold text-3xl mb-5
            text-indigo-600;

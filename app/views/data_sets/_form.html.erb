@@ -1,7 +1,8 @@
 <%= form_with(model: data_set, class: "contents") do |form| %>
   <%= render "shared/form/text_field", form: form,
                                        field: :title,
-                                       placeholder: "The name as listed on web page or report" %>
+                                       placeholder: "The name as listed on web page or report",
+                                       required: true %>
   <%= render "shared/form/text_area", form: form,
                                       field: :description,
                                       rows: 3,
@@ -36,7 +37,7 @@
                                    field: :state,
                                    options: options_for_select(us_states, form.object.state) %>
   <% if action_name == 'new' || action_name == 'create' %>
-    <%= render "shared/form/file_field", form: form, field: :files %>
+    <%= render "shared/form/file_field", form: form, field: :files, required: true %>
   <% end %>
   <div class="mb-12">
     <fieldset>
