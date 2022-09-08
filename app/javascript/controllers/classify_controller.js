@@ -24,9 +24,7 @@ export default class extends Controller {
       "[data-classify-target='incidentTypeCard']"
     );
 
-    // Disable search input
-    const selectedEvent = new CustomEvent("selected-incident-type");
-    window.dispatchEvent(selectedEvent);
+    this.disableSearchInput();
 
     // Hide "Select" button of selected card and
     // show "Selected" button before cloning
@@ -57,9 +55,7 @@ export default class extends Controller {
     this.selectedIncidentCardTarget.innerHTML = "";
     this.selectedFormTarget.classList.add("hidden");
 
-    // Enable search input
-    const deselectedEvent = new CustomEvent("deselected-incident-type");
-    window.dispatchEvent(deselectedEvent);
+    this.enableSearchInput();
   }
 
   selectConfidenceRating(event) {
@@ -114,6 +110,7 @@ export default class extends Controller {
 
   submitUnknown(e) {
     e.preventDefault();
+    this.disableSearchInput();
     this.incidentTypeUnknownTarget.setAttribute("value", true);
     this.selectedFormTarget.requestSubmit();
   }
@@ -122,5 +119,16 @@ export default class extends Controller {
     e.preventDefault();
     this.selectedFormTarget.requestSubmit();
     this.selectedFormTarget.classList.add("hidden");
+  }
+
+  enableSearchInput() {
+    // Enable search input
+    const deselectedEvent = new CustomEvent("deselected-incident-type");
+    window.dispatchEvent(deselectedEvent);
+  }
+
+  disableSearchInput() {
+    const selectedEvent = new CustomEvent("selected-incident-type");
+    window.dispatchEvent(selectedEvent);
   }
 }
