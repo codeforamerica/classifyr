@@ -85,6 +85,6 @@ Rails.application.configure do
     }
   end
 
-  config.hosts << /^.+\.us-.+-\d.elb.amazonaws.com/
-  config.hosts << /^.+\.nprd.classifyr.org/
+  config.hosts << /^[\w-\.]+\.us-.+-\d\.elb\.amazonaws\.com/
+  config.hosts << /^.+\.nprd\.classifyr\.org/
 end
