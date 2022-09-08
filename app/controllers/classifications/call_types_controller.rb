@@ -22,6 +22,7 @@ class Classifications::CallTypesController < ApplicationController
   def show
     authorize! :create, :classifications
 
+    @apco_codes = CommonIncidentType.apco
     @data_set = @call_type.data_set
     @fields = @data_set.fields.order(:position)
     @data = @call_type&.examples

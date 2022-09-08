@@ -71,14 +71,19 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
-
+  # Configure mail sending based on the delivery method.
   config.action_mailer.delivery_method = ENV.fetch('RAILS_DELIVERY_METHOD',
                                                    'letter_opener').to_sym
-  if config.action_mailer.delivery_method == :letter_opener
+  case config.action_mailer.delivery_method
+  when :letter_opener
     config.action_mailer.perform_deliveries = true
+    config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  when :ses
+    config.action_mailer.default_url_options = {
+      host: ENV.fetch("RAILS_HOST", "development.nprd.classifyr.org"),
+      protocol: 'https'
+    }
   end
-
 
   config.hosts << /^.+\.us-.+-\d.elb.amazonaws.com/
   config.hosts << /^.+\.nprd.classifyr.org/

@@ -23,6 +23,8 @@ class CommonIncidentType < ApplicationRecord
 
   has_many :classifications, dependent: :destroy
 
+  scope :apco, -> { where(standard: "APCO") }
+
   def self.to_csv
     cits = all
     CSV.generate do |csv|
