@@ -14,7 +14,7 @@ RSpec.describe "Update a user's role", type: :feature do
     find("#sidenav").click_on "Users"
     expect(page).to have_content("List of users in the system.")
 
-    find(:xpath, "//a[@href='/users/#{volunteer.slug}/edit']", match: :first).click
+    find(:xpath, "//a[@href='/admin/users/#{volunteer.slug}/edit']", match: :first).click
     expect(page).to have_content(volunteer.email)
     expect(page).to have_content("Make updates to an existing user.")
 

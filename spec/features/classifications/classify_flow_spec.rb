@@ -57,9 +57,9 @@ RSpec.describe "Classify call types", type: :feature, js: true do
   end
 
   def check_incident_type_card(incident_type)
-    expect(page).to have_content(incident_type.code)
-    expect(page).to have_content(incident_type.description)
-    expect(page).to have_content(incident_type.notes)
+    expect(page).to have_content(incident_type.formatted_code)
+    expect(page).to have_content(incident_type.formatted_description)
+    expect(page).to have_content(incident_type.formatted_notes)
   end
 
   def check_data_completion(data_set, percent, completed, total)
@@ -98,8 +98,8 @@ RSpec.describe "Classify call types", type: :feature, js: true do
       last_cit = CommonIncidentType.last
 
       expect(page).to have_content("APCO Codes")
-      expect(page).to have_content(first_cit.code)
-      expect(page).to have_content(last_cit.code)
+      expect(page).to have_content(first_cit.formatted_code)
+      expect(page).to have_content(last_cit.formatted_code)
     end
   end
 

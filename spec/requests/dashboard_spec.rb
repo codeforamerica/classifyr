@@ -56,7 +56,7 @@ RSpec.describe "Dashboards", type: :request do
         get(response.headers["Location"])
 
         html = Nokogiri::HTML(response.body.to_s)
-        users_link = html.css('//a[@href="/users"]')
+        users_link = html.css('//a[@href="/admin/users"]')
         expect(users_link.length).to eq(1)
       end
     end

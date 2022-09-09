@@ -1,8 +1,8 @@
 require "rails_helper"
 
-RSpec.describe "Users", type: :request do
+RSpec.describe "Admin::Users", type: :request do
   describe "#index" do
-    let(:path) { "/users" }
+    let(:path) { "/admin/users" }
 
     include_examples "unauthenticated", :get
 
@@ -40,7 +40,7 @@ RSpec.describe "Users", type: :request do
 
   describe "#edit" do
     let(:edit_user) { create(:user, role: nil) }
-    let(:path) { "/users/#{edit_user.slug}/edit" }
+    let(:path) { "/admin/users/#{edit_user.slug}/edit" }
 
     include_examples "unauthenticated", :get
 
@@ -61,14 +61,14 @@ RSpec.describe "Users", type: :request do
 
         context "when user == current_user" do
           it "redirects" do
-            get "/users/#{user.slug}/edit"
+            get "/admin/users/#{user.slug}/edit"
             expect(response).to have_http_status(:redirect)
           end
         end
 
         context "when user != current_user" do
           it "renders the 'edit' template" do
-            get "/users/#{edit_user.slug}/edit"
+            get "/admin/users/#{edit_user.slug}/edit"
             expect(response.body).to include("Make updates to an existing user.")
           end
         end
@@ -78,7 +78,7 @@ RSpec.describe "Users", type: :request do
 
   describe "#update" do
     let(:update_user) { create(:user, role: nil) }
-    let(:path) { "/users/#{update_user.slug}" }
+    let(:path) { "/admin/users/#{update_user.slug}" }
     let(:valid_params) do
       {
         user: {
@@ -106,7 +106,7 @@ RSpec.describe "Users", type: :request do
 
         context "when user == current_user" do
           it "redirects" do
-            patch "/users/#{user.slug}", params: valid_params
+            patch "/admin/users/#{user.slug}", params: valid_params
             expect(response).to have_http_status(:redirect)
           end
         end
@@ -114,7 +114,7 @@ RSpec.describe "Users", type: :request do
         context "when user != current_user" do
           context "with invalid params" do
             it "returns an error" do
-              patch "/users/#{update_user.slug}", params: {
+              patch "/admin/users/#{update_user.slug}", params: {
                 user: {
                   email: nil,
                 },
@@ -127,7 +127,7 @@ RSpec.describe "Users", type: :request do
 
           context "with valid params" do
             it "updates a user" do
-              patch "/users/#{update_user.slug}", params: valid_params
+              patch "/admin/users/#{update_user.slug}", params: valid_params
 
               expect(response).to have_http_status(:found)
               expect(update_user.reload.role.to_s).to eq("Other")
@@ -140,7 +140,7 @@ RSpec.describe "Users", type: :request do
 
   describe "#destroy" do
     let(:destroy_user) { create(:user, role: nil) }
-    let(:path) { "/users/#{destroy_user.slug}" }
+    let(:path) { "/admin/users/#{destroy_user.slug}" }
 
     include_examples "unauthenticated", :delete
 
@@ -161,8 +161,9 @@ RSpec.describe "Users", type: :request do
 
         context "when user == current_user" do
           it "redirects" do
-            delete "/users/#{user.slug}"
+            delete "/admin/users/#{user.slug}"
             expect(response).to have_http_status(:redirect)
+            expect(User.find_by(id: user.id)).not_to be_nil
           end
         end
 
@@ -170,7 +171,7 @@ RSpec.describe "Users", type: :request do
           context "with invalid params" do
             it "returns an error" do
               expect do
-                delete "/users/123"
+                delete "/admin/users/123"
               end.to raise_error(ActiveRecord::RecordNotFound)
             end
           end
@@ -180,7 +181,8 @@ RSpec.describe "Users", type: :request do
               delete path
 
               expect(response).to have_http_status(:found)
-              expect(DataSet.count).to eq(0)
+              expect(User.find_by(id: user.id)).not_to be_nil
+              expect(User.find_by(id: destroy_user.id)).to be_nil
             end
           end
         end

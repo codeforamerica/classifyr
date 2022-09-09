@@ -10,7 +10,6 @@ RSpec.describe "DataSets", type: :request do
     include_examples "unauthenticated", :get
 
     context "when authenticated" do
-      include_examples "unauthorized", :get, :data_classifier
       include_examples "unauthorized", :get, :data_consumer
       include_examples "unauthorized", :get, :data_reviewer
 
@@ -48,7 +47,6 @@ RSpec.describe "DataSets", type: :request do
     include_examples "unauthenticated", :get
 
     context "when authenticated" do
-      include_examples "unauthorized", :get, :data_classifier
       include_examples "unauthorized", :get, :data_consumer
       include_examples "unauthorized", :get, :data_reviewer
 
@@ -89,7 +87,6 @@ RSpec.describe "DataSets", type: :request do
     include_examples "unauthenticated", :get
 
     context "when authenticated" do
-      include_examples "unauthorized", :get, :data_classifier
       include_examples "unauthorized", :get, :data_consumer
       include_examples "unauthorized", :get, :data_reviewer
       include_examples "unauthorized", :get, :volunteer
@@ -117,7 +114,6 @@ RSpec.describe "DataSets", type: :request do
     include_examples "unauthenticated", :get
 
     context "when authenticated" do
-      include_examples "unauthorized", :get, :data_classifier
       include_examples "unauthorized", :get, :data_consumer
       include_examples "unauthorized", :get, :data_reviewer
       include_examples "unauthorized", :get, :volunteer
@@ -155,7 +151,6 @@ RSpec.describe "DataSets", type: :request do
     include_examples "unauthenticated", :post
 
     context "when authenticated" do
-      include_examples "unauthorized", :post, :data_classifier
       include_examples "unauthorized", :post, :data_consumer
       include_examples "unauthorized", :post, :data_reviewer
       include_examples "unauthorized", :post, :volunteer
@@ -210,7 +205,6 @@ RSpec.describe "DataSets", type: :request do
     include_examples "unauthenticated", :patch
 
     context "when authenticated" do
-      include_examples "unauthorized", :patch, :data_classifier
       include_examples "unauthorized", :patch, :data_consumer
       include_examples "unauthorized", :patch, :data_reviewer
       include_examples "unauthorized", :patch, :volunteer
@@ -301,7 +295,6 @@ RSpec.describe "DataSets", type: :request do
     include_examples "unauthenticated", :get
 
     context "when authenticated" do
-      include_examples "unauthorized", :get, :data_classifier
       include_examples "unauthorized", :get, :data_consumer
       include_examples "unauthorized", :get, :data_reviewer
       include_examples "unauthorized", :get, :volunteer
@@ -338,7 +331,6 @@ RSpec.describe "DataSets", type: :request do
     include_examples "unauthenticated", :get
 
     context "when authenticated" do
-      include_examples "unauthorized", :get, :data_classifier
       include_examples "unauthorized", :get, :data_consumer
       include_examples "unauthorized", :get, :data_reviewer
       include_examples "unauthorized", :get, :volunteer

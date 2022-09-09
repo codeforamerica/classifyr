@@ -1,4 +1,6 @@
 class Role < ApplicationRecord
+  include AppConfig
+
   has_paper_trail
   has_many :users, dependent: :nullify
 
@@ -42,6 +44,7 @@ class Role < ApplicationRecord
       classifications: [:index, :create],
       common_incident_types: [:index],
       dashboard: [:index, :show],
+      data_sets: [:index, :show, :create, :update],
     },
     data_consumer: {
       classifications: [:index],
@@ -64,7 +67,7 @@ class Role < ApplicationRecord
   end
 
   def self.find_default_role
-    find_by(name: DEFAULT_ROLE_NAME)
+    find_by(name: config[:default] || DEFAULT_ROLE_NAME)
   end
 
   def to_s

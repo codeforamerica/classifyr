@@ -89,7 +89,7 @@ RSpec.describe CommonIncidentType, type: :model do
         expect(csv).to include(CommonIncidentType::EXPORT_COLUMNS.join(","))
 
         common_incident_types.each do |common_incident_type|
-          expect(csv).to include(common_incident_type.code)
+          expect(csv).to include(common_incident_type.formatted_code)
         end
       end
     end

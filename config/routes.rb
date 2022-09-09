@@ -45,7 +45,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, param: :slug, only: [:index, :edit, :update, :destroy]
+  namespace :admin do
+    resources :users, param: :slug, only: [:index, :edit, :update, :destroy]
+  end
+
   resources :dashboards, only: [:index, :show]
 
   root "dashboards#index"
