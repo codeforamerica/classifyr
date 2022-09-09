@@ -44,7 +44,7 @@
                           UNKNOWN
                         </i>
                       <% else %>
-                        <%= link_to classification.common_incident_type&.code, '#', title: classification.common_incident_type&.notes || classification.common_incident_type&.description %>
+                        <%= link_to classification.common_incident_type&.formatted_code, '#', title: classification.common_incident_type&.formatted_notes || classification.common_incident_type&.formatted_description %>
                       <% end %>
                     </td>
                     <td>

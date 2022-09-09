@@ -20,5 +20,8 @@ module Classifyr
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.active_storage.multiple_file_field_include_hidden = false
+
+    # Load custom configurations.
+    config.classifyr = config_for(:classifyr)
   end
 end

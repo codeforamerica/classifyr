@@ -13,9 +13,9 @@
     <tbody>
       <% apco_codes.each do |apco_code| %>
         <tr class="row">
-          <td class="p-1"><%= apco_code.code %></td>
-          <td class="p-1 break-normal whitespace-normal"><%= apco_code.description %></td>
-          <td class="p-1 break-normal whitespace-normal"><%= apco_code.notes %></td>
+          <td class="p-1"><%= apco_code.formatted_code %></td>
+          <td class="p-1 break-normal whitespace-normal"><%= apco_code.formatted_description %></td>
+          <td class="p-1 break-normal whitespace-normal"><%= apco_code.formatted_notes %></td>
         </tr>
       <% end %>
     </tbody>

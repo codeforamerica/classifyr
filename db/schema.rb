@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_07_015121) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_08_073304) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -73,6 +73,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_015121) do
     t.datetime "updated_at", null: false
     t.string "humanized_code"
     t.string "humanized_description"
+    t.text "humanized_notes"
+    t.index "to_tsvector('simple'::regconfig, COALESCE((code)::text, ''::text))", name: "index_common_incident_types_on_code", using: :gin
     t.index ["standard", "code_version", "code"], name: "index_common_incident_types_on_standard_and_version_and_code"
   end
 
@@ -147,6 +149,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_015121) do
     t.string "slug"
     t.datetime "created_at", default: -> { "now()" }, null: false
     t.datetime "updated_at", default: -> { "now()" }, null: false
+    t.json "examples", default: [], null: false
     t.index ["field_id"], name: "index_unique_values_on_field_id"
     t.index ["slug"], name: "index_unique_values_on_slug", unique: true
   end
