@@ -25,7 +25,7 @@ class Classifications::CallTypesController < ApplicationController
     @apco_codes = CommonIncidentType.apco
     @data_set = @call_type.data_set
     @fields = @data_set.fields.order(:position)
-    @data = @call_type&.examples
+    @data = @call_type&.find_or_generate_examples
     @existing_classication = @call_type.classification_by(current_user)
     @classification = Classification.new(
       unique_value: @call_type, value: @call_type.value, common_type: Classification::CALL_TYPE,

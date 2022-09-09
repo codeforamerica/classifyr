@@ -213,8 +213,8 @@ RSpec.describe UniqueValue, type: :model do
       end
     end
 
-    describe "#examples" do
-      it "returns X examples" do
+    describe "#find_or_generate_examples" do
+      it "stores the examples" do
         data_set = create(:data_set, files: [
                             Rack::Test::UploadedFile.new("spec/support/files/police-incidents-2022.csv", "text/csv"),
                           ])
@@ -223,7 +223,48 @@ RSpec.describe UniqueValue, type: :model do
         data_set.fields.find_by(heading: "call_type").update(common_type: "Detailed Call Type")
         data_set.reload.analyze!
 
-        expect(data_set.call_type_field.unique_values.first.examples.flatten.map { |v| v.delete("\u0002") }).to eq(
+        value = data_set.call_type_field.unique_values.where(value: "Fraud Under $250").first
+        value.find_or_generate_examples
+
+        expect(value.generate_examples.flatten).to eq(
+          [
+            "22BU000002",
+            "Fraud Under $250",
+            "Public Service",
+            "2021-12-31T20:08:55-05:00",
+            "Main St",
+            "911",
+            "0",
+            "1",
+            "0",
+            "1",
+            "E",
+            "SouthEnd",
+            "44.475410548309",
+            "-73.1971131641151",
+            "1 am",
+            "Saturday",
+            "8",
+            "East",
+            "Priority 2",
+            "January",
+            "2022",
+          ],
+        )
+      end
+    end
+
+    describe "#generate_examples" do
+      it "generate examples from the file" do
+        data_set = create(:data_set, files: [
+                            Rack::Test::UploadedFile.new("spec/support/files/police-incidents-2022.csv", "text/csv"),
+                          ])
+
+        data_set.prepare_datamap
+        data_set.fields.find_by(heading: "call_type").update(common_type: "Detailed Call Type")
+        data_set.reload.analyze!
+
+        expect(data_set.call_type_field.unique_values.first.generate_examples.flatten).to eq(
           [
             "22BU000002",
             "Welfare Check",
@@ -245,7 +286,7 @@ RSpec.describe UniqueValue, type: :model do
             "East",
             "Priority 2",
             "January",
-            "2022\r",
+            "2022",
           ],
         )
       end
