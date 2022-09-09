@@ -57,8 +57,7 @@ class UniqueValue < ApplicationRecord
     tail = "| tail -n +2 | "
 
     field.data_set.datafile.with_file do |f|
-      grep_value = escape_for_grep(value)
-      data = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} #{tail} grep "#{grep_value}" | head -5`
+      data = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} #{tail} grep "#{value&.shellescape}" | head -5`
       &.split("\n")&.map do |line|
         line.delete("\u0002").delete("\r").split("\t")
       end
@@ -68,10 +67,6 @@ class UniqueValue < ApplicationRecord
   end
 
   private
-
-  def escape_for_grep(str)
-    str.gsub("$", "\\$")
-  end
 
   def can_auto_approve?
     confident_enough = true
