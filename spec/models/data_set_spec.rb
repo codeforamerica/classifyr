@@ -171,6 +171,64 @@ RSpec.describe DataSet, type: :model do
       end
     end
 
+    describe "#map_fields" do
+      let(:data_set) { create(:data_set) }
+      let(:field) { create(:field, common_type: "Something", position: 0, data_set:) }
+      let!(:unique_value) { create(:unique_value, field:) }
+
+      context "when field is classified" do
+        it "does not update it" do
+          create(:classification, unique_value:)
+
+          data_set.map_fields({ "0" => "Something else" })
+
+          field.reload
+          expect(field.common_type).to eq("Something")
+          expect(field.unique_values).to eq([unique_value])
+        end
+      end
+
+      context "when common_type was changed to nil" do
+        it "sets the common_type to nil and deletes all unique values" do
+          data_set.map_fields({ "0" => nil })
+
+          field.reload
+          expect(field.common_type).to be_nil
+          expect(field.unique_values).to eq([])
+        end
+      end
+
+      context "when common_type was not changed" do
+        it "keeps the common_type and unique_values" do
+          data_set.map_fields({ "0" => "Something" })
+
+          field.reload
+          expect(field.common_type).to eq("Something")
+          expect(field.unique_values).to eq([unique_value])
+        end
+      end
+
+      context "when common_type was changed to a Field::VALUE_TYPES value" do
+        it "sets the common_type and keeps all unique_values" do
+          data_set.map_fields({ "0" => Field::VALUE_TYPES.first })
+
+          field.reload
+          expect(field.common_type).to eq(Field::VALUE_TYPES.first)
+          expect(field.unique_values).to eq([unique_value])
+        end
+      end
+
+      context "when common_type was changed to a non Field::VALUE_TYPES value" do
+        it "sets the common_type and deletes all unique_values" do
+          data_set.map_fields({ "0" => "Something else" })
+
+          field.reload
+          expect(field.common_type).to eq("Something else")
+          expect(field.unique_values).to eq([])
+        end
+      end
+    end
+
     describe "#analyze!" do
       it "analyses a datafile" do
         data_set = create(:data_set, files: [

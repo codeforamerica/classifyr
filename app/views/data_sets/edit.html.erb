@@ -1,7 +1,10 @@
 <div class="w-full">
   <%= render 'shared/header',
     title: "Edit #{@data_set.title}",
-    description: "Make updates to this existing dataset.  Note: file updates will be added shortly."
+    description: "Make updates to this existing dataset.  Note: file updates will be added shortly.",
+    buttons: [
+      { label: "Edit Mappings", href: map_data_set_path(@data_set) }
+    ]
   %>
   <div class="responsive-container">
     <div class="my-12 px-4 py-5 sm:px-6">

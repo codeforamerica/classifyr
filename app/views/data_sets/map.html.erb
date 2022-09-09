@@ -46,7 +46,18 @@
                           <%= field.empty_value_count %>
                         </td>
                         <td>
-                          <%= form.select "common_types[#{position}]", options_for_select(Field::TYPES, field.common_type), {}, { class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" } %>
+                          <%= form.select "common_types[#{position}]",
+                              options_for_select(
+                                Field::TYPES,
+                                selected: field.common_type,
+                                disabled: @classified_fields
+                              ),
+                              {},
+                              {
+                                class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full",
+                                disabled: field.classified?
+                              }
+                          %>
                         </td>
                       </tr>
                     <% end %>

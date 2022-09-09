@@ -37,10 +37,7 @@ class DataSetsController < ApplicationController
   def update
     authorize! :update, :data_sets
     if params["data_set"]["step"] == "map_fields"
-      params["data_set"]["common_types"].each do |position, common_type|
-        common_type = nil if common_type.blank?
-        @data_set.fields.find_by(position:).update(common_type:)
-      end
+      @data_set.map_fields(params["data_set"]["common_types"])
       redirect_to analyze_data_set_url(@data_set), notice: "Fields were successfully mapped."
     elsif @data_set.update(data_set_params)
       redirect_to data_set_url(@data_set), notice: "Data set was successfully updated."
@@ -62,7 +59,8 @@ class DataSetsController < ApplicationController
     add_breadcrumb("Map Data Fields", nil)
 
     @data_set.prepare_datamap
-    @fields = @data_set.fields.order("position asc")
+    @fields = @data_set.fields.includes(:classifications).order("position asc")
+    @classified_fields = @data_set.fields.classified.map(&:common_type)
   end
 
   def analyze
@@ -70,7 +68,7 @@ class DataSetsController < ApplicationController
     add_breadcrumb(@data_set.title, data_set_path(@data_set))
     add_breadcrumb("Analyze", nil)
 
-    @data_set.analyze! unless @data_set.analyzed?
+    @data_set.analyze!
   end
 
   private

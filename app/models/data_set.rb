@@ -105,16 +105,21 @@ class DataSet < ApplicationRecord
     files.each(&:set_metadata!)
   end
 
-  def analyze!
-    return if analyzed?
+  def map_fields(common_types)
+    common_types.each do |position, common_type|
+      fields.find_by(position:).map_to(common_type)
+    end
+  end
 
+  def analyze!
     datafile.with_file do |f|
       contents = CSV.read(f, headers: true)
-      fields.mapped.each do |field|
+      fields.mapped.not_classified.each do |field|
         field.min_value = contents[field.heading].compact.min
         field.max_value = contents[field.heading].compact.max
 
-        if Field::VALUE_TYPES.include? field.common_type
+        # If the field has unique values, it has already been analyzed
+        if Field::VALUE_TYPES.include?(field.common_type) && field.unique_values.none?
           contents[field.heading].uniq.each do |value|
             field.unique_values.build value: value,
                                       frequency: contents[field.heading].count(value)
