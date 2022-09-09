@@ -7,26 +7,12 @@ RSpec.describe "Dashboards", type: :request do
     include_examples "unauthenticated", :get
 
     context "when authenticated" do
-      include_examples "authorized", :get, :data_admin, :found
-      include_examples "authorized", :get, :volunteer, :found
-      include_examples "authorized", :get, :data_importer, :found
-      include_examples "authorized", :get, :data_classifier, :found
-      include_examples "authorized", :get, :data_consumer, :found
-      include_examples "authorized", :get, :data_reviewer, :found
-
-      context "when authorized" do
-        let(:role) { create(:role, name: :data_admin) }
-        let(:user) { create(:user, role:) }
-
-        before { sign_in user }
-
-        it "redirects to the classification page" do
-          get(path)
-          expect(response.body).to include(
-            "You are being <a href=\"http://www.example.com/classifications/call_types\">redirected</a>",
-          )
-        end
-      end
+      include_examples "authorized", :get, :volunteer
+      include_examples "authorized", :get, :data_importer
+      include_examples "authorized", :get, :data_classifier
+      include_examples "authorized", :get, :data_consumer
+      include_examples "authorized", :get, :data_reviewer
+      include_examples "authorized", :get, :data_admin
     end
   end
 
@@ -51,7 +37,7 @@ RSpec.describe "Dashboards", type: :request do
 
       before { sign_in user }
 
-      it "does not include the 'Users' menu item" do
+      it "does include the 'Users' menu item" do
         get(path)
         get(response.headers["Location"])
 

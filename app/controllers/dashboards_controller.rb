@@ -3,7 +3,6 @@ class DashboardsController < ApplicationController
 
   def index
     authorize! :index, :dashboard
-    redirect_to call_types_classifications_path
   end
 
   def show

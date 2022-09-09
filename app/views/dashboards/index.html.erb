@@ -1,59 +1,46 @@
 <div class="w-full">
   <%= render 'shared/header',
       title: "Dashboard",
-      description: "Manage, view and export your datasets and classifications from the dashboards screen.",
-      links: [
-        { name: "Datasets", href: "#" },
-        { name: "Call Type Mapping", href: "#", selected: true }
-      ]
+      description: "View metrics about your datasets and classifications from the dashboards screen."
   %>
   <div class="responsive-container">
     <div class="mt-12 px-4 py-5 sm:px-6">
       <section class="px-6 pb-6 bg-white">
         <div class="overflow-hidden">
           <div class="overflow-x-auto">
-            <table class="w-auto">
-              <thead>
-                <tr>
-                  <th scope="col">
-                    Detailed Call Type
-                  </th>
-                  <th scope="col">
-                    Common Incident Type
-                  </th>
-                  <th scope="col">
-                    Classifier
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <% @call_type_maps.each do |classification| %>
-                  <tr class="row">
-                    <td>
-                      <% if classification.unknown? %>
-                        <i>
-                          <%= classification.value %>
-                        </i>
-                      <% else %>
-                        <%= classification.value %>
-                      <% end %>
-                    </td>
-                    <td>
-                      <% if classification.unknown? %>
-                        <i>
-                          UNKNOWN
-                        </i>
-                      <% else %>
-                        <%= link_to classification.common_incident_type&.formatted_code, '#', title: classification.common_incident_type&.formatted_notes || classification.common_incident_type&.formatted_description %>
-                      <% end %>
-                    </td>
-                    <td>
-                      <%= classification.user&.email || 'UNKNOWN' %>
-                    </td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
+            <div class="grid grid-cols-2">
+              <div>
+                <%= pie_chart(
+                      Classification.where("value != '\u0002'").select(:value)
+                        .group(:value).order(count: :desc).limit(10).count,
+                      title: "Top 10 Call Types", legend: "right", point: true
+                    ) %>
+              </div>
+              <div>
+                <%= pie_chart(
+                      DataSet.group(
+                          "CASE " \
+                          "WHEN \"data_sets\".\"completion_percent\" = 0 THEN 'Unstarted' " \
+                          "WHEN \"data_sets\".\"completion_percent\" < 100 THEN 'Started' " \
+                          "ELSE 'Completed' END"
+                        ).select(
+                          "CASE " \
+                            "WHEN \"data_sets\".\"completion_percent\" = 0 THEN 'Unstarted' " \
+                            "WHEN \"data_sets\".\"completion_percent\" < 100 THEN 'Started' " \
+                            "ELSE 'Completed' END"
+                        ).count,
+                      title: "Data Set States", legend: "right"
+                    ) %>
+              </div>
+            </div>
+            <% if current_user.role.name == "data_admin" %>
+              <div class="grid grid-cols-1">
+                <%= bar_chart(
+                      Classification.joins(:user).group('users.name').order(count: :desc).count,
+                      title: "Call Type Classifications by User"
+                      ) %>
+              </div>
+            <% end %>
           </div>
         </div>
       </section>
