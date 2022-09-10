@@ -13,6 +13,7 @@ class User < ApplicationRecord
   after_create :set_default_role
 
   validates :email, presence: true
+  validates :name, presence: true
 
   def update_role(role_name)
     new_role = Role.find_by(name: role_name)

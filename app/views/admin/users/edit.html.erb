@@ -1,6 +1,6 @@
 <div class="w-full">
   <%= render 'shared/header',
-    title: @user.email,
+    title: "#{@user.name} (#{@user.email})",
     description: 'Make updates to an existing user.'
   %>
   <div class="responsive-container">

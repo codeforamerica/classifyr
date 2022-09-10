@@ -11,13 +11,18 @@
             <div class="overflow-hidden">
               <%= form_for(resource, as: resource_name, url: profile_path, html: { method: :put }, data: { turbo: false }) do |f| %>
                 <div class="form-group my-4">
-                  <%= f.label :email %>
+                  <%= f.label :email, class: "required" %>
                   <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter your email" %>
                   <%= render "shared/input_error", resource: resource, field: :email %>
                 </div>
                 <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
                   <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
                 <% end %>
+                <div class="form-group my-4">
+                  <%= f.label :name, class: "required" %>
+                  <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "Enter your name" %>
+                  <%= render "shared/input_error", resource: resource, field: :name %>
+                </div>
                 <div class="form-group my-4">
                   <%= f.label :password %>
                   <%= f.password_field :password, autocomplete: "new-password", placeholder: "Leave blank if you don't want to change it" %>
@@ -32,7 +37,7 @@
                   <%= render "shared/input_error", resource: resource, field: :password_confirmation %>
                 </div>
                 <div class="form-group my-4">
-                  <%= f.label :current_password %>
+                  <%= f.label :current_password, class: "required" %>
                   <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "We need your current password to confirm your changes" %>
                   <%= render "shared/input_error", resource: resource, field: :current_password %>
                 </div>

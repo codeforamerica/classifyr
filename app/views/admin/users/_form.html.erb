@@ -4,6 +4,11 @@
                                        required: true,
                                        type: :email,
                                        placeholder: "Enter an email" %>
+  <%= render "shared/form/text_field", form: form,
+                                       field: :name,
+                                       required: true,
+                                       type: :text,
+                                       placeholder: "Enter your name" %>
   <%= render "shared/form/select", form: form,
                                    field: :role_id,
                                    options: options_for_select(@roles, @user.role&.id) %>

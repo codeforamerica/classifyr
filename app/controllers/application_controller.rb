@@ -6,6 +6,9 @@ class ApplicationController < ActionController::Base
 
   layout :layout_by_resource
 
+  protect_from_forgery with: :exception
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   rescue_from NotAuthorizedError, with: :not_authorized
 
   protected
@@ -33,6 +36,12 @@ class ApplicationController < ActionController::Base
   def add_breadcrumb(name, path = nil)
     @breadcrumbs ||= []
     @breadcrumbs << { name:, path: }
+  end
+
+  def configure_permitted_parameters
+    fields = %i[email name password]
+    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(fields) }
+    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(fields << :current_password) }
   end
 
   def disable_turbo

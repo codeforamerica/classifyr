@@ -10,6 +10,7 @@
           <table class="min-w-full">
             <thead class="bg-gray-50 border-b">
               <tr>
+                <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Role</th>
                 <th scope="col">Sign In Count</th>
@@ -22,6 +23,7 @@
             <tbody>
               <% @users.each do |user| %>
                 <tr class="row">
+                  <td><%= link_to user.name, edit_admin_user_path(user) %></td>
                   <td><%= link_to user.email, edit_admin_user_path(user) %></td>
                   <td><%= user.role %></td>
                   <td class="text-sm px-3 py-4 text-center"><%= user.sign_in_count %></td>

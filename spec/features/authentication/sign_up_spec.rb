@@ -12,6 +12,7 @@ RSpec.describe "Sign up", type: :feature do
       click_on "Sign up"
 
       fill_in "Email", with: "test@example.com"
+      fill_in "Name", with: "Test User"
       fill_in "Password", with: "password"
       fill_in "Password confirmation", with: "password"
 
@@ -46,6 +47,7 @@ RSpec.describe "Sign up", type: :feature do
       click_on "Sign up"
 
       expect(page).to have_content("Email can't be blank.")
+      expect(page).to have_content("Name can't be blank.")
       expect(page).to have_content("Password can't be blank.")
     end
   end

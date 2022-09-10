@@ -45,7 +45,7 @@ module Admin
     end
 
     def user_params
-      params.require(:user).permit(:email, :role_id)
+      params.require(:user).permit(:email, :name, :role_id)
     end
 
     def set_breadcrumbs
