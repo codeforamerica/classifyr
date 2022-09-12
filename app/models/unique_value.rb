@@ -57,8 +57,8 @@ class UniqueValue < ApplicationRecord
     tail = "| tail -n +2 | "
 
     field.data_set.datafile.with_file do |f|
-      data = `sed -E 's/("([^"]*)")?,/\2\t/g' #{f.path} #{tail} grep "#{value&.shellescape}" | head -5`
-      &.split("\n")&.map do |line|
+      result = `sed -E 's/("([^"]*)")?,/\\2\\t/g' #{f.path} #{tail} grep #{value&.shellescape} | head -5`
+      data = result&.split("\n")&.map do |line|
         line.delete("\u0002").delete("\r").split("\t")
       end
     end

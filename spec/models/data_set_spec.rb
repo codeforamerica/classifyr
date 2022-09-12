@@ -251,6 +251,7 @@ RSpec.describe DataSet, type: :model do
                                                "Intoxication",
                                                "Mental Health Issue",
                                                "Trespass",
+                                               "BURGLAR ALARM, SILENT",
                                              ]))
       end
     end

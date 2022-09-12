@@ -5,3 +5,4 @@ incident_number,call_type,call_type_group,call_time,Street,call_origin,mental_he
 22BU000007,Intoxication,Quality of Life,2021-12-31T21:25:52-05:00,Main St,Phone,0,0,0,1,D,Downtown,44.4756491602608,-73.2145682567682,2 am,Saturday,3,Central,Priority 3,January,2022
 22BU000013,Mental Health Issue,Public Service,2022-01-01T00:20:29-05:00,S Champlain St,Phone,1,0,0,0,E,SouthEnd,44.4725442759697,-73.2166263378627,5 am,Saturday,5,South,Priority 2,January,2022
 22BU000016,Trespass,Other,2022-01-01T04:37:29-05:00,Pine St,Phone,0,0,0,0,D,Downtown,44.4742771510042,-73.2156656366762,9 am,Saturday,5,South,Priority 2,January,2022
+22BU000019,"BURGLAR ALARM, SILENT",Other,2022-01-01T04:41:18-05:00,Pit St,Phone,0,0,0,0,D,Downtown,44.4742771510042,-73.2156656366762,9 am,Saturday,5,South,Priority 2,January,2022
