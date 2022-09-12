@@ -1,28 +1,28 @@
-﻿code,description,notes
-911H,911 HANG UP,911 hang-ups.
+code,description,notes
+911H,911 HANG UP,911 hang-ups
 911OPN,911 OPEN LINE,911 open line
-ABDOM,ABDOMINAL PAIN OR PROBLEMS,Abdominal pain or problems
-ABDUCTF,ABDUCTION FAMILY,Abduction/kidnapping by family member
-ABDUCTNF,ABDUCTION NON-FAMILY,Abduction/kidnapping by non-family member
-ABUSE,ABUSE,Child or Elder
+ABDOM,"ABDOMINAL PAIN OR PROBLEMS","Abdominal pain or problems"
+ABDUCTF,ABDUCTION FAMILY,"Abduction/kidnapping by family member"
+ABDUCTNF,ABDUCTION NON-FAMILY,"Abduction/kidnapping by non-family member"
+ABUSE,ABUSE,"Child or Elder"
 ACCIND,INDUSTRIAL ACCIDENT,"Includes entrapment in major machinery, industrial disasters"
 ACTSHOOT,ACTIVE SHOOTER,Active assailant
 ADMIN,ADMINISTRATIVE,"Includes follow-ups, DNA collection, citizen complaints, law escorts, request extra patrol"
-AIR,AIRCRAFT RELATED INCIDENTS INCLUDING REPORTED HIJACKING,Aircraft related incidents including reported hijacking
-AIRINC,AIRPORT INCIDENT (NOT AIRCRAFT),Incident at Airport - not aircraft related
+AIR,"AIRCRAFT RELATED INCIDENTS INCLUDING REPORTED HIJACKING","Aircraft related incidents including reported hijacking"
+AIRINC,"AIRPORT INCIDENT (NOT AIRCRAFT)","Incident at Airport - not aircraft related"
 ALIEN,IMMIGRATION,"Immigration violation, illegal aliens"
 ALLERGIC,"ALLERGIC REACTION, INSECT STINGS","Allergic reaction, insect stings"
 ALMA,ALARM AUDIBLE,
 ALMB,COMMERCIAL ALARM,
-ALMH,PANIC/DURESS/HOLD UP ALARM,
+ALMH,"PANIC/DURESS/HOLD UP ALARM",
 ALMR,RESIDENTIAL ALARM,
 ALRBA,BURGLAR ALARM- AUDIBLE,Includes audible Intrusion alarms
 ALRBOX,BOX ALARM,"Pull box alarm for police, fire or EMS"
 ALRBS,BURGLAR ALARM - SILENT,Includes silent intrusion alarms
 ALRCO,CARBON MONOXIDE,Carbon Monoxide
 ALRCO2,FIRE ALARM - CO2,Carbon Dioxide
-ALRDEFIB,AUTOMATED IMPLANTABLE CARDIAC DEFIBRILLATOR (AICD) ALARM OR EVENT,Automated Implantable Cardiac Defibrillator (AICD) alarm or event
-ALRF,GENERIC FIRE ALARM Generic fire alarm,
+ALRDEFIB,"AUTOMATED IMPLANTABLE CARDIAC DEFIBRILLATOR (AICD) ALARM OR EVENT",Automated Implantable Cardiac Defibrillator (AICD) alarm or event
+ALRF,GENERIC FIRE ALARM,Generic fire alarm
 ALRGAS,FIRE ALARM - GAS,
 ALRHEAT,FIRE ALARM - HEAT,
 ALRKPAD,FIRE ALARM - KEYPAD,
@@ -37,26 +37,27 @@ ALRROBS,ROBBERY ALARM SILENT,Includes hold up alarms
 ALRU,ALARM UNK,Audible alarm unknown type
 ALRVEH,VEHICLE ALARM,
 ALRWTR,FIRE ALARM - WATER FLOW,includes sprinkler alarms
-ALS,ADVANCED LIFE SUPPORT INCIDENT,Advanced Life Support incident
+ALS,"ADVANCED LIFE SUPPORT INCIDENT",Advanced Life Support incident
 ANIMAL,ANIMAL,"Animal complaints including animal rescue,"
 ASSAULT,WITH OR WITHOUT INJURY,With or without injury
-ASSIST,ASSIST TO OTHER AGENCY OR REQUEST FOR MANPOWER,Assist to other agency or request for manpower
+ASSIST,"ASSIST TO OTHER AGENCY OR REQUEST FOR MANPOWER","Assist to other agency or request for manpower"
 ATL,ATL,"Attempt to Locate, BOLO"
-BACK,NON-TRAUMATIC Non-traumatic,
+BACK,NON-TRAUMATIC,Non-traumatic
 BARICADE,BARRICADED,"Barricaded person, gunman etc"
-BIO,BIOLOGICAL THREAT Biological threat,
-BITE,ANIMAL BITES OR ATTACK BY AN ANIMAL,Animal bites or attack by an animal
-BLDCLPSE,COLLAPSED BUILDING INCLUDES TECHNICAL RESCUE INCIDENTS,Collapsed building includes technical rescue incidents
-BLEEDING,"INCLUDES RECTAL, VAGINAL, NON-TRAUMATIC","Includes rectal, vaginal, non-traumatic"
+BIO,BIOLOGICAL THREAT,Biological threat
+BITE,"ANIMAL BITES OR ATTACK BY AN ANIMAL",Animal bites or attack by an animal
+BLDCLPSE,"COLLAPSED BUILDING INCLUDES TECHNICAL RESCUE INCIDENTS","Collapsed building includes technical rescue incidents"
+BLEEDING,"INCLUDES RECTAL, VAGINAL,
+NON-TRAUMATIC","Includes rectal, vaginal, non-traumatic"
 BLS,BASIC LIFE SUPPORT INCIDENT,Basic Life Support incident
-BOMB,BOMB THREAT OR INVESTIGATION,Bomb threat or investigation
+BOMB,"BOMB THREAT OR INVESTIGATION",Bomb threat or investigation
 BRGCLPSE,BRIDGE COLLAPSE,
-BURGLARY,BURGLARY,Includes breaking and entering incidents
+BURGLARY,BURGLARY,"Includes breaking and entering incidents"
 BURN,BURNS,
 CARDIAC,"CARDIAC RELATED EVENT, HEART ATTACK, CHEST PAIN","Cardiac related event, heart attack, chest pain"
 CARJACK,CARJACK,
 CDX,CIVIL DISPUTE,
-CHEMICAL,INCLUDES CHEMICAL AND ENVIRONMENTAL INCIDENTS,Includes chemical and environmental incidents
+CHEMICAL,"INCLUDES CHEMICAL AND ENVIRONMENTAL INCIDENTS","Includes chemical and environmental incidents"
 CHESPAIN,CHEST PAIN NON-CARDIAC,Chest pain non-cardiac
 CHOKE,CHOKING,
 CITASST,"PUBLIC ASSISTANCE, CITIZEN STANDBY, PUBLIC SERVICE","Public assistance, citizen standby, public service"
@@ -64,8 +65,8 @@ CIVDIS,CIVIL DISOBEDIENCE,"Riot, sit-in, protests, organized actions"
 CIVIL,CIVIL,"Civil matters, codes enforcement issues"
 CNTRFT,COUNTERFEIT MONEY,
 COURT,COURT ORDER SERVE,
-CRIMPS,IMPERSONATION,Criminal impersonation of officer or public official
-CRIMTRAF,CRIMINAL TRAFFIC,"Driving with suspended license, no valid operator‚Äôs license"
+CRIMPS,IMPERSONATION,"Criminal impersonation of officer or public official"
+CRIMTRAF,CRIMINAL TRAFFIC,"Driving with suspended license, no valid operator’s license"
 CRWD,"LARGE, ROWDY CROWD",
 CU1,CIVIL UNREST VIOLENT,
 CU2,CIVIL UNREST NON-VIOLENT,
@@ -86,10 +87,10 @@ DUI,DUI,"Driving while intoxicated, under the influence"
 DVA,DOMESTIC VIOLENT,"Domestic dispute with violence, family fight, assault"
 DVNA,DOMESTIC NON-VIOLENT,"Domestic dispute non-violent, verbal"
 EDP,"EDP, EMOTIONAL DISTURBANCE, ABNORMAL BEHAVIOR","EDP, emotional disturbance, abnormal behavior"
-ELEC,INCLUDES STRUCK BY LIGHTNING,Includes struck by lightning
+ELEC,"INCLUDES STRUCK BY LIGHTNING",Includes struck by lightning
 ELECHZD,ELECTRICAL HAZARD,Includes all electrical problems
 ELUDING,ELUDING,Eluding law enforcement
-ENTRAP,INCLUDES ACCIDENTAL ENTRAPMENTS AND INACCESSIBLE INCIDENTS,Includes accidental entrapments and inaccessible incidents
+ENTRAP,"INCLUDES ACCIDENTAL ENTRAPMENTS AND INACCESSIBLE INCIDENTS",Includes accidental entrapments and inaccessible incidents
 ESCAPE,ESCAPE,Escaped prisoner
 EXPLOS,EXPLOSION,
 EXPOSURE,HEAT OR COLD EXPOSURE,Heat or cold exposure
@@ -101,47 +102,43 @@ FALL,NON TRAUMATIC FALL,Non traumatic fall
 FAM,FAMILY OFFENSE,
 FAPT,FIRE APARTMENT,"Multi-family dwelling, apartment building"
 FARSON,FIRE ARSON,
-FAS,FELONIOUS ASSAULT - NO SUSPECT,
-FASX,FELONIOUS ASSAULT - SUSPECT IN AREA,
-FBRUSH,"INCLUDES TRESS, BRUSH GRASSCONTROLLED BURNS WITH NO STRUCTURAL EXPOSURE, OUTDOOR FIRES","Includes tress, brush grass-controlled burns with no structural exposure, outdoor fires"
+FAS,"FELONIOUS ASSAULT - NO SUSPECT",
+FASX,"FELONIOUS ASSAULT - SUSPECT IN AREA",
+FBRUSH,"INCLUDES TRESS, BRUSH GRASS- CONTROLLED BURNS WITH NO STRUCTURAL EXPOSURE,
+OUTDOOR FIRES","Includes tress, brush grass-controlled burns with no structural exposure, outdoor fires"
 FELEC,FIRE ELECTRICAL,"Includes arcing wires, shorted electrical equipment, light ballast, transformers."
-FELEC,"INCLUDES ARCING WIRES, SHORTED ELECTRICAL EQUIPMENT, LIGHT BALLAST, TRANSFORMERS","Includes arcing wires, shorted electrical equipment, light ballast, transformers"
 FFUEL,"INCLUDES GAS STATIONS, FUEL REFINERY","Includes gas stations, fuel refinery"
 FIGHT,FIGHT,Includes verbal and physical disputes
 FIREWRKS,FIREWORKS,Illegal use of fireworks
-FMARINE,FIRE MARINE,Includes marine vessels & boats on waterways (for boats on land use FIRE VEHICLE)
-FMARINE,INCLUDES MARINE VESSELS & BOATS ON WATERWAYS (FOR BOATS ON LAND USE FIRE VEHICLE),Includes marine vessels & boats on waterways (for boats on land use FIRE VEHICLE)
+FMARINE,FIRE MARINE,"Includes marine vessels & boats on waterways (for boats on land use FIRE VEHICLE)"
 FORCENTR,"INCLUDES BREECH, FORCIBLE ENTRY REQUIRED FOR STRUCTURE, RESIDENTIAL LOCK OUTS","Includes breech, forcible entry required for structure, residential lock outs"
-FOTHER,INCLUDES OTHER TYPES NOT LISTED,Includes other types not listed
-FRAUD,FRAUD,"Includes forgery, fraud, bad checks, identity theft"
+FOTHER,"INCLUDES OTHER TYPES NOT LISTED",Includes other types not listed FRAUD,FRAUD,"Includes forgery, fraud, bad checks, identity theft"
 FRAUD,"FRAUD, BAD CHECKS, ID THEFT, COUNTERFEIT MONEY",
 FREPORT,"RESPONSE TO TAKE FIRE REPORT ONLY NO ACTIVE FIRE, INCIDENT NOT IN PROGRESS","Response to take fire report only no active fire, incident not in progress"
 FSMOKE,FIRE SMOKE,"Includes fire investigations, smoke odors no flames seen"
-FSMOKE,"INCLUDES FIRE INVESTIGATIONS, SMOKE ODORS NO FLAMES SEEN","Includes fire investigations, smoke odors no flames seen"
 FSTRU,"INCLUDES SHEDS, ATTACHED GARAGES, HOUSE FIRES","Includes sheds, attached garages, house fires"
-FTRAILER,FIRE TRAILER,Single wide mobile home fires-double wide should use FIRE STRUCTURE
+FTRAILER,FIRE TRAILER,"Single wide mobile home fires-double wide should use FIRE STRUCTURE"
 FTRAIN,"ANY TYPE OF RAILWAY FIRE, LOCOMOTIVE, RAIL CAR, PASSENGER CAR, ETC.","Any type of railway fire, locomotive, rail car, passenger car, etc."
 FTRASH,FIRE TRASH,"Refuse fires, garbage cans, dumpsters"
-FTRASH,"REFUSE FIRES, GARBAGE CANS, DUMPSTERS","Refuse fires, garbage cans, dumpsters"
 FTRUCK,"INCLUDES LARGE VEHICLES SUCH AS RV, TRACTOR TRAILERS, DUMP TRUCKS, BUSES","Includes large vehicles such as RV, tractor trailers, dump trucks, buses"
 FUNK,FIRE UNKNOWN,
-FUNK,---,
 FVEH,FIRE VEHICLE,"Includes small or medium size vehicles, passenger cars, SUV, vans, pick-up trucks"
-FVEH,"INCLUDES SMALL OR MEDIUM SIZE VEHICLES, PASSENGER CARS, SUVS, VANS, PICK-UP TRUCKS","Includes small or medium size vehicles, passenger cars, SUVs, vans, pick-up trucks"
 GASLEAK,"INCLUDES NATURAL GAS, LIQUID FUEL OR PROPANE LEAKS","Includes natural gas, liquid fuel or propane leaks"
 GASLEAKI,GAS LEAK INSIDE,
 GASLEAKO,GAS LEAK OUTSIDE,
 HARR,HARASSMENT,Includes intimidation
 HATE,HATE CRIME,
 HAZ,"WIRES DOWN, OTHER NATURAL HAZARDS",
-HAZMAT,"HAZARDOUS MATERIALS INCIDENT CAN INCLUDE LARGE FUEL SPILL (>100 GALLONS), CHEMICAL, BIOLOGICAL,RADIOLOGICAL OR NUCLEAR (CBRN)","Hazardous materials incident can include large fuel spill (>100 gallons), chemical, biological, radiological or nuclear (CBRN)"
+HAZMAT,HAZARDOUS MATERIALS,"Hazardous materials incident can include large fuel spill (>100 gallons), chemical, biological, radiological or nuclear (CBRN)"
 HEADACHE,HEADACHE,
 HEMRG,HEMORRHAGE,"Severe bleeding, lacerations"
 HLP1,POLICE/FIRE/EMS IN TROUBLE,
-HLP2,POLICE/FIRE/EMS NONEMERGENCY,
-HOLD,CITIZEN/SECURITY HOLDING SUSPECT,
+HLP2,"POLICE/FIRE/EMS NON- EMERGENCY",
+HOLD,"CITIZEN/SECURITY HOLDING SUSPECT",
 HOMICIDE,HOMICIDE,"Includes murder, criminally negligent homicide, manslaughter"
-HOSTAGE,HOSTAGE IMP IMPERSONATION INDECENT INDECENT,"Includes indecent exposure, indecent liberties"
+HOSTAGE,HOSTAGE,
+IMP,IMPERSONATION,
+INDECENT,INDECENT,"Includes indecent exposure, indecent liberties"
 INFO,INFO,Informational calls
 INTERNET,INTERNET CRIMES,"Obscene material, pornography, cyber bullying"
 INTOX,INTOXICATED,"Intoxicated person, drunk & disorderly"
@@ -151,21 +148,19 @@ LARCENY,LARCENY,"Includes larceny attempt, theft, pickpocketing"
 LIQUOR,LIQUOR VIOLATION,"Includes selling to minors, underage drinking, over service"
 MAJORINC,MAJOR INCIDENT,"Includes large-scale weather-related event, weapons of mass destruction event - typically used as a code declared by incident command"
 MAYDAY,MAYDAY,"Immediate assistance request, emergency back-up request"
-MAYDAY,"IMMEDIATE ASSISTANCE REQUEST, EMERGENCY BACK-UP REQUEST","Immediate assistance request, emergency back-up request"
-MCI,MCI - TYPICALLY USED AS A CODE DECLARED BY INCIDENT COMMAND,MCI - typically used as a code declared by incident command
-MISBOATR,MISSING BOATER,Missing person(s) last seen on boat out on a waterway
+MCI,"MCI - TYPICALLY USED AS A CODE DECLARED BY INCIDENT COMMAND",MCI - typically used as a code declared by incident command
+MISBOATR,MISSING BOATER,"Missing person(s) last seen on boat out on a waterway"
 MISCON,MISCONDUCT,"Includes conspiracy, falsifying information, plotting, other misconduct"
 MNTL,MENTAL PERSON NON-VIOLENT,
 MTLV,MENTAL PERSON VIOLENT,
 MVA,"MOTOR VEHICLE ACCIDENT, NO INJURY - CAN BE RECEIVED AS AUTOMATED CRASH NOTIFICATION","Motor vehicle accident, no injury - can be received as automated crash notification"
 MVAHR,HIT & RUN,Vehicle accident hit & run
 MVAINJY,"MOTOR VEHICLE ACCIDENT WITH INJURY - CAN BE RECEIVED AS AUTOMATED CRASH NOTIFICATION, INCLUDES CAR, PEDESTRIAN, ATV ACCIDENTS","Motor vehicle accident with injury - can be received as automated crash notification, includes car, pedestrian, ATV accidents"
-MVAUNK,MVA UNK,Motor vehicle accident unknown injury can be received as automated crash notification crash notification
-MVCP,MOTOR VEHICLE COLLISION ON,
-PRIVATE,PROPERTY,
+MVAUNK,MVA UNK,"Motor vehicle accident unknown injury can be received as automated crash notification crash notification"
+MVCP,"MOTOR VEHICLE COLLISION ON PRIVATE PROPERTY",
 NCIC,NCIC HIT,
 NCRASLTWF,ASSAULT WITH WEAPON,Assault with Weapon
-NCRCPRF,MEDICAL - CARDIOPULMONARY RESUSCITATION.,Medical - Cardiopulmonary Resuscitation.
+NCRCPRF,"MEDICAL - CARDIOPULMONARY RESUSCITATION.","Medical - Cardiopulmonary Resuscitation."
 NCRELEV,RESCUE - ELEVATOR,Rescue - Elevator
 NCRFACTR,"APPROVED, FIELD INFUSION OF BLOOD PRODUCTS NECESSARY FOR LIFE-SAVING INTERVENTION","Approved, field infusion of blood products necessary for life-saving intervention"
 NCRMUAIDF,MUTUAL AID FIRE,Mutual Aid Fire
@@ -174,19 +169,23 @@ NCRNONE,NONE - NO CODE FOUND,None - No Code Found
 NCRTASKFORCE,TASK FORCE,Task Force
 NCRTESTF,TEST CALL - FIRE,Test Call - Fire
 NCRTRANS,"TRANSPORTATION INCIDENT, INCLUDES, PLANES, TRAINS, SUBWAY, ETC.","Transportation Incident, includes, Planes, Trains, Subway, etc."
-NEGLECT,NEGLECT NOISE NOISE,Loud noise or music
+NEGLECT,NEGLECT,
+NOISE,NOISE,Loud noise or music
 OD,"OVERDOSE - ACCIDENTAL, POISONING, ACCIDENTAL INGESTION","Overdose - accidental, poisoning, accidental ingestion"
-ODOR,ODOR INVESTIGATION - ANY TYPE,Odor investigation - any type
+ODOR,"ODOR INVESTIGATION - ANY TYPE",Odor investigation - any type
 OPEN,UNSECURE-BLDG,"Includes Open door, open window"
 ORDERV,ORDER VIOLATION,"Domestic violence writ violation, order of protection, custody disputes"
-PANDEMIC,"PANDEMIC FLU OR ILLNESS OUTBREAK, EPIDEMIC","Pandemic flu or illness outbreak, epidemic"
+PANDEMIC,"PANDEMIC FLU OR ILLNESS
+OUTBREAK, EPIDEMIC","Pandemic flu or illness outbreak, epidemic"
 PARKING,PARKING,"Parking problems/complaints, handicap parking violation"
 PERFND,FOUND PERSON,Adults & children
 PERMISS,MISSING PERSON,
 PERSUSP,SUSPICIOUS PERSON,"Includes prowler, peeping tom"
-PERUNCON,"UNCONSCIOUS PERSON, INCLUDES FAINTING AND NEAR FAINTING","Unconscious person, includes fainting and near fainting"
+PERUNCON,"UNCONSCIOUS PERSON, INCLUDES FAINTING AND NEAR
+FAINTING","Unconscious person, includes fainting and near fainting"
 PERWANT,WANTED PERSON,"Arrest warrant, fugitive information"
-PHANDLE,"PANHANDLING PREG PREGNANCY PROBLEMS, CHILDBIRTH, MISCARRIAGE","Pregnancy problems, childbirth, miscarriage"
+PHANDLE,PANHANDLING,
+PREG,"PREGNANCY PROBLEMS, CHILDBIRTH, MISCARRIAGE","Pregnancy problems, childbirth, miscarriage"
 PROPFND,FOUND PROPERTY,"Includes abandoned bicycles, found cell phones, purses"
 PROPLOST,LOST PROPERTY,
 PROPSTLN,STOLEN PROPERTY,"Includes retention of, transferring or receiving stolen property"
@@ -194,13 +193,13 @@ PROW,PROWLER,
 PUBWKS,PUBLIC WORKS / UTILITIES,"Public works, utility company requests, transportation infrastructure"
 PURSUIT,PURSUIT,Includes vehicle or foot pursuits
 RADIAT,INCLUDES NUCLEAR INCIDENTS,Includes nuclear incidents
-RECKDRV,RECKLESS DRIVER,Careless driving and other driving offenses
+RECKDRV,RECKLESS DRIVER,"Careless driving and other driving offenses"
 REPO,REPO,Vehicle repossession
 RESCUE,"INCLUDES LOCK-INS, HIGH ANGLE RESCUE","Includes lock-ins, high angle rescue"
 RESIST,RESISTING ARREST,
 RESP,"DIFFICULTY BREATHING, SHORTNESS OF BREATH, RESPIRATORY ISSUE","Difficulty breathing, shortness of breath, respiratory issue"
 RESPARR,RESPIRATORY ARREST,
-ROBBERY,ROBBERY,Includes strong arm and attempted robbery excludes car jacking
+ROBBERY,ROBBERY,"Includes strong arm and attempted robbery excludes car jacking"
 RUNAWAY,RUNAWAY,Includes thrown away children
 SAR,SEARCH AND RESCUE,
 SCH,SCHOOL OFFENSE,
@@ -215,21 +214,20 @@ SMOKING,SMOKING,Smoking violation
 SOL,SOLICITORS,
 STABBING,STABBING,
 STDBY,"POLICE, FIRE OR EMS","Police, Fire or EMS"
-STKX,STALKING WITH SUSPECT ON SCENE,
-STROKE,STROKE OR CEREBRAL VASCULAR ACCIDENT (CVA),Stroke or cerebral vascular accident (CVA)
+STKX,"STALKING WITH SUSPECT ON SCENE",
+STROKE,"STROKE OR CEREBRAL VASCULAR ACCIDENT (CVA)","Stroke or cerebral vascular accident (CVA)"
 SUBJSTP,SUBJECT STOP,
 SUICIDE,SUICIDE,
-SUICTHRT,ATTEMPT OR THREATENING SUICIDE,Attempt or threatening suicide
+SUICTHRT,"ATTEMPT OR THREATENING SUICIDE",Attempt or threatening suicide
 SUSP,"SUSPICIOUS INCIDENT, CIRCUMSTANCES, UNKNOWN PROBLEMS","Suspicious incident, circumstances, unknown problems"
 TERROR,TERRORIST ACTIVITY,
 THAZ,TRAFFIC HAZARD,"Includes debris in roadway, black ice,"
 THREATS,THREATS,
 TOW,TOW,
-TRAIN,,
-INCIDENTS,OTHER THAN FIRES OR DERAILMENTS RELATED TO TRAINS,Incidents other than fires or derailments related to trains
+TRAIN,"INCIDENTS OTHER THAN FIRES OR DERAILMENTS RELATED TO TRAINS",Incidents other than fires or derailments related to trains
 TRAINDRL,TRAIN DERAIL,
-TRANSFER,"INTER-FACILITY TRANSFER, PALLIATIVE CARE. ALSO USED FOR TRANSFER OF APPARATUS BETWEEN JURISDICTIONS.","Inter-facility transfer, palliative care. Also used for transfer of apparatus between jurisdictions."
-TRAUMA,TRAUMATIC INJURY INCLUDING HEAD INJURY,Traumatic injury including head injury
+TRANSFER,"INTER-FACILITY TRANSFER, PALLIATIVE CARE.  ALSO USED FOR TRANSFER OF APPARATUS BETWEEN JURISDICTIONS.","Inter-facility transfer, palliative care. Also used for transfer of apparatus between jurisdictions."
+TRAUMA,"TRAUMATIC INJURY INCLUDING HEAD INJURY",Traumatic injury including head injury
 TRAUMAP,PENETRATING TRAUMA,Other than shooting or stabbing
 TRESPASS,TRESPASS,
 TROUBLE,UNKNOWN TYPE TROUBLE,Unknown type trouble
@@ -238,7 +236,7 @@ TSTOP,TRAFFIC STOP,
 VAG,VAGRANT/PANHANDLER,
 VANDAL,VANDALISM,"Vehicle tampering, graffiti, criminal mischief"
 VEHABND,ABANDONED VEH,
-VEHASST,MOTORIST ASSIST,Assist to motorist includes vehicle lock outs
+VEHASST,MOTORIST ASSIST,"Assist to motorist includes vehicle lock outs"
 VEHLOCK,VEHICLE LOCK OUT,
 VEHREC,RECOVERED VEHICLE,Recovered stolen vehicle
 VEHSTLN,STOLEN VEHICLE,Includes Lo-Jack alerts
