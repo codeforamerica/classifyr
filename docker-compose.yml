@@ -6,8 +6,8 @@ services:
       - ./tmp/db:/var/lib/postgresql/data:rw
       - ./scripts:/opt/scripts
     environment:
-      POSTGRES_PASSWORD: "${CLASSIFYR_DATABASE_PASSWORD:-thisisprobablyabadidea!}"
-      POSTGRES_USER: "${CLASSIFYR_DATABASE_USERNAME:-classifyr}"
+      POSTGRES_PASSWORD: "${RAILS_DB_PASSWORD:-thisisprobablyabadidea!}"
+      POSTGRES_USER: "${RAILS_DB_USER:-classifyr}"
     command: /opt/scripts/initdb.sh
   web:
     build: .
@@ -18,8 +18,12 @@ services:
       - "3000:3000"
     environment:
       RAILS_DB_HOST: db
-      RAILS_DB_PASSWORD: "${CLASSIFYR_DATABASE_PASSWORD:-thisisprobablyabadidea!}"
-      RAILS_DB_USER: "${CLASSIFYR_DATABASE_USERNAME:-classifyr}"
+      RAILS_DB_PASSWORD: "${RAILS_DB_PASSWORD:-thisisprobablyabadidea!}"
+      RAILS_DB_USER: "${RAILS_DB_USER:-classifyr}"
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_SESSION_TOKEN: "${AWS_SESSION_TOKEN}"
+      AWS_REGION: "${AWS_REGION:-us-east-1}"
       # Our container has no browser, so we can't use letter opener.
       LAUNCHY_DRY_RUN: true
       BROWSER: /dev/null
