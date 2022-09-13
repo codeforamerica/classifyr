@@ -1,5 +1,6 @@
 class UniqueValue < ApplicationRecord
   COMPLETION_COUNT = 3
+  EXAMPLE_COUNT = 5
   MIN_APPROVAL_CONFIDENCE = Classification::SOMEWHAT_CONFIDENT
 
   extend FriendlyId
@@ -54,12 +55,16 @@ class UniqueValue < ApplicationRecord
 
   def generate_examples
     data = []
-    tail = "| tail -n +2 | "
 
     field.data_set.datafile.with_file do |f|
-      result = `sed -E 's/("([^"]*)")?,/\\2\\t/g' #{f.path} #{tail} grep #{value&.shellescape} | head -5`
-      data = result&.split("\n")&.map do |line|
-        line.delete("\u0002").delete("\r").split("\t")
+      CSV.foreach(f, headers: true) do |row|
+        if row[field.heading] == value
+          data << row.values_at
+        end
+
+        if data.length >= EXAMPLE_COUNT
+          break
+        end
       end
     end
 
