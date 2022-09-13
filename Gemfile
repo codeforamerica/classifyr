@@ -36,6 +36,7 @@ group :development, :test do
   gem "faker", "~> 2.21"
   gem "pry", "~> 0.14"
   gem "bullet", "~> 7.0"
+  gem "rspec-github", "~> 2.3"
 end
 
 group :development do
