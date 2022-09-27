@@ -11,10 +11,12 @@
     <div class="justify-self-end self-end">
       <% if defined?(buttons) %>
         <% buttons.each do |button| %>
-          <%= link_to button[:label],
-                      button[:href],
-                      method: button[:method] || :get,
-                      class: "#{button[:class] ? button[:class] : "button"} mb-2" %>
+          <% if button[:display] || button[:display].nil? %>
+            <%= link_to button[:label],
+                        button[:href],
+                        method: button[:method] || :get,
+                        class: "#{button[:class] ? button[:class] : "button"} mb-2" %>
+          <% end %>
         <% end %>
       <% end %>
     </div>

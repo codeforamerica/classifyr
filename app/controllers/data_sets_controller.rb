@@ -2,7 +2,7 @@
 
 # Rails controller for datasets.
 class DataSetsController < ApplicationController
-  before_action :set_data_set, only: %i[show edit update destroy map analyze]
+  before_action :set_data_set, only: %i[show edit update destroy map analyze classification]
   before_action :set_breadcrumbs
 
   def index
@@ -72,6 +72,15 @@ class DataSetsController < ApplicationController
     add_breadcrumb(t('.title'), nil)
 
     @data_set.analyze!
+  end
+
+  def classification
+    authorize! :show, :data_sets
+    add_breadcrumb(@data_set.title, data_set_path(@data_set))
+    add_breadcrumb('Classification', nil)
+
+    @field_values = @data_set.call_type_field.unique_values.order(:value)
+    @classified_fields = @data_set.fields.classified.map(&:common_type)
   end
 
   private

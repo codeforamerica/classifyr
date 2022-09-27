@@ -1,0 +1,43 @@
+<div class="w-full">
+  <%= render 'shared/header',
+             title: t('.title', title: @data_set.title),
+             description: t('.description', percentage: @data_set.completion_percent),
+              buttons: [
+                {
+                  label: "Classify",
+                  href: classify_data_sets_call_types_classifications_path(data_set_slug: @data_set.slug),
+                  display: !@data_set.completed? && authorized?(:create, :classifications)
+                }
+              ]
+  %>
+<div class="responsive-container">
+  <div class="my-12 px-4 py-5 sm:px-6">
+    <div id="data_sets" class="header lex flex-col">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col" class="text-sm"><%= t '.detailed' %></th>
+              <th scope="col" class="text-sm"><%= t '.common' %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @field_values.each do |value| %>
+            <tr class="row">
+              <td><%= value.value %></td>
+              <td>
+                <span class="classification count-<%= value.approved_at? ? value.classification[:count] : 0 %>">
+                <% if value.approved_at? %>
+                  <%= value.classification[:value] %> (<%= value.classification[:count] %>)
+                <% else %>
+                  <%= t '.in_progress' %>
+                <% end %>
+                </span>
+              </td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+    </div>
+  </div>
+</div>
+</div>

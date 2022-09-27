@@ -1,0 +1,24 @@
+.classification {
+    border-width: 1px;
+    border-radius: 6px;
+    padding: 3px;
+
+    /* Default to the approved color. */
+    border-color: #81C784;
+    background-color: #81C784;
+}
+
+.classification.count-0 {
+    border-color: #FF80AB;
+    background-color: #FF80AB;
+}
+
+.classification.count-1 {
+    border-color: #FFA726;
+    background-color: #FFA726;
+}
+
+.classification.count-2 {
+    border-color: #FFEE58;
+    background-color: #FFEE58;
+}

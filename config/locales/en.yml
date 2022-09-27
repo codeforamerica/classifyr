@@ -46,6 +46,12 @@ en:
     title: "Datasets"
     analyze:
       title: "Analyze"
+    classification:
+      common: "Common call type"
+      description: "Categorization for this dataset is currently %{percentage}% complete."
+      detailed: "Detailed call type"
+      in_progress: "CLASSIFICATION IN PROGRESS"
+      title: "%{title} Classification"
     create:
       success: "Dataset was successfully created."
     destroy:

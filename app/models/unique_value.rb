@@ -38,6 +38,21 @@ class UniqueValue < ApplicationRecord
     classifications.where(user_id: user.id).first
   end
 
+  def classification
+    return @classification if @classification
+
+    threshold = Classification.confidence_ratings[MIN_APPROVAL_CONFIDENCE]
+    classification = classifications.where(confidence_rating: threshold..)
+                                    .joins(:common_incident_type)
+                                    .group('common_incident_types.code')
+                                    .order(count: :desc).count.first
+
+    @classification = {
+      value: classification&.[](0),
+      count: classification&.[](1) || 0
+    }
+  end
+
   def update_approval_status
     return if classifications_count < COMPLETION_COUNT
 

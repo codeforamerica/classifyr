@@ -20,6 +20,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     member do
       get 'map'
       get 'analyze'
+      get 'classification'
     end
   end
 
