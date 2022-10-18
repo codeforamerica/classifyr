@@ -30,4 +30,28 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  admin:
+    users:
+      destroy:
+        success: "User was successfully destroyed."
+      update:
+        success: "User was successfully updated."
+  application:
+    unauthorized: "You are not authorized to access this page."
+  classifications:
+    call_types:
+      completed: "This data set has already been fully classified."
+      user_completed: "You have already classified all call types for this data set."
+  data_sets:
+    title: "Datasets"
+    analyze:
+      title: "Analyze"
+    create:
+      success: "Dataset was successfully created."
+    destroy:
+      success: "Data set was successfully destroyed."
+    map:
+      title: "Map Data Fields"
+    update:
+      mapped: "Fields were successfully mapped."
+      success: "Data set was successfully updated."

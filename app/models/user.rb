@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Represents a user within the application.
 class User < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged]

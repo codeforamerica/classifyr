@@ -1,21 +1,24 @@
-require "csv"
+# frozen_string_literal: true
 
+require 'csv'
+
+# Represents a common incident type to be used for data classification.
 class CommonIncidentType < ApplicationRecord
   include PgSearch::Model
   pg_search_scope :search,
-                  against: [
-                    :code, :description, :notes,
-                    :humanized_code, :humanized_description,
-                    :humanized_notes
+                  against: %i[
+                    code description notes
+                    humanized_code humanized_description
+                    humanized_notes
                   ],
                   using: {
                     tsearch: {
-                      dictionary: "english",
-                      prefix: true,
+                      dictionary: 'english',
+                      prefix: true
                     },
                     trigram: {
-                      word_similarity: true,
-                    },
+                      word_similarity: true
+                    }
                   }
 
   has_paper_trail
@@ -24,7 +27,7 @@ class CommonIncidentType < ApplicationRecord
 
   has_many :classifications, dependent: :destroy
 
-  scope :apco, -> { where(standard: "APCO") }
+  scope :apco, -> { where(standard: 'APCO') }
 
   def formatted_code
     humanized_code || code

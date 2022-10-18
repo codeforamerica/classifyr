@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# User authentication service.
 class Authorizer
   def initialize(user:, action:, entity:, record: nil)
     @user = user

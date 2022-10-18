@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Represents an individual field within a dataset.
 class Field < ApplicationRecord
   has_paper_trail
 
@@ -6,17 +9,17 @@ class Field < ApplicationRecord
   has_many :classifications, through: :unique_values
 
   TYPES = [
-    "", "Emergency Category", "Call Category", Classification::CALL_TYPE,
-    "-----------------", "Call Identifier", "Call Time", "Call Disposition", "Priority", "Dispatched Unit Type",
-    "-----------------", "Geolocation Latitude", "Geolocation Longitude",
-    "-----------------", "Flag Alcohol Related", "Flag Domestic Violence", "Flag Drug Related", "Flag Mental Health"
+    '', 'Emergency Category', 'Call Category', Classification::CALL_TYPE,
+    '-----------------', 'Call Identifier', 'Call Time', 'Call Disposition', 'Priority', 'Dispatched Unit Type',
+    '-----------------', 'Geolocation Latitude', 'Geolocation Longitude',
+    '-----------------', 'Flag Alcohol Related', 'Flag Domestic Violence', 'Flag Drug Related', 'Flag Mental Health'
   ].freeze
 
   # FORMATS = ['', 'Lookup', 'Date', 'Time', 'Address', 'Geolocation', 'Text']
   #
 
-  VALUE_TYPES = ["Emergency Category", "Call Category", Classification::CALL_TYPE, "Call Disposition",
-                 "Priority"].freeze
+  VALUE_TYPES = ['Emergency Category', 'Call Category', Classification::CALL_TYPE, 'Call Disposition',
+                 'Priority'].freeze
 
   scope :classified, -> { joins(:classifications).distinct }
   scope :not_classified, -> { where.missing(:classifications).distinct }
@@ -41,9 +44,7 @@ class Field < ApplicationRecord
 
     # If the new common_type is not of interest, we delete the
     # unique values.
-    unless Field::VALUE_TYPES.include?(new_common_type)
-      unique_values.destroy_all
-    end
+    unique_values.destroy_all unless Field::VALUE_TYPES.include?(new_common_type)
 
     update(common_type: new_common_type)
   end

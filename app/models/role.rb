@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Represents a user role.
 class Role < ApplicationRecord
   include AppConfig
 
@@ -27,35 +30,35 @@ class Role < ApplicationRecord
   #
   ROLE_PERMISSIONS = {
     data_admin: {
-      all: [:all],
+      all: [:all]
     },
     volunteer: {
       classifications: [:index],
-      dashboard: [:index, :show],
-      data_sets: [:index, :show],
+      dashboard: %i[index show],
+      data_sets: %i[index show]
     },
     data_importer: {
       classifications: [:index],
-      dashboard: [:index, :show],
-      data_sets: [:index, :show, :create, :update],
+      dashboard: %i[index show],
+      data_sets: %i[index show create update]
     },
     data_classifier: {
       categories: [:request],
-      classifications: [:index, :create],
+      classifications: %i[index create],
       common_incident_types: [:index],
-      dashboard: [:index, :show],
-      data_sets: [:index, :show, :create, :update],
+      dashboard: %i[index show],
+      data_sets: %i[index show create update]
     },
     data_consumer: {
       classifications: [:index],
-      dashboard: [:index, :show],
-      data_sets: [:export],
+      dashboard: %i[index show],
+      data_sets: [:export]
     },
     data_reviewer: {
       classifications: [:index],
-      dashboard: [:index, :show],
-      data_categorization: [:review],
-    },
+      dashboard: %i[index show],
+      data_categorization: [:review]
+    }
   }.freeze
 
   def self.insert_roles

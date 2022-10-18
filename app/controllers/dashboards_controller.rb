@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Rails controller for the main dashboard.
 class DashboardsController < ApplicationController
   before_action :set_breadcrumbs
 
@@ -12,6 +15,6 @@ class DashboardsController < ApplicationController
   private
 
   def set_breadcrumbs
-    add_breadcrumb("Dashboard", dashboards_path)
+    add_breadcrumb('Dashboard', dashboards_path)
   end
 end

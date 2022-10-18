@@ -1,4 +1,6 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe Authorizer, type: :model do
   subject do
@@ -6,7 +8,7 @@ RSpec.describe Authorizer, type: :model do
       user: current_user,
       action:,
       entity:,
-      record:,
+      record:
     ).run
   end
 
@@ -16,34 +18,34 @@ RSpec.describe Authorizer, type: :model do
   let(:entity) { :data_sets }
   let(:record) { nil }
 
-  describe "#run" do
-    context "when user does not have a role" do
+  describe '#run' do
+    context 'when user does not have a role' do
       let(:role) { nil }
 
       it { is_expected.to be(false) }
     end
 
-    context "when no record is passed" do
-      context "when role does not exist in permissions" do
+    context 'when no record is passed' do
+      context 'when role does not exist in permissions' do
         let(:role) { create(:role, name: :unknown) }
 
         it { is_expected.to be(false) }
       end
 
-      context "when role has :all permissions" do
+      context 'when role has :all permissions' do
         let(:role) { create(:role, name: :data_admin) }
 
         it { is_expected.to be(true) }
       end
 
-      context "when entity is not in permissions" do
+      context 'when entity is not in permissions' do
         let(:role) { create(:role, name: :volunteer) }
         let(:entity) { :unknown }
 
         it { is_expected.to be(false) }
       end
 
-      context "when entity permission is present" do
+      context 'when entity permission is present' do
         let(:role) { create(:role, name: :volunteer) }
         let(:entity) { :data_sets }
 
@@ -51,14 +53,14 @@ RSpec.describe Authorizer, type: :model do
       end
     end
 
-    context "when a record is passed" do
-      context "when policy does not exist" do
+    context 'when a record is passed' do
+      context 'when policy does not exist' do
         let(:record) { create(:data_set) }
 
         it { is_expected.to be(true) }
       end
 
-      context "when policy exists" do
+      context 'when policy exists' do
         let(:record) { create(:user) }
 
         it { is_expected.to be(true) }

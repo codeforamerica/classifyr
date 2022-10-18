@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Helper methods for models that work with files.
 module ActiveStorageAttachmentExtension
   extend ActiveSupport::Concern
 

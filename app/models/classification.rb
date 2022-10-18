@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
+# Represents a classification for a unique dataset field value.
 class Classification < ApplicationRecord
   has_paper_trail
 
-  CALL_TYPE = "Detailed Call Type".freeze
-  LOW_CONFIDENCE = "Low Confidence".freeze
-  SOMEWHAT_CONFIDENT = "Somewhat Confident".freeze
-  VERY_CONFIDENT = "Very Confident".freeze
+  CALL_TYPE = 'Detailed Call Type'
+  LOW_CONFIDENCE = 'Low Confidence'
+  SOMEWHAT_CONFIDENT = 'Somewhat Confident'
+  VERY_CONFIDENT = 'Very Confident'
 
   belongs_to :common_incident_type, optional: true
   belongs_to :user, optional: true
@@ -15,7 +18,7 @@ class Classification < ApplicationRecord
   enum :confidence_rating, {
     LOW_CONFIDENCE => 0,
     SOMEWHAT_CONFIDENT => 1,
-    VERY_CONFIDENT => 2,
+    VERY_CONFIDENT => 2
   }
 
   validates :user, :unique_value, :common_type, :value,

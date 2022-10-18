@@ -1,26 +1,28 @@
-require "rails_helper"
-require "csv"
+# frozen_string_literal: true
+
+require 'rails_helper'
+require 'csv'
 
 RSpec.describe DataSet, type: :model do
   let(:data_set) { build(:data_set) }
 
-  include_examples "valid factory", :data_set
-  include_examples "papertrail versioning", :data_set, "title"
-  include_examples "associations", :data_set, [:files, :fields]
+  include_examples 'valid factory', :data_set
+  include_examples 'papertrail versioning', :data_set, 'title'
+  include_examples 'associations', :data_set, %i[files fields]
 
-  describe "FriendlyID" do
-    it "updates the slug when the title changes" do
-      data_set = create(:data_set, title: "My New Data Set")
-      expect(data_set.slug).to eq("my-new-data-set")
+  describe 'FriendlyID' do
+    it 'updates the slug when the title changes' do
+      data_set = create(:data_set, title: 'My New Data Set')
+      expect(data_set.slug).to eq('my-new-data-set')
 
-      data_set.update(title: "My Updated Data Set")
-      expect(data_set.slug).to eq("my-updated-data-set")
+      data_set.update(title: 'My Updated Data Set')
+      expect(data_set.slug).to eq('my-updated-data-set')
     end
   end
 
-  describe "scopes" do
-    describe "ordered" do
-      it "sorts data sets by creation date (desc)" do
+  describe 'scopes' do
+    describe 'ordered' do
+      it 'sorts data sets by creation date (desc)' do
         data_set_1 = create(:data_set)
         data_set_2 = create(:data_set)
         data_set_3 = create(:data_set)
@@ -31,7 +33,7 @@ RSpec.describe DataSet, type: :model do
       end
     end
 
-    describe "to_classify" do
+    describe 'to_classify' do
       it "filters data sets with call type fields and sorts them by
           completion percent and creation date" do
         data_set_1 = create(:data_set, id: 1)
@@ -57,22 +59,20 @@ RSpec.describe DataSet, type: :model do
 
         # Oldest with lowest completion first
         expect(described_class.to_classify.map(&:id)).to \
-          eq(
-           [
-             # data_set_5.id is not present because it doesn't have a Call Type field
-             data_set_3.id, # Oldest one with no completion
-             data_set_4.id, # More recent with no completion
-             data_set_2.id, # Partial completion 1/2 unique values classified
-             data_set_1.id, # Completed is last
-           ],
-         )
+          eq([
+               # data_set_5.id is not present because it doesn't have a Call Type field
+               data_set_3.id, # Oldest one with no completion
+               data_set_4.id, # More recent with no completion
+               data_set_2.id, # Partial completion 1/2 unique values classified
+               data_set_1.id # Completed is last
+             ])
       end
     end
   end
 
-  describe "instance methods" do
-    describe "#call_type_field" do
-      it "returns the data_set call_type field" do
+  describe 'instance methods' do
+    describe '#call_type_field' do
+      it 'returns the data_set call_type field' do
         set = create(:data_set)
         create(:field, data_set: set, common_type: Field::VALUE_TYPES[1])
         create(:field, data_set: set, common_type: Field::VALUE_TYPES[5])
@@ -82,8 +82,8 @@ RSpec.describe DataSet, type: :model do
       end
     end
 
-    describe "#pick_value_to_classify_for" do
-      it "returns a unique_value to classify" do
+    describe '#pick_value_to_classify_for' do
+      it 'returns a unique_value to classify' do
         user = create(:user)
         data_set = create(:data_set)
         field = create(:field, data_set:, common_type: Classification::CALL_TYPE)
@@ -97,27 +97,27 @@ RSpec.describe DataSet, type: :model do
       end
     end
 
-    describe "completed?" do
-      context "when completion_percent != 100" do
-        it "returns false" do
+    describe 'completed?' do
+      context 'when completion_percent != 100' do
+        it 'returns false' do
           data_set = create(:data_set, completion_percent: 50)
           expect(data_set.completed?).to be(false)
         end
       end
 
-      context "when completion_percent = 100" do
-        it "returns true" do
+      context 'when completion_percent = 100' do
+        it 'returns true' do
           data_set = create(:data_set, completion_percent: 100)
           expect(data_set.completed?).to be(true)
         end
       end
     end
 
-    describe "#field types" do
-      let(:emergency_field) { create(:field, :with_unique_values, common_type: "Emergency Category") }
-      let(:call_field) { create(:field, :with_unique_values, common_type: "Call Category") }
+    describe '#field types' do
+      let(:emergency_field) { create(:field, :with_unique_values, common_type: 'Emergency Category') }
+      let(:call_field) { create(:field, :with_unique_values, common_type: 'Call Category') }
       let(:detailed_call_field) { create(:field, :with_unique_values, common_type: Classification::CALL_TYPE) }
-      let(:priority_field) { create(:field, :with_unique_values, common_type: "Priority") }
+      let(:priority_field) { create(:field, :with_unique_values, common_type: 'Priority') }
 
       let(:data_set) do
         create(:data_set, fields: [
@@ -125,45 +125,45 @@ RSpec.describe DataSet, type: :model do
                ])
       end
 
-      describe "#emergency_categories" do
+      describe '#emergency_categories' do
         it "return the unique_values of the field matching the 'Emergency Category' type" do
           expect(data_set.emergency_categories).to eq(emergency_field.unique_values.order(:value))
         end
       end
 
-      describe "#call_categories" do
+      describe '#call_categories' do
         it "return the unique_values of the field matching the 'Call Category' type" do
           expect(data_set.call_categories).to eq(call_field.unique_values.order(:value))
         end
       end
 
-      describe "#detailed_call_types" do
+      describe '#detailed_call_types' do
         it "return the unique_values of the field matching the 'Classification::CALL_TYPE' type" do
           expect(data_set.detailed_call_types).to eq(detailed_call_field.unique_values.order(:frequency))
         end
       end
 
-      describe "#priorities" do
+      describe '#priorities' do
         it "return the unique_values of the field matching the 'Priority' type" do
           expect(data_set.priorities).to eq(priority_field.unique_values.order(:value))
         end
       end
     end
 
-    describe "#time" do
-      let(:datetime) { "2022-01-01 00:00:00" }
-      let(:call_time_field) { create(:field, common_type: "Call Time", min_value: datetime) }
+    describe '#time' do
+      let(:datetime) { '2022-01-01 00:00:00' }
+      let(:call_time_field) { create(:field, common_type: 'Call Time', min_value: datetime) }
 
-      describe "#start_time" do
+      describe '#start_time' do
         context "when there is one field with common_type = 'Call Time" do
-          it "returns nil" do
+          it 'returns nil' do
             data_set = create(:data_set, fields: [call_time_field])
             expect(data_set.start_time).to eq(Chronic.parse(datetime))
           end
         end
 
         context "when there are no fields with common_type != 'Call Time" do
-          it "returns the parsed time" do
+          it 'returns the parsed time' do
             data_set = create(:data_set)
             expect(data_set.start_time).to be_nil
           end
@@ -171,26 +171,26 @@ RSpec.describe DataSet, type: :model do
       end
     end
 
-    describe "#map_fields" do
+    describe '#map_fields' do
       let(:data_set) { create(:data_set) }
-      let(:field) { create(:field, common_type: "Something", position: 0, data_set:) }
+      let(:field) { create(:field, common_type: 'Something', position: 0, data_set:) }
       let!(:unique_value) { create(:unique_value, field:) }
 
-      context "when field is classified" do
-        it "does not update it" do
+      context 'when field is classified' do
+        it 'does not update it' do
           create(:classification, unique_value:)
 
-          data_set.map_fields({ "0" => "Something else" })
+          data_set.map_fields({ '0' => 'Something else' })
 
           field.reload
-          expect(field.common_type).to eq("Something")
+          expect(field.common_type).to eq('Something')
           expect(field.unique_values).to eq([unique_value])
         end
       end
 
-      context "when common_type was changed to nil" do
-        it "sets the common_type to nil and deletes all unique values" do
-          data_set.map_fields({ "0" => nil })
+      context 'when common_type was changed to nil' do
+        it 'sets the common_type to nil and deletes all unique values' do
+          data_set.map_fields({ '0' => nil })
 
           field.reload
           expect(field.common_type).to be_nil
@@ -198,19 +198,19 @@ RSpec.describe DataSet, type: :model do
         end
       end
 
-      context "when common_type was not changed" do
-        it "keeps the common_type and unique_values" do
-          data_set.map_fields({ "0" => "Something" })
+      context 'when common_type was not changed' do
+        it 'keeps the common_type and unique_values' do
+          data_set.map_fields({ '0' => 'Something' })
 
           field.reload
-          expect(field.common_type).to eq("Something")
+          expect(field.common_type).to eq('Something')
           expect(field.unique_values).to eq([unique_value])
         end
       end
 
-      context "when common_type was changed to a Field::VALUE_TYPES value" do
-        it "sets the common_type and keeps all unique_values" do
-          data_set.map_fields({ "0" => Field::VALUE_TYPES.first })
+      context 'when common_type was changed to a Field::VALUE_TYPES value' do
+        it 'sets the common_type and keeps all unique_values' do
+          data_set.map_fields({ '0' => Field::VALUE_TYPES.first })
 
           field.reload
           expect(field.common_type).to eq(Field::VALUE_TYPES.first)
@@ -218,46 +218,46 @@ RSpec.describe DataSet, type: :model do
         end
       end
 
-      context "when common_type was changed to a non Field::VALUE_TYPES value" do
-        it "sets the common_type and deletes all unique_values" do
-          data_set.map_fields({ "0" => "Something else" })
+      context 'when common_type was changed to a non Field::VALUE_TYPES value' do
+        it 'sets the common_type and deletes all unique_values' do
+          data_set.map_fields({ '0' => 'Something else' })
 
           field.reload
-          expect(field.common_type).to eq("Something else")
+          expect(field.common_type).to eq('Something else')
           expect(field.unique_values).to eq([])
         end
       end
     end
 
-    describe "#analyze!" do
-      it "analyses a datafile" do
+    describe '#analyze!' do
+      it 'analyses a datafile' do
         data_set = create(:data_set, files: [
-                            Rack::Test::UploadedFile.new("spec/support/files/police-incidents-2022.csv", "text/csv"),
+                            Rack::Test::UploadedFile.new('spec/support/files/police-incidents-2022.csv', 'text/csv')
                           ])
 
         data_set.prepare_datamap
 
-        data_set.fields.find_by(heading: "incident_number").update(common_type: "Call Identifier")
-        data_set.fields.find_by(heading: "call_type").update(common_type: "Detailed Call Type")
-        data_set.fields.find_by(heading: "call_time").update(common_type: "Call Time")
+        data_set.fields.find_by(heading: 'incident_number').update(common_type: 'Call Identifier')
+        data_set.fields.find_by(heading: 'call_type').update(common_type: 'Detailed Call Type')
+        data_set.fields.find_by(heading: 'call_time').update(common_type: 'Call Time')
 
         expect(data_set.reload.analyze!).to be(true)
 
-        expect(data_set.fields.find_by(heading: "call_type").unique_values
+        expect(data_set.fields.find_by(heading: 'call_type').unique_values
                        .pluck(:value)).to(eq([
-                                               "Welfare Check",
-                                               "Fraud Under $250",
-                                               "DUI",
-                                               "Intoxication",
-                                               "Mental Health Issue",
-                                               "Trespass",
-                                               "BURGLAR ALARM, SILENT",
+                                               'Welfare Check',
+                                               'Fraud Under $250',
+                                               'DUI',
+                                               'Intoxication',
+                                               'Mental Health Issue',
+                                               'Trespass',
+                                               'BURGLAR ALARM, SILENT'
                                              ]))
       end
     end
 
-    describe "#update_completion" do
-      it "calls the DataSets::Completion service and update the correct attributes" do
+    describe '#update_completion' do
+      it 'calls the DataSets::Completion service and update the correct attributes' do
         role = create(:role)
         jack = create(:user, role:)
         john = create(:user, role:)
@@ -282,11 +282,11 @@ RSpec.describe DataSet, type: :model do
         # data_set.update_completion
 
         expect(
-          data_set.attributes.slice("completion_percent", "completed_unique_values", "total_unique_values"),
+          data_set.attributes.slice('completion_percent', 'completed_unique_values', 'total_unique_values')
         ).to eq({
-                  "completion_percent" => 25,
-                  "completed_unique_values" => 1,
-                  "total_unique_values" => 4,
+                  'completion_percent' => 25,
+                  'completed_unique_values' => 1,
+                  'total_unique_values' => 4
                 })
       end
     end

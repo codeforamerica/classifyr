@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Rails controller for datasets.
 class DataSetsController < ApplicationController
   before_action :set_data_set, only: %i[show edit update destroy map analyze]
   before_action :set_breadcrumbs
@@ -15,7 +18,7 @@ class DataSetsController < ApplicationController
   def new
     authorize! :create, :data_sets
     @data_set = DataSet.new
-    add_breadcrumb("Create a new dataset", nil)
+    add_breadcrumb('Create a new dataset', nil)
   end
 
   def edit
@@ -28,19 +31,19 @@ class DataSetsController < ApplicationController
     @data_set = DataSet.new(data_set_params)
 
     if @data_set.save
-      redirect_to map_data_set_path(@data_set), notice: "DataSet was successfully created."
+      redirect_to map_data_set_path(@data_set), notice: t('.success')
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  def update
+  def update # rubocop:disable Metrics/AbcSize
     authorize! :update, :data_sets
-    if params["data_set"]["step"] == "map_fields"
-      @data_set.map_fields(params["data_set"]["common_types"])
-      redirect_to analyze_data_set_url(@data_set), notice: "Fields were successfully mapped."
+    if params['data_set']['step'] == 'map_fields'
+      @data_set.map_fields(params['data_set']['common_types'])
+      redirect_to analyze_data_set_url(@data_set), notice: t('.mapped')
     elsif @data_set.update(data_set_params)
-      redirect_to data_set_url(@data_set), notice: "Data set was successfully updated."
+      redirect_to data_set_url(@data_set), notice: t('.success')
     else
       render :edit, status: :unprocessable_entity
     end
@@ -50,23 +53,23 @@ class DataSetsController < ApplicationController
     authorize! :destroy, :data_sets
     @data_set.destroy
 
-    redirect_to data_sets_url, notice: "Data set was successfully destroyed."
+    redirect_to data_sets_url, notice: t('.success')
   end
 
   def map
     authorize! :create, :data_sets
     add_breadcrumb(@data_set.title, data_set_path(@data_set))
-    add_breadcrumb("Map Data Fields", nil)
+    add_breadcrumb(t('.title'), nil)
 
     @data_set.prepare_datamap
-    @fields = @data_set.fields.includes(:classifications).order("position asc")
+    @fields = @data_set.fields.includes(:classifications).order('position asc')
     @classified_fields = @data_set.fields.classified.map(&:common_type)
   end
 
   def analyze
     authorize! :create, :data_sets
     add_breadcrumb(@data_set.title, data_set_path(@data_set))
-    add_breadcrumb("Analyze", nil)
+    add_breadcrumb(t('.title'), nil)
 
     @data_set.analyze!
   end
@@ -88,6 +91,6 @@ class DataSetsController < ApplicationController
   end
 
   def set_breadcrumbs
-    add_breadcrumb("Datasets", data_sets_path)
+    add_breadcrumb(t('.title'), data_sets_path)
   end
 end

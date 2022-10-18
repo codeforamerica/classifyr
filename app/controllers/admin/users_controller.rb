@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Admin
+  # Rails controller for user administration.
   class UsersController < ApplicationController
     before_action :set_user, only: %i[edit update destroy]
     before_action :set_roles, only: %i[edit update]
@@ -18,7 +21,7 @@ module Admin
       authorize! :update, :users, @user
 
       if @user.update(user_params)
-        redirect_to admin_users_path, notice: "User was successfully updated."
+        redirect_to admin_users_path, notice: t('.success')
       else
         render :edit, status: :unprocessable_entity
       end
@@ -29,7 +32,7 @@ module Admin
 
       @user.destroy
 
-      redirect_to admin_users_path, notice: "User was successfully destroyed."
+      redirect_to admin_users_path, notice: t('.success')
     end
 
     private
@@ -49,7 +52,7 @@ module Admin
     end
 
     def set_breadcrumbs
-      add_breadcrumb("Users", admin_users_path)
+      add_breadcrumb('Users', admin_users_path)
     end
   end
 end

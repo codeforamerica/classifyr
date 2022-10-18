@@ -1,8 +1,10 @@
-# rubocop:disable Metrics/MethodLength
+# frozen_string_literal: true
+
+# Application level helper methods.
 module ApplicationHelper
-  def us_states
+  def us_states # rubocop:disable Metrics/MethodLength
     [
-      ["", nil],
+      ['', nil],
       %w[Alabama AL],
       %w[Alaska AK],
       %w[Arizona AZ],
@@ -11,7 +13,7 @@ module ApplicationHelper
       %w[Colorado CO],
       %w[Connecticut CT],
       %w[Delaware DE],
-      ["District of Columbia", "DC"],
+      ['District of Columbia', 'DC'],
       %w[Florida FL],
       %w[Georgia GA],
       %w[Hawaii HI],
@@ -32,29 +34,29 @@ module ApplicationHelper
       %w[Montana MT],
       %w[Nebraska NE],
       %w[Nevada NV],
-      ["New Hampshire", "NH"],
-      ["New Jersey", "NJ"],
-      ["New Mexico", "NM"],
-      ["New York", "NY"],
-      ["North Carolina", "NC"],
-      ["North Dakota", "ND"],
+      ['New Hampshire', 'NH'],
+      ['New Jersey', 'NJ'],
+      ['New Mexico', 'NM'],
+      ['New York', 'NY'],
+      ['North Carolina', 'NC'],
+      ['North Dakota', 'ND'],
       %w[Ohio OH],
       %w[Oklahoma OK],
       %w[Oregon OR],
       %w[Pennsylvania PA],
-      ["Puerto Rico", "PR"],
-      ["Rhode Island", "RI"],
-      ["South Carolina", "SC"],
-      ["South Dakota", "SD"],
+      ['Puerto Rico', 'PR'],
+      ['Rhode Island', 'RI'],
+      ['South Carolina', 'SC'],
+      ['South Dakota', 'SD'],
       %w[Tennessee TN],
       %w[Texas TX],
       %w[Utah UT],
       %w[Vermont VT],
       %w[Virginia VA],
       %w[Washington WA],
-      ["West Virginia", "WV"],
+      ['West Virginia', 'WV'],
       %w[Wisconsin WI],
-      %w[Wyoming WY],
+      %w[Wyoming WY]
     ]
   end
 
@@ -63,25 +65,24 @@ module ApplicationHelper
       user: current_user,
       action:,
       entity:,
-      record:,
+      record:
     ).run
   end
 
   def current_class?(path)
-    return "nav-item-active" if request.path.starts_with?(path)
+    return 'nav-item-active' if request.path.starts_with?(path)
 
-    ""
+    ''
   end
 
   def tailwind_classes_for(flash_type)
     {
-      notice: "authenticated-notice",
-      error: "authenticated-error",
+      notice: 'authenticated-notice',
+      error: 'authenticated-error'
     }.stringify_keys[flash_type.to_s] || flash_type.to_s
   end
 
   def alert_background_for(flash_type)
-    flash_type == :notice ? "text-green-800" : "text-red-900"
+    flash_type == :notice ? 'text-green-800' : 'text-red-900'
   end
 end
-# rubocop:enable Metrics/MethodLength

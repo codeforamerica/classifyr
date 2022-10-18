@@ -1,19 +1,21 @@
-require "rails_helper"
-require "csv"
+# frozen_string_literal: true
 
-RSpec.describe "Classify call types", type: :feature, js: true do
+require 'rails_helper'
+require 'csv'
+
+RSpec.describe 'Classify call types', type: :feature, js: true do
   let(:role) { create(:role, name: :data_classifier) }
   let(:jack) { create(:user, role:) }
   let(:john) { create(:user, role:) }
 
-  let!(:dui) {
-    create(:common_incident_type, code: "DUI", description: "DUI",
-                                  notes: "Driving while intoxicated, under the influence")
-  }
-  let!(:intox) {
-    create(:common_incident_type, code: "INTOX", description: "INTOXICATED",
-                                  notes: "Intoxicated person, drunk & disorderly")
-  }
+  let!(:dui) do
+    create(:common_incident_type, code: 'DUI', description: 'DUI',
+                                  notes: 'Driving while intoxicated, under the influence')
+  end
+  let!(:intox) do
+    create(:common_incident_type, code: 'INTOX', description: 'INTOXICATED',
+                                  notes: 'Intoxicated person, drunk & disorderly')
+  end
 
   let(:data_set_1) { create(:data_set) }
   let(:data_set_2) { create(:data_set) }
@@ -21,11 +23,11 @@ RSpec.describe "Classify call types", type: :feature, js: true do
   let(:field_1) { create(:field, data_set: data_set_1, common_type: Classification::CALL_TYPE) }
   let(:field_2) { create(:field, data_set: data_set_2, common_type: Classification::CALL_TYPE) }
 
-  let(:unique_value_1_1) { create(:unique_value, field: field_1, value: "Intoxication") }
-  let(:unique_value_1_2) { create(:unique_value, field: field_1, value: "DUI") }
-  let(:unique_value_1_3) { create(:unique_value, field: field_1, value: "Welfare Check") }
+  let(:unique_value_1_1) { create(:unique_value, field: field_1, value: 'Intoxication') }
+  let(:unique_value_1_2) { create(:unique_value, field: field_1, value: 'DUI') }
+  let(:unique_value_1_3) { create(:unique_value, field: field_1, value: 'Welfare Check') }
 
-  let(:unique_value_2_1) { create(:unique_value, field: field_2, value: "Something") }
+  let(:unique_value_2_1) { create(:unique_value, field: field_2, value: 'Something') }
 
   before do
     create_list(:classification, 1, unique_value: unique_value_1_1)
@@ -33,10 +35,10 @@ RSpec.describe "Classify call types", type: :feature, js: true do
     create_list(:classification, 2, unique_value: unique_value_1_3)
   end
 
-  def go_to_classify(user, data_set, percent = 0, completion = "0/3")
+  def go_to_classify(user, data_set, percent = 0, completion = '0/3')
     sign_in user
     visit root_path
-    find("#sidenav").click_on "Classification"
+    find_by_id('sidenav').click_on 'Classification'
     check_data_set_card(data_set, percent, completion)
 
     find(:xpath, "//a[@href='/classifications/call_types/data_sets/#{data_set.slug}/classify']", match: :first).click
@@ -51,9 +53,9 @@ RSpec.describe "Classify call types", type: :feature, js: true do
   end
 
   def check_classify_page(unique_value)
-    expect(page).to have_content("Classify Call Type")
+    expect(page).to have_content('Classify Call Type')
     expect(page).to have_content(unique_value.value)
-    expect(page).to have_content("Search above to populate results")
+    expect(page).to have_content('Search above to populate results')
   end
 
   def check_incident_type_card(incident_type)
@@ -71,15 +73,15 @@ RSpec.describe "Classify call types", type: :feature, js: true do
   end
 
   context "when selecting 'Unable to map call type'" do
-    it "stores the classification as unknown" do
+    it 'stores the classification as unknown' do
       go_to_classify(jack, data_set_1)
       check_classify_page(unique_value_1_1)
 
-      fill_in "q", with: "something else"
+      fill_in 'q', with: 'something else'
 
-      expect(page).to have_content("Unable to map call type")
-      click_on "Select"
-      expect(page).to have_content("Success! Your classification has been submitted.")
+      expect(page).to have_content('Unable to map call type')
+      click_on 'Select'
+      expect(page).to have_content('Success! Your classification has been submitted.')
 
       unique_value_1_1.reload
       expect(unique_value_1_1.classifications_count).to eq(2)
@@ -87,124 +89,125 @@ RSpec.describe "Classify call types", type: :feature, js: true do
     end
   end
 
-  context "when checking the APCO codes table" do
-    it "displays the APCO codes" do
+  context 'when checking the APCO codes table' do
+    it 'displays the APCO codes' do
       go_to_classify(jack, data_set_1)
       check_classify_page(unique_value_1_1)
 
-      find("#show-apco").click
+      find_by_id('show-apco').click
 
       first_cit = CommonIncidentType.first
       last_cit = CommonIncidentType.last
 
-      expect(page).to have_content("APCO Codes")
+      expect(page).to have_content('APCO Codes')
       expect(page).to have_content(first_cit.formatted_code)
       expect(page).to have_content(last_cit.formatted_code)
     end
   end
 
-  context "when cancelling and trying again" do
-    it "allows the user to search again" do
+  context 'when cancelling and trying again' do
+    it 'allows the user to search again' do
       go_to_classify(jack, data_set_1)
       check_classify_page(unique_value_1_1)
 
-      fill_in "q", with: "into"
+      fill_in 'q', with: 'into'
 
-      expect(page).to have_content("Unable to map call type")
+      expect(page).to have_content('Unable to map call type')
       check_incident_type_card(dui)
       check_incident_type_card(intox)
 
-      find("[data-incident-id='#{intox.id}']").click_on("Select")
-      expect(find("[data-incident-id='#{intox.id}']")).to have_content("Selected")
+      find("[data-incident-id='#{intox.id}']").click_on('Select')
+      expect(find("[data-incident-id='#{intox.id}']")).to have_content('Selected')
 
-      expect(page).to have_css("#q[disabled]")
+      expect(page).to have_css('#q[disabled]')
 
-      click_on "Back"
-      expect(find("[data-incident-id='#{intox.id}']")).not_to have_content("Selected")
-      expect(page).not_to have_css("#q[disabled]")
+      click_on 'Back'
+      expect(find("[data-incident-id='#{intox.id}']")).not_to have_content('Selected')
+      expect(page).not_to have_css('#q[disabled]')
     end
   end
 
-  context "when a user has classified all call types for a data set" do
-    context "when there are no other data sets" do
-      it "redirects to the data sets page and shows a notice" do
+  context 'when a user has classified all call types for a data set' do
+    context 'when there are no other data sets' do
+      it 'redirects to the data sets page and shows a notice' do
         # Ensure all unique values have all been classified by jack
         create(:classification, unique_value: unique_value_1_1, user: jack)
         create(:classification, unique_value: unique_value_1_2, user: jack)
 
-        go_to_classify(jack, data_set_1, 33, "1/3")
+        go_to_classify(jack, data_set_1, 33, '1/3')
         check_classify_page(unique_value_1_3)
-        fill_in "q", with: "into"
-        find("[data-incident-id='#{intox.id}']").click_on("Select")
-        select "Very Confident", from: "classification[confidence_rating]"
+        fill_in 'q', with: 'into'
+        find("[data-incident-id='#{intox.id}']").click_on('Select')
+        select 'Very Confident', from: 'classification[confidence_rating]'
 
         expect(unique_value_1_3.reload.classifications_count).to eq(2)
-        click_on "Submit"
+        click_on 'Submit'
 
-        click_on "Classify Another Call Type"
+        click_on 'Classify Another Call Type'
         expect(unique_value_1_3.reload.classifications_count).to eq(3)
 
-        expect(page).to have_current_path("/classifications/call_types")
-        expect(page).to have_content("You have already classified all call types for this data set.")
+        expect(page).to have_current_path('/classifications/call_types')
+        expect(page).to have_content('You have already classified all call types for this data set.')
       end
     end
 
-    context "when there are more data sets to classify" do
-      it "redirects to the data sets page and shows a notice" do
+    context 'when there are more data sets to classify' do
+      it 'redirects to the data sets page and shows a notice' do
         # Ensure all unique values have all been classified by jack
         create(:classification, unique_value: unique_value_1_1, user: jack)
         create(:classification, unique_value: unique_value_1_2, user: jack)
 
         create_list(:classification, 1, unique_value: unique_value_2_1)
 
-        go_to_classify(jack, data_set_1, 33, "1/3")
+        go_to_classify(jack, data_set_1, 33, '1/3')
         check_classify_page(unique_value_1_3)
-        fill_in "q", with: "into"
-        find("[data-incident-id='#{intox.id}']").click_on("Select")
-        select "Very Confident", from: "classification[confidence_rating]"
+        fill_in 'q', with: 'into'
+        find("[data-incident-id='#{intox.id}']").click_on('Select')
+        select 'Very Confident', from: 'classification[confidence_rating]'
 
         expect(unique_value_1_3.reload.classifications_count).to eq(2)
-        click_on "Submit"
+        click_on 'Submit'
 
-        click_on "Classify Another Call Type"
+        click_on 'Classify Another Call Type'
         expect(unique_value_1_3.reload.classifications_count).to eq(3)
 
-        expect(page).to have_current_path("/classifications/call_types")
-        expect(page).to have_content("You have already classified all call types for this data set.")
+        expect(page).to have_current_path('/classifications/call_types')
+        expect(page).to have_content('You have already classified all call types for this data set.')
       end
     end
   end
 
-  context "when selecting a common incident" do
-    it "creates the classification successfully" do
+  context 'when selecting a common incident' do
+    # TODO: Can we break this into multiple tests with a single expectation for each?
+    it 'creates the classification successfully' do # rubocop:disable RSpec/MultipleExpectations
       # ----------------------------------- #
       # Do a first classification with Jack #
       # ----------------------------------- #
       go_to_classify(jack, data_set_1)
       check_classify_page(unique_value_1_1)
 
-      fill_in "q", with: "into"
+      fill_in 'q', with: 'into'
 
-      expect(page).to have_content("Unable to map call type")
+      expect(page).to have_content('Unable to map call type')
       check_incident_type_card(dui)
       check_incident_type_card(intox)
 
-      find("[data-incident-id='#{intox.id}']").click_on("Select")
-      expect(find("[data-incident-id='#{intox.id}']")).to have_content("Selected")
+      find("[data-incident-id='#{intox.id}']").click_on('Select')
+      expect(find("[data-incident-id='#{intox.id}']")).to have_content('Selected')
 
-      select "Low Confidence", from: "classification[confidence_rating]"
-      fill_in "classification[confidence_reasoning]", with: "I'm not sure."
+      select 'Low Confidence', from: 'classification[confidence_rating]'
+      fill_in 'classification[confidence_reasoning]', with: "I'm not sure."
 
       expect(unique_value_1_1.reload.classifications_count).to eq(1)
-      click_on "Submit"
+      click_on 'Submit'
 
-      expect(page).to have_content("Success! Your classification has been submitted.")
+      expect(page).to have_content('Success! Your classification has been submitted.')
       expect(unique_value_1_1.reload.classifications_count).to eq(2)
 
       # completion percent, completed unique values, total unique values
       check_data_completion(data_set_1, 0, 0, 3)
 
-      click_on "Classify Another Call Type"
+      click_on 'Classify Another Call Type'
       check_classify_page(unique_value_1_2)
 
       # ----------------------------------- #
@@ -213,20 +216,20 @@ RSpec.describe "Classify call types", type: :feature, js: true do
       go_to_classify(john, data_set_1)
 
       # For some reason, the first fill_in doesn't trigger the search
-      fill_in "q", with: "into"
-      fill_in "q", with: "into"
+      fill_in 'q', with: 'into'
+      fill_in 'q', with: 'into'
 
-      expect(page).to have_content("Unable to map call type", wait: 50)
+      expect(page).to have_content('Unable to map call type', wait: 50)
       check_incident_type_card(intox)
 
-      find("[data-incident-id='#{intox.id}']").click_on("Select")
-      select "Very Confident", from: "classification[confidence_rating]"
-      expect(page).not_to have_content("Describe your reasoning (optional)")
+      find("[data-incident-id='#{intox.id}']").click_on('Select')
+      select 'Very Confident', from: 'classification[confidence_rating]'
+      expect(page).not_to have_content('Describe your reasoning (optional)')
 
       expect(unique_value_1_1.reload.classifications_count).to eq(2)
-      click_on "Submit"
+      click_on 'Submit'
 
-      expect(page).to have_content("Success! Your classification has been submitted.")
+      expect(page).to have_content('Success! Your classification has been submitted.')
       expect(unique_value_1_1.reload.classifications_count).to eq(3)
 
       # -------------------------------------------- #
@@ -235,8 +238,8 @@ RSpec.describe "Classify call types", type: :feature, js: true do
       # -------------------------------------------- #
       check_data_completion(data_set_1, 33, 1, 3)
 
-      find("#sidenav").click_on "Classification"
-      check_data_set_card(data_set_1, 33, "1/3")
+      find_by_id('sidenav').click_on 'Classification'
+      check_data_set_card(data_set_1, 33, '1/3')
     end
   end
 end

@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module DataSets
+  # Service to provide dataset completion statistics.
   class Completion
     def initialize(data_set)
       @data_set = data_set
@@ -9,9 +12,7 @@ module DataSets
       return unless call_type
 
       call_type.unique_values.each do |unique_value|
-        if unique_value.classifications_count > UniqueValue::COMPLETION_COUNT - 1
-          @completed_unique_values += 1
-        end
+        @completed_unique_values += 1 if unique_value.classifications_count > UniqueValue::COMPLETION_COUNT - 1
       end
 
       format
@@ -28,7 +29,7 @@ module DataSets
       {
         completion_percent: @completed_unique_values * 100 / call_type.unique_values.count,
         completed_unique_values: @completed_unique_values,
-        total_unique_values: call_type.unique_values.count,
+        total_unique_values: call_type.unique_values.count
       }
     end
   end

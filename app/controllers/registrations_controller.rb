@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Rails controller for user registration.
 class RegistrationsController < Devise::RegistrationsController
   protected
 

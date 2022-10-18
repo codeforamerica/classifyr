@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Rails controller for the Classifyr application.
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
@@ -19,16 +22,16 @@ class ApplicationController < ActionController::Base
       user: current_user,
       action:,
       entity:,
-      record:,
+      record:
     ).run
   end
 
   def set_default_breadcrumbs
-    return if controller_name == "registrations"
+    return if controller_name == 'registrations'
 
     @default_breadcrumbs = [{
       name: controller_name.humanize,
-      path: request.path,
+      path: request.path
     }]
   end
 
@@ -57,9 +60,7 @@ class ApplicationController < ActionController::Base
   def redirect_if_previous_slug(klass, slug)
     slug_record = FriendlyId::Slug.find_by(sluggable_type: klass.to_s, slug:)
 
-    unless slug_record
-      raise ActiveRecord::RecordNotFound, "can't find record with slug: \"#{slug}\""
-    end
+    raise ActiveRecord::RecordNotFound, "can't find record with slug: \"#{slug}\"" unless slug_record
 
     redirect_to slug_record.sluggable, status: :moved_permanently
   end
@@ -67,7 +68,7 @@ class ApplicationController < ActionController::Base
   private
 
   def not_authorized
-    redirect_to dashboards_path, alert: "You are not authorized to access this page."
+    redirect_to dashboards_path, alert: t('.unauthorized')
   end
 
   def verify_authorized
@@ -77,13 +78,13 @@ class ApplicationController < ActionController::Base
   # Use logged-in layout when editing current_user details
   def layout_by_resource
     if devise_controller? && defined?(resource_name) && !my_profile?
-      "devise"
+      'devise'
     else
-      "application"
+      'application'
     end
   end
 
   def my_profile?
-    controller_name == "registrations" && %w[edit update].include?(action_name)
+    controller_name == 'registrations' && %w[edit update].include?(action_name)
   end
 end

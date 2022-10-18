@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Helper methods for working with the application configuration.
 module AppConfig
   extend ActiveSupport::Concern
 

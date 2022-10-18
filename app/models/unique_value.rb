@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Represents a unique value for a single dataset field.
 class UniqueValue < ApplicationRecord
   COMPLETION_COUNT = 3
   EXAMPLE_COUNT = 5
@@ -15,7 +18,7 @@ class UniqueValue < ApplicationRecord
 
   scope :to_classify_with_data_set_priority, lambda { |user|
     joins(:data_set)
-      .order("data_sets.completion_percent ASC, unique_values.classifications_count ASC")
+      .order('data_sets.completion_percent ASC, unique_values.classifications_count ASC')
       .call_types.not_completed.not_classified_by(user)
   }
   scope :to_classify, lambda { |user|
@@ -23,7 +26,7 @@ class UniqueValue < ApplicationRecord
   }
   scope :call_types, -> { joins(:field).where(field: { common_type: Classification::CALL_TYPE }) }
   scope :ordered_by_completion, -> { order(frequency: :desc, classifications_count: :asc) }
-  scope :not_completed, -> { where("classifications_count < ?", COMPLETION_COUNT) }
+  scope :not_completed, -> { where('classifications_count < ?', COMPLETION_COUNT) }
   scope :classified_by, lambda { |user|
     left_joins(:classifications).where(classifications: { user_id: user.id })
   }
@@ -58,13 +61,8 @@ class UniqueValue < ApplicationRecord
 
     field.data_set.datafile.with_file do |f|
       CSV.foreach(f, headers: true) do |row|
-        if row[field.heading] == value
-          data << row.values_at
-        end
-
-        if data.length >= EXAMPLE_COUNT
-          break
-        end
+        data << row.values_at if row[field.heading] == value
+        break if data.length >= EXAMPLE_COUNT
       end
     end
 
@@ -75,16 +73,14 @@ class UniqueValue < ApplicationRecord
 
   def can_auto_approve?
     confident_enough = true
-    incident_type_ids = []
-
-    classifications.each do |classification|
-      incident_type_ids << classification.common_incident_type_id
-
+    incident_type_ids = classifications.map do |classification|
       ratings = Classification.confidence_ratings
       if classification.confidence_rating.blank? ||
-          (ratings[classification.confidence_rating] < ratings[MIN_APPROVAL_CONFIDENCE])
+         (ratings[classification.confidence_rating] < ratings[MIN_APPROVAL_CONFIDENCE])
         confident_enough = false
       end
+
+      classification.common_incident_type_id
     end
 
     # A single incident type for all classifications

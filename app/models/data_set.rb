@@ -1,7 +1,10 @@
-# rubocop:disable all
-class DataSet < ApplicationRecord
+# frozen_string_literal: true
+
+# Represents a dataset to be classified.
+# TODO: Refactor to remove disabled cops.
+class DataSet < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend FriendlyId
-  friendly_id :title, use: [:slugged, :history]
+  friendly_id :title, use: %i[slugged history]
 
   has_paper_trail
 
@@ -49,11 +52,11 @@ class DataSet < ApplicationRecord
   end
 
   def emergency_categories
-    fields.find_by(common_type: "Emergency Category").unique_values.order(:value)
+    fields.find_by(common_type: 'Emergency Category').unique_values.order(:value)
   end
 
   def call_categories
-    fields.find_by(common_type: "Call Category").unique_values.order(:value)
+    fields.find_by(common_type: 'Call Category').unique_values.order(:value)
   end
 
   def detailed_call_types
@@ -61,19 +64,19 @@ class DataSet < ApplicationRecord
   end
 
   def priorities
-    fields.find_by(common_type: "Priority").unique_values.order(:value)
+    fields.find_by(common_type: 'Priority').unique_values.order(:value)
   end
 
   def start_time
-    return unless (call_time = fields.find_by(common_type: "Call Time")&.min_value)
+    return unless (call_time = fields.find_by(common_type: 'Call Time')&.min_value)
 
-    Chronic.parse call_time.gsub(/[[:^ascii:]]/, "")
+    Chronic.parse call_time.gsub(/[[:^ascii:]]/, '')
   end
 
   def end_time
-    return unless (call_time = fields.find_by(common_type: "Call Time")&.max_value)
+    return unless (call_time = fields.find_by(common_type: 'Call Time')&.max_value)
 
-    Chronic.parse call_time.gsub(/[[:^ascii:]]/, "")
+    Chronic.parse call_time.gsub(/[[:^ascii:]]/, '')
   end
 
   def timeframe(full: false)
@@ -86,7 +89,7 @@ class DataSet < ApplicationRecord
     end
   end
 
-  def prepare_datamap
+  def prepare_datamap # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     return unless fields.empty?
 
     set_metadata!
@@ -94,9 +97,9 @@ class DataSet < ApplicationRecord
       contents = CSV.read(f, headers: true)
       contents.headers.each_with_index do |heading, i|
         fields.create heading:, position: i,
-                     unique_value_count: contents[heading].uniq.length,
-                     empty_value_count: contents[heading].count(''),
-                     sample_data: contents[heading].uniq[0..9]
+                      unique_value_count: contents[heading].uniq.length,
+                      empty_value_count: contents[heading].count(''),
+                      sample_data: contents[heading].uniq[0..9]
       end
     end
   end
@@ -111,7 +114,7 @@ class DataSet < ApplicationRecord
     end
   end
 
-  def analyze!
+  def analyze! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     datafile.with_file do |f|
       contents = CSV.read(f, headers: true)
       fields.mapped.not_classified.each do |field|
@@ -121,7 +124,7 @@ class DataSet < ApplicationRecord
         # If the field has unique values, it has already been analyzed
         if Field::VALUE_TYPES.include?(field.common_type) && field.unique_values.none?
           contents[field.heading].uniq.each do |value|
-            field.unique_values.build value: value,
+            field.unique_values.build value:,
                                       frequency: contents[field.heading].count(value)
           end
         end
@@ -130,7 +133,7 @@ class DataSet < ApplicationRecord
       end
     end
 
-    update_attribute :analyzed, true
+    update_attribute :analyzed, true # rubocop:disable Rails/SkipsModelValidations
     reload.update_completion
   end
 
@@ -141,4 +144,3 @@ class DataSet < ApplicationRecord
     update(results)
   end
 end
-# rubocop:enable all

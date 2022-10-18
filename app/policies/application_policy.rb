@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Default application policy.
 class ApplicationPolicy
   def initialize(user, record)
     @current_user = user
