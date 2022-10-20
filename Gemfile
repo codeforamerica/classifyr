@@ -51,6 +51,7 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 
+  gem 'brakeman', '~> 5.3'
   gem 'rubocop', '~> 1.32'
   gem 'rubocop-performance', '~> 1.14'
   gem 'rubocop-rails', '~> 2.15'

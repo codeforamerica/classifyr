@@ -1,0 +1,7 @@
+---
+:run_all_checks: true
+:combine_locations: false
+:min_confidence: 1
+:skip_checks:
+  # In production, SSL is terminated at the load balancer.
+  - CheckForceSSL

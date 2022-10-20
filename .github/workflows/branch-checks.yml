@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -69,3 +69,24 @@ jobs:
           action_config_path: ".github/config/branch_rubocop_linter_action.yml"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  vulnerabilities:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Brakeman
+        uses: reviewdog/action-brakeman@v2
+        with:
+          brakeman_flags: "--config-file ./config/brakeman.yml"
+          brakeman_version: gemfile
+          fail_on_error: true
+          reporter: github-check

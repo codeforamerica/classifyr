@@ -3,6 +3,7 @@
 # Helper methods for models that work with files.
 module ActiveStorageAttachmentExtension
   extend ActiveSupport::Concern
+  include ShellCommand
 
   included do
     # TD -
@@ -19,8 +20,8 @@ module ActiveStorageAttachmentExtension
 
   def set_metadata!
     blob.open do |f|
-      self.row_count = `wc -l #{f.path}`.split.first.to_i - 1
-      self.headers = `head -1 #{f.path}`.chomp
+      self.row_count = exec_command('wc', '-l', f.path).split.first.to_i - 1
+      self.headers = exec_command('head', '-1', f.path).chomp
     end
 
     save!
