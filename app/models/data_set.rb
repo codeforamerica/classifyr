@@ -116,21 +116,25 @@ class DataSet < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def analyze! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     datafile.with_file do |f|
-      contents = CSV.read(f, headers: true)
-      fields.mapped.not_classified.each do |field|
-        field.min_value = contents[field.heading].compact.min
-        field.max_value = contents[field.heading].compact.max
-
-        # If the field has unique values, it has already been analyzed
-        if Field::VALUE_TYPES.include?(field.common_type) && field.unique_values.none?
-          contents[field.heading].uniq.each do |value|
-            field.unique_values.build value:,
-                                      frequency: contents[field.heading].count(value)
+      fields_to_map = fields.mapped.not_classified
+      CSV.foreach(f, headers: true) do |row|
+        fields_to_map.each do |field|
+          if field.min_value.nil?
+            field.min_value = row[field.heading]
+          elsif row[field.heading] < field.min_value
+            field.min_value = row[field.heading]
           end
-        end
 
-        field.save!
+          if field.max_value.nil?
+            field.max_value = row[field.heading]
+          elsif row[field.heading] > field.max_value
+            field.max_value = row[field.heading]
+          end
+
+        end
       end
+
+      fields_to_map.each(&:save!)
     end
 
     update_attribute :analyzed, true # rubocop:disable Rails/SkipsModelValidations
