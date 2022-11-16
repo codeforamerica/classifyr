@@ -1,9 +1,21 @@
 <div class="w-full">
   <%= render 'shared/classifications/header' %>
   <div class="responsive-container">
-    <div class="mt-12 px-4 py-5 sm:px-6">
+    <div class="mt-12 px-4 py-5 sm:px-6" data-controller="visibility">
       <h6><%= @data_set.title %></h6>
-      <h2><%= @call_type.value %></h2>
+      <div class="flex flex-col lg:flex-row justify-between">
+        <div>
+          <h2><%= @call_type.value %></h2>
+        </div>
+        <div class="mb-8">
+          <button id="show-examples" class="button" data-action="click->visibility#show" data-visibility-target="temporaryHide">
+            <%= t('.show_examples') %>
+          </button>
+          <button class="button hidden" data-action="click->visibility#hide" data-visibility-target="hide">
+            <%= t('.hide_examples') %>
+          </button>
+        </div>
+      </div>
       <div class="text-black pb-8">
         Please review the sample call records for this call type. From there, please classify the
         call type to the best of your ability by searching below for different common incident types.
@@ -11,7 +23,7 @@
         If you are unable to identify a common incident type to map to this call type,
         you can choose to skip this call type classification.
       </div>
-      <section id="call-types-examples" class="bg-white mb-16">
+      <section id="call-types-examples" class="bg-white mb-16 hidden" data-visibility-target="hide">
         <h4 class="px-6 pt-6 border-b-2 border-gray-200">
           Example Call Type Records
         </h4>
@@ -52,10 +64,10 @@
           </div>
           <div class="mb-8">
             <button id="show-apco" class="button" data-action="click->visibility#show" data-visibility-target="temporaryHide">
-              View all APCO codes
+              <%= t('.view_codes') %>
             </button>
             <button class="button hidden" data-action="click->visibility#hide" data-visibility-target="hide">
-              Hide APCO codes
+              <%= t('.hide_codes') %>
             </button>
           </div>
         </div>

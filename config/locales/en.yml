@@ -42,6 +42,11 @@ en:
     call_types:
       completed: "This data set has already been fully classified."
       user_completed: "You have already classified all call types for this data set."
+      show:
+        show_examples: "Show example records"
+        hide_examples: "Hide example records"
+        view_codes: "View all APCO codes"
+        hide_codes: "Hide APCO codes"
   data_sets:
     title: "Datasets"
     analyze:

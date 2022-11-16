@@ -26,6 +26,7 @@ classify:
 2. The value being classified
 3. Instructions for the classification process
 4. A set of example records with that value (default: 5)
+5. Show or hide the example records (hidden on page load)
 
 _Note: If you are the first user to classify a value, it may take a minute for
 the page to load while the examples are pulled from the source document._
