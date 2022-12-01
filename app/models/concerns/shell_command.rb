@@ -14,7 +14,7 @@ module ShellCommand
   #   @return [String] The contents of standard output.
   def exec_command(*command)
     Open3.popen3(*command) do |_, stdout, _, _|
-      stdout.gets
+      stdout.read.strip
     end
   end
 end

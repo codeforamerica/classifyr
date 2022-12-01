@@ -4,6 +4,8 @@
 # TODO: Refactor to remove disabled cops.
 class DataSet < ApplicationRecord # rubocop:disable Metrics/ClassLength
   extend FriendlyId
+  include ShellCommand
+
   friendly_id :title, use: %i[slugged history]
 
   has_paper_trail
@@ -94,12 +96,25 @@ class DataSet < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
     set_metadata!
     datafile.with_file do |f|
-      contents = CSV.read(f, headers: true)
-      contents.headers.each_with_index do |heading, i|
-        fields.create heading:, position: i,
-                      unique_value_count: contents[heading].uniq.length,
-                      empty_value_count: contents[heading].count(''),
-                      sample_data: contents[heading].uniq[0..9]
+      command = "xsv index #{f.path} && xsv stats --cardinality #{f.path} | yq -p csv -o json"
+      Rails.logger.debug(command)
+      r = exec_command(command)
+      # result = JSON.parse(exec_command(command), symbolize_names: true)
+      result = JSON.parse(r, symbolize_names: true)
+
+      result.each_with_index.map do |column, i|
+        samples = exec_command("xsv select #{column[:field]} #{f.path} " \
+                               '| xsv search "[^\s]" | xsv sort | uniq | ' \
+                               'head -n 11 | tail -n +2')
+        empties = exec_command("xsv search -vs #{column[:field]} '[^\\s]' #{f.path} " \
+                               "| xsv frequency -s #{column[:field]} -l1 " \
+                               '| xsv select count | tail -n 1')
+        fields.create heading: column[:field], position: i,
+                      unique_value_count: column[:cardinality],
+                      empty_value_count: empties,
+                      min_value: column[:min],
+                      max_value: column[:max],
+                      sample_data: samples.split("\n")
       end
     end
   end
@@ -116,20 +131,23 @@ class DataSet < ApplicationRecord # rubocop:disable Metrics/ClassLength
 
   def analyze! # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     datafile.with_file do |f|
-      fields_to_map = fields.mapped.not_classified
-      CSV.foreach(f, headers: true) do |row|
-        fields_to_map.each do |field|
-          if field.min_value.nil? || row[field.heading] < field.min_value
-            field.min_value = row[field.heading]
-          end
+      # Create an index of the CSV for faster processing.
+      exec_command('xsv', 'index', f.path)
 
-          if field.max_value.nil? || row[field.heading] > field.max_value
-            field.max_value = row[field.heading]
-          end
+      fields.mapped.not_classified.each do |field|
+        # If the field has unique values, it has already been analyzed
+        next unless Field::VALUE_TYPES.include?(field.common_type) && field.unique_values.none?
+
+        values = exec_command("xsv search -s #{field.heading} '[^\\s]' #{f.path} " \
+                             "| xsv frequency -s #{field.heading} -l0" \
+                             '| xsv select value,count | yq -p csv -o json')
+        JSON.parse(values, symbolize_names: true).each do |value|
+          field.unique_values.build value: value[:value],
+                                    frequency: value[:count]
+          field.save!
         end
-      end
 
-      fields_to_map.each(&:save!)
+      end
     end
 
     update_attribute :analyzed, true # rubocop:disable Rails/SkipsModelValidations

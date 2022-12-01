@@ -30,6 +30,10 @@ gem 'tailwindcss-rails', '2.0.12'
 gem 'turbo-rails', '~> 1.1'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
+gem 'fastcsv', '~> 0.0.6'
+gem 'smarter_csv', '~> 1.7'
+gem 'get_process_mem', '~> 0.2'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'bullet', '~> 7.0'
@@ -56,6 +60,9 @@ group :development do
   gem 'rubocop-performance', '~> 1.14'
   gem 'rubocop-rails', '~> 2.15'
   gem 'rubocop-rspec', '~> 2.12'
+
+  # gem 'rack-mini-profiler'
+  # gem 'memory_profiler'
 end
 
 group :test do
