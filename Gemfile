@@ -63,7 +63,7 @@ group :test do
   gem 'capybara', '~> 3.37'
   gem 'capybara-screenshot', '~> 1.0'
   gem 'database_cleaner-active_record', '~> 2.0'
-  gem 'nokogiri', '~> 1.13'
+  gem 'nokogiri', '~> 1.14'
   gem 'selenium-webdriver', '~> 4.3'
   gem 'vcr', '~> 6.1'
   gem 'webdrivers', '~> 5.0'
