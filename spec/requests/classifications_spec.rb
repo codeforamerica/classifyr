@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Classifications', type: :request do
+RSpec.describe 'Classifications' do
   let(:user) { create(:user) }
 
   describe '#index' do

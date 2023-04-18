@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Field, type: :model do
+RSpec.describe Field do
   let(:field) { build(:field) }
 
   include_examples 'valid factory', :field

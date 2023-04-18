@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'CommonIncidentTypes', type: :request do
+RSpec.describe 'CommonIncidentTypes' do
   let(:user) { create(:user) }
 
   describe '#search' do

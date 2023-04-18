@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'csv'
 
-RSpec.describe 'Classify call types', type: :feature, js: true do
+RSpec.describe 'Classify call types', js: true do
   let(:role) { create(:role, name: :data_classifier) }
   let(:jack) { create(:user, role:) }
   let(:john) { create(:user, role:) }

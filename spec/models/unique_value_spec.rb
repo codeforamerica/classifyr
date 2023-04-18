@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe UniqueValue, type: :model do
+RSpec.describe UniqueValue do
   include_examples 'valid factory', :unique_value
   include_examples 'papertrail versioning', :unique_value, 'value'
   include_examples 'associations', :unique_value, %i[field classifications users]
@@ -56,39 +56,22 @@ RSpec.describe UniqueValue, type: :model do
 
     describe 'to_classify_with_data_set_priority' do
       it 'returns values to classify based on data set completion' do
-        expect(described_class.to_classify_with_data_set_priority(jack)).to match_array(
-          [
-            unique_value_4, # data_set_2 has 15% completion so its value should come up first
-            unique_value_3 # not classified by jack yet, in data_set_1
-            # unique_value_2, classified by jack already
-            # unique_value_1, # classified 3 times
-          ]
-        )
+        expect(described_class.to_classify_with_data_set_priority(jack)).to contain_exactly(unique_value_4,
+                                                                                            unique_value_3)
       end
     end
 
     describe 'to_classify' do
       it 'returns all values to classify for the given user' do
-        expect(described_class.to_classify(jack)).to match_array(
-          [
-            unique_value_3,
-            unique_value_4
-          ]
-        )
+        expect(described_class.to_classify(jack)).to contain_exactly(unique_value_3, unique_value_4)
       end
     end
 
     describe 'call_types' do
       it 'returns unique_values with a type of Classification::CALL_TYPE' do
         # The 4 unique values created in the before block
-        expect(described_class.call_types).to match_array(
-          [
-            unique_value_1,
-            unique_value_2,
-            unique_value_3,
-            unique_value_4
-          ]
-        )
+        expect(described_class.call_types).to contain_exactly(unique_value_1, unique_value_2, unique_value_3,
+                                                              unique_value_4)
       end
     end
 
@@ -105,27 +88,20 @@ RSpec.describe UniqueValue, type: :model do
 
     describe 'not_completed' do
       it 'returns unique_values that have less than 3 classifications_count' do
-        expect(described_class.not_completed).to match_array(
-          [
-            unique_value_2, unique_value_3, unique_value_4
-          ]
-        )
+        expect(described_class.not_completed).to contain_exactly(unique_value_2, unique_value_3, unique_value_4)
       end
     end
 
     describe 'classified_by' do
       it 'returns all unique_values classified by a specific user' do
-        expect(described_class.classified_by(jack)).to match_array([unique_value_2])
+        expect(described_class.classified_by(jack)).to contain_exactly(unique_value_2)
       end
     end
 
     describe 'not_classified_by' do
       it 'returns all unique_values not classified by a specific user' do
-        expect(described_class.not_classified_by(jack)).to match_array(
-          [
-            unique_value_1, unique_value_3, unique_value_4
-          ]
-        )
+        expect(described_class.not_classified_by(jack)).to contain_exactly(unique_value_1, unique_value_3,
+                                                                           unique_value_4)
       end
     end
   end

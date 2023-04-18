@@ -27,6 +27,9 @@ Naming/VariableNumber:
 RSpec/ExampleLength:
   Max: 40
 
+RSpec/IndexedLet:
+  Enabled: false
+
 # TODO: Reduce to the default (1).
 RSpec/MultipleExpectations:
   Max: 6

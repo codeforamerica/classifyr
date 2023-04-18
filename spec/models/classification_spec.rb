@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Classification, type: :model do
+RSpec.describe Classification do
   include_examples 'valid factory', :classification
   include_examples 'papertrail versioning', :classification, 'value'
   include_examples 'associations', :classification, %i[

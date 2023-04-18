@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Create a data set', type: :feature do
+RSpec.describe 'Create a data set' do
   let(:role) { create(:role, name: :data_admin) }
   let(:user) { create(:user, role:) }
 

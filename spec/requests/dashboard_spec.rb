@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Dashboards', type: :request do
+RSpec.describe 'Dashboards' do
   describe '#index' do
     let(:path) { '/dashboards' }
 

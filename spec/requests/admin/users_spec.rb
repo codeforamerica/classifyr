@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Admin::Users', type: :request do
+RSpec.describe 'Admin::Users' do
   describe '#index' do
     let(:path) { '/admin/users' }
 

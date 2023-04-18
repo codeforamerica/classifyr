@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe "Update a user's role", type: :feature do
+RSpec.describe "Update a user's role" do
   it "updates the user's role successfully" do
     role = create(:role, name: :data_admin)
     user = create(:user, role:)

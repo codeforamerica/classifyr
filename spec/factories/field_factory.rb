@@ -7,7 +7,7 @@ FactoryBot.define do
     common_type { Field::VALUE_TYPES[1] }
 
     trait :with_unique_values do
-      unique_values { create_list :unique_value, 3 }
+      unique_values { create_list(:unique_value, 3) }
     end
   end
 end

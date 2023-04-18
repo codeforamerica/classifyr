@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CommonIncidentType, type: :model do
+RSpec.describe CommonIncidentType do
   let(:common_incident_type) { build(:common_incident_type) }
 
   include_examples 'valid factory', :common_incident_type

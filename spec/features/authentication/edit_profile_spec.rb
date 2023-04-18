@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Edit profile', type: :feature do
+RSpec.describe 'Edit profile' do
   let(:role) { create(:role, name: :volunteer) }
   let(:user) { create(:user, role:) }
 

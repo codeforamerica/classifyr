@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'csv'
 
-RSpec.describe DataSet, type: :model do
+RSpec.describe DataSet do
   let(:data_set) { build(:data_set) }
 
   include_examples 'valid factory', :data_set

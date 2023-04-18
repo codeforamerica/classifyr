@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Sign up', type: :feature do
+RSpec.describe 'Sign up' do
   context 'with valid inputs' do
     it 'creates a new user account' do
       visit root_path

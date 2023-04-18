@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Resend confirmation instructions', type: :feature do
+RSpec.describe 'Resend confirmation instructions' do
   let(:user) { create(:user, confirmed_at: nil) }
 
   it 'resends confirmation instructions' do

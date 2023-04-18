@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Auth flow', type: :feature do
+RSpec.describe 'Auth flow' do
   before { Role.insert_roles }
 
   context 'with valid inputs' do

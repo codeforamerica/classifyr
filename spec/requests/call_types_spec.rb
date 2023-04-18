@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'CallTypes', type: :request do
+RSpec.describe 'CallTypes' do
   let(:user) { create(:user) }
   let(:data_set) { create(:data_set) }
   let(:common_incident_type) { create(:common_incident_type) }

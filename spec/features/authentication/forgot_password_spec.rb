@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Forgot password', type: :feature do
+RSpec.describe 'Forgot password' do
   let(:role) { create(:role, name: :volunteer) }
   let(:user) { create(:user, role:) }
 
